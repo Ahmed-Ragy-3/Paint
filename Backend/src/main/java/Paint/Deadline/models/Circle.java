@@ -4,6 +4,7 @@ import Paint.Deadline.Abstract.Shape;
 
 public class Circle extends Shape{
 
+    public double radius;
     @Override
     public int area() {
         // TODO Auto-generated method stub
