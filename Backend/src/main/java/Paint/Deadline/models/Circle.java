@@ -10,9 +10,8 @@ public class Circle extends Shape{
 
     public double radius;
     @Override
-    public int area() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'area'");
+    public double area() {
+        return Double.valueOf(Math.PI * Math.pow(radius, 2));
     }
 
 }

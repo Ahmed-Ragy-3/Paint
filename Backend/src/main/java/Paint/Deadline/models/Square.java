@@ -1,8 +1,9 @@
 package Paint.Deadline.models;
 
 import Paint.Deadline.Abstract.Shape;
-import lombok.Data;
+
 import lombok.EqualsAndHashCode;
+import lombok.Data;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -10,9 +11,8 @@ public class Square extends Shape {
 
     public double side;
     @Override
-    public int area() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'area'");
+    public double area() {
+        return Math.pow(side, 2);
     }
 
 }

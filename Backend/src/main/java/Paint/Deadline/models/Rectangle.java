@@ -13,9 +13,8 @@ public class Rectangle extends Shape {
     public double width;
 
     @Override
-    public int area() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'area'");
+    public double area() {
+        return Double.valueOf(length*width);
     }
 
 }

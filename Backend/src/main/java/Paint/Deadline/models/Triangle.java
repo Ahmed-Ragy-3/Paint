@@ -11,9 +11,8 @@ public class Triangle extends Shape {
 
     public double side;
     @Override
-    public int area() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'area'");
+    public double area() {
+        return Double.valueOf(0.5 * side * side);
     }
 
 }

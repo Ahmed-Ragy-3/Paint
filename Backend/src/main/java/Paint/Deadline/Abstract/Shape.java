@@ -6,5 +6,5 @@ public abstract class Shape {
 
     public int centerY;
 
-    public abstract int area();
+    public abstract double area();
 }
