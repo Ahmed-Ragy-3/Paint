@@ -30,4 +30,9 @@ public class ShapeService {
     {
         shapeRepository.deleteById(id);
     }
+    
+    public void reset()
+    {
+        shapeRepository.deleteAll();
+    }
 }

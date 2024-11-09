@@ -10,7 +10,7 @@
       "length": 100
     },
     {
-      "type": "circle",
+      "type": "Circle",
       "centerX": 400,
       "centerY": 250,
       "color": "blue",

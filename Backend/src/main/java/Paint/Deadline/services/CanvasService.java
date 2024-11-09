@@ -42,6 +42,9 @@ public class CanvasService {
     }
 
     public void readFromJson() throws IOException {
+
+        shapeService.reset();
+
         Path jsonPath = Path.of("canvas_data.json");
 
         if (!Files.exists(jsonPath)) {
