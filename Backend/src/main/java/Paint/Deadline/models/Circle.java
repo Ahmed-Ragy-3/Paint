@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class Circle extends Shape{
 
-    public double radius;
+    private double radius;
     @Override
     public double area() {
         return Double.valueOf(Math.PI * Math.pow(radius, 2));

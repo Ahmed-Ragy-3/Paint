@@ -9,8 +9,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class Rectangle extends Shape {
 
-    public double length;
-    public double width;
+    private double length;
+    private double width;
 
     @Override
     public double area() {
