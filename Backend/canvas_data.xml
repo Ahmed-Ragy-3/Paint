@@ -1,0 +1,1 @@
+<LinkedHashMap><shapes><type>Rectangle</type><centerX>100</centerX><centerY>150</centerY><color>red</color><strokeWidth>2</strokeWidth><width>200</width><length>100</length></shapes><shapes><type>circle</type><centerX>400</centerX><centerY>250</centerY><color>blue</color><strokeWidth>3</strokeWidth><radius>50</radius></shapes></LinkedHashMap>

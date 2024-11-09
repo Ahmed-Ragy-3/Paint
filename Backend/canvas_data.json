@@ -1,0 +1,21 @@
+{
+  "shapes": [
+    {
+      "type": "Rectangle",
+      "centerX": 100,
+      "centerY": 150,
+      "color": "red",
+      "strokeWidth": 2,
+      "width": 200,
+      "length": 100
+    },
+    {
+      "type": "circle",
+      "centerX": 400,
+      "centerY": 250,
+      "color": "blue",
+      "strokeWidth": 3,
+      "radius": 50
+    }
+  ]
+}
