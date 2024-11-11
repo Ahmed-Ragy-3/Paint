@@ -1,13 +1,16 @@
 // Import the SVG as an image and rename it to `delete`
-import trash3 from './assets/trash3.svg';
+
+// import { Stage } from "react-konva";
+import ToolBar from "./ToolBar";
+import './AppStyle.css'
+import ZoomBar from "./ZoomBar";
+
 
 function App() {
   return (
     <>
-      <button>
-        {/* Use the imported SVG as the src for the <img> */}
-        <img src={trash3} alt="Delete icon" width={100} height={100} />
-      </button>
+      <ToolBar/>
+      <ZoomBar/>
     </>
   );
 }
