@@ -1,8 +1,7 @@
 .toolbar {
    display: grid;
-   /* grid-template-columns: 1fr; */
-   height: 100%;
-   width: 5%;
+   height: 70%;
+   width: 4%;
    background-color: #2E2E2E;
    
    border-radius: 30px;
@@ -10,45 +9,51 @@
    border: none;
    
    justify-content: center;
-   align-content: space-between;
    
-   background-position-y: center;
+   position: absolute;
+   top: 10%;
+   left: 1%;
 
    padding: 7px 1px;
 }
 
 .toolbar button {
-   height: 40px;
-   width: 40px;
+   height: 35px;
+   width: 35px;
    
    background-color: transparent;
    border: none;
-   margin: 8px 0px;
+   margin: 5px 0px;
    justify-content: center;
-   padding: 0px;
+   
+   padding: 5px;
 }
 .toolbar button img {
-   height: 35px;
-   width: 35px;
-
+   height: 90%;
+   width: 90%;
+   
    margin: 0px;
    padding: 0px;
 }
 
 .toolbar button:hover {
-   /* border-radius: 10px; */
+   border-radius: 5px;
+   border: transparent;
    background-color: #171717;
+   cursor: pointer;
 }
 
 
 
 .zoom-bar {
+   display: flex;
+   align-items: center;
+   
    justify-content: center;
-   align-content: space-between;
    
    position: absolute;
-   width: 10%;
-   height: 40px;
+   width: 8%;
+   height: 5%;
    
    left: 43%;
    top: 2%;
@@ -56,27 +61,29 @@
    background: #2E2E2E;
    border-radius: 30px;
 
-   padding: 1px 3px;
+   padding: 1px 2px;
 }
 .zoom-bar button {
-   height: 30px;
-   width: 30px;
+   height: 80%;
+   width: 25%;
    
    background-color: transparent;
    border: none;
-   margin: 0px 4px;
+   margin: 0px 2px;
    justify-content: center;
-   align-content: space-between;
-   padding: 0px;
    
-   position: relative;
-   top: 15%;
+   padding: 4px;
 }
 .zoom-bar button:hover {
-   /* border-radius: 10px; */
+   border-radius: 5px;
+   border: transparent;
    background-color: #171717;
+   cursor: pointer;
 }
 .zoom-bar button img {
-   height: 25px;
-   width: 25px;
+   height: 100%;
+   width: 100%;
+
+   margin: 0px;
+   padding: 0px;
 }
