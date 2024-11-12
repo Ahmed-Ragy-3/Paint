@@ -1,10 +1,10 @@
 :root {
-    --primary-color: #EBEBEB;
-    --secondary-color: #6c757d;
-    --danger-color: #dc3545;
-    --button-color: rgb(171, 171, 171);
-    --button-hover-color: hsla(0, 0%, 35%, 0.397);
-    --button-active-color: hsla(0, 0%, 27%, 0.2);
-    --background-color: #EBEBEB;
-  }
+  --primary-color: #EBEBEB;
+  --secondary-color: #6c757d;
+  --danger-color: #dc3545;
+  --button-color: rgb(171, 171, 171);
+  --button-hover-color: hsla(0, 0%, 35%, 0.397);
+  --button-active-color: hsla(0, 0%, 27%, 0.2);
+  --background-color: #EBEBEB;
+}
   

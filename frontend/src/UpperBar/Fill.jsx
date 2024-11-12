@@ -1,32 +1,34 @@
 import './Fill.css';
 
-import { SketchPicker } from 'react-color';
-import { useState } from 'react';
+// import { SketchPicker } from 'react-color';
+// import { useState } from 'react';
 
 export default function Fill() {
-  const [fillColor, setFillColor] = useState('#ffffff');
-  const [showPicker, setShowPicker] = useState(false);
+  // const [fillColor, setFillColor] = useState('#ffffff');
+  // const [showPicker, setShowPicker] = useState(false);
 
-  const handleFillColorChange = (color) => setFillColor(color.hex);
-  const togglePicker = () => setShowPicker(!showPicker);
+  // const handleFillColorChange = (color) => setFillColor(color.hex);
+  // const togglePicker = () => setShowPicker(!showPicker);
 
   return (
     <div className="Fill" role="group">
 
       <label className='fill-lable'>Fill :</label>
-
-      <div 
+      
+      <input type='color'/>
+      
+      {/* <div 
         className="fill-color" 
         style={{backgroundColor: fillColor}} 
         onClick={togglePicker}
       >
-      </div>
+      </div> */}
 
-      {showPicker && (
+      {/* {showPicker && (
         <div className="color-picker">
           <SketchPicker color={fillColor} onChangeComplete={handleFillColorChange} />
         </div>
-      )}
+      )} */}
       
     </div>
   )

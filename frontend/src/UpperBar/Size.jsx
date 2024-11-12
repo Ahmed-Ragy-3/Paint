@@ -30,7 +30,7 @@ export default function Size() {
       <button
         className="btn"
         onClick={handleLinkToggle}
-        title='Link Width and Hieght'
+        title='Link Width and Height'
       >
         {linkDimensions ? <span className="ci--link-horizontal-off"></span> : <span className="ci--link-horizontal"></span>}
       </button>

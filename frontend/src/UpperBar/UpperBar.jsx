@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 
 import UndoRedo from './UndoRedo';
 import File from './File';
@@ -11,8 +11,8 @@ import Opacity from './Opacity'
 import '../variables.css';
 import './UpperBarStyle.css';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '@fortawesome/fontawesome-free/css/all.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
 function UpperBar() {

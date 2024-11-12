@@ -1,5 +1,5 @@
 import './File.css';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function File() {
   const [isOpen, setIsOpen] = useState(true);

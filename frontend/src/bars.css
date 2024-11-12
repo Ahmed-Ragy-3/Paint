@@ -87,3 +87,32 @@
    margin: 0px;
    padding: 0px;
 }
+
+
+
+
+.tooltip-button {
+   position: relative;
+   cursor: pointer;
+}
+ 
+.tooltip-button::after {
+   content: attr(data-tooltip);
+   position: relative;
+   top: 10px;
+   left: 5px;
+
+   background-color: rgba(0, 0, 0, 0.7);
+   color: white;
+   padding: 5px 8px;
+   border-radius: 4px;
+   font-size: 0.8em;
+   white-space: nowrap;
+   opacity: 0;
+   pointer-events: none;
+   transition: opacity 0.2s ease-in-out;
+}
+ 
+.tooltip-button:hover::after {
+   opacity: 0.8;
+}
