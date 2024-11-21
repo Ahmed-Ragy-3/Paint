@@ -1,0 +1,65 @@
+{
+   "backgroundColor": "white",
+   "shapes": [
+      {
+         "type": "Ellipse",
+         "id": 10,
+         "centerX": 0,
+         "centerY": 0,
+         "strokeWidth": 0,
+         "strokeColor": "black",
+         "fill": "grey",
+         "opacity": 1,
+         "height": 10,
+         "width": 10
+      },
+      {
+         "type": "Rectangle",
+         "id": 10,
+         "centerX": 0,
+         "centerY": 0,
+         "strokeWidth": 0,
+         "strokeColor": "black",
+         "fill": "grey",
+         "opacity": 1,
+         "height": 10,
+         "width": 10
+      },
+      {
+         "type": "Triangle",
+         "id": 10,
+         "strokeWidth": 0,
+         "strokeColor": "black",
+         "fill": "grey",
+         "opacity": 1
+      },
+      {
+         "type": "Line",
+         "id": 10,
+         "centerX": 0,
+         "centerY": 0,
+         "strokeWidth": 0,
+         "strokeColor": "black",
+         "fill": "grey",
+         "opacity": 1,
+         "height": 10,
+         "width": 10
+      },
+      {
+         "type": "Text",
+         "text": "test the text component"
+      },
+      {
+         "type": "Polygon",
+         "id": 10,
+         "centerX": 0,
+         "centerY": 0,
+         "strokeWidth": 0,
+         "strokeColor": "black",
+         "fill": "grey",
+         "opacity": 1,
+         "height": 10,
+         "width": 10
+      }
+   ]
+}
