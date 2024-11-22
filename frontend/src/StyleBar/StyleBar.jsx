@@ -1,22 +1,50 @@
-import UndoRedo from './UndoRedo';
+// import UndoRedo from './UndoRedo';
 import Fill from './Fill';
 import Stroke from './Stroke';
 import Size from './Size';
-import Align from './Align';
 import Opacity from './Opacity'
 
 import './styleBar.css';
 
+import undo from './icons/undo.svg';
+import redo from './icons/redo.svg';
+import v_align from './icons/vertical-align.svg';
+import h_align from './icons/horizontal-align.svg';
 
 function StyleBar() {
   return (
     <div className="style-bar">
-      <UndoRedo/>
+      
+      <div className="UndoRedo">
+
+        <button className="btn" title='Undo'>
+          <img src={undo} />
+        </button>
+
+        <button className="btn" title='Redo'>
+          <img src={redo} />
+        </button>
+
+      </div>
+
       <Fill/>
       <Stroke/>
       <Opacity/>
-      <Align/>
+
+      <div className="Align">
+      
+        <button className="v-btn" title='Vertical Align'>
+          <img src={v_align}/>
+        </button>
+
+        <button className="h-btn" title='Horizontal Align'>
+          <img src={h_align}/>
+        </button>
+
+      </div>
+
       <Size/>
+      
     </div>
   );
 }

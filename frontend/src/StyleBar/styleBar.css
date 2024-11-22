@@ -2,17 +2,20 @@
     background-color: #2E2E2E;
     display: flex;
     flex-direction: column;
-    position: fixed;
-    right: 0;
+    
+    position: absolute;
     top: 50%;
-    width: 200px;
-    height: 550px;
-    margin-right: 0.5%;
-    padding: 1%;
+    right: 1%;
+    
+    width: 17%;
+    height: 80%;
+
+    /* margin-right: 0.5%; */
+
     align-items: center;
     justify-content: center;
     z-index: 9999;
-    border-radius:30px;
+    border-radius: 30px;
     transform: translateY(-50%);
     gap: 2%;
 }
@@ -24,7 +27,7 @@
     justify-content: center;
     padding: 1%;
     background-color: transparent;
-    width: 90%;
+    width: 80%;
     height: 10%;
 }
 

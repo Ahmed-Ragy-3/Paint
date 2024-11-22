@@ -1,20 +1,17 @@
-
-import ToolBar from "./ToolBar";
+import Canvas from './Canvas.jsx';
 import StyleBar from './StyleBar/StyleBar';
+import ToolBar from "./ToolBar";
 import ZoomBar from "./ZoomBar";
 
-
-import Canvas from './Canvas.jsx';
-
-// import './AppStyle.css'
-
+import { useState } from 'react';
 
 function App() {
+  const [data, setData] = useState([])
   return (
     <>
-      <Canvas/>
+      <Canvas data={data}/>
       <StyleBar/>
-      <ToolBar/>
+      <ToolBar data={data} setData={setData}/>
       <ZoomBar/>
     </>
   );

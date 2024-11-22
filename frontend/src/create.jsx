@@ -1,8 +1,8 @@
-import React from "react";
+// import React from "react";
 import { Rect, Text, Line, Ellipse } from 'react-konva';
 
 function createShape(shape) {
-   console.log(shape)
+   // console.log(shape)
    switch (shape.type) {
       case "Ellipse":   return createEllipse(shape);
       case "Rectangle": return createRectangle(shape);
@@ -20,6 +20,7 @@ export default createShape;
 
 function createEllipse(shape) {
    return <Ellipse
+      key={shape.id}
       draggable
       x={shape.centerX}         // centerX is the center, no need to adjust
       y={shape.centerY}         // centerY is the center, no need to adjust
@@ -34,6 +35,7 @@ function createEllipse(shape) {
    
 function createRectangle(shape) {
    return <Rect
+      key={shape.id}   
       draggable
       x={shape.centerX - shape.width / 2}  // Adjust x to top-left corner
       y={shape.centerY - shape.height / 2} // Adjust y to top-left corner
@@ -48,6 +50,7 @@ function createRectangle(shape) {
 
 function createTriangle(shape) {
    return <Line
+      key={shape.id}   
       draggable
       points={shape.points}
       stroke={shape.strokeColor}
@@ -60,6 +63,7 @@ function createTriangle(shape) {
 
 function createText(shape) {
    return <Text
+      key={shape.id}   
       draggable 
       text={shape.text}
       fontSize={shape.fontSize} 
@@ -71,6 +75,7 @@ function createText(shape) {
 
 function createPolygon(shape) {
    return <Line
+      key={shape.id}   
       draggable
       points={shape.points}
       fill={shape.fill}
@@ -82,6 +87,7 @@ function createPolygon(shape) {
 
 function createLine(shape) {
    return <Line
+      key={shape.id}   
       draggable
       points={shape.points}
       stroke={shape.strokeColor}

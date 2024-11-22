@@ -18,8 +18,8 @@
 }
 
 .toolbar button {
-   height: 35px;
-   width: 35px;
+   height: 72%;
+   width: 95%;
    
    background-color: transparent;
    border: none;
@@ -43,8 +43,6 @@
    cursor: pointer;
 }
 
-
-
 .zoom-bar {
    display: flex;
    align-items: center;
@@ -63,6 +61,7 @@
 
    padding: 1px 2px;
 }
+
 .zoom-bar button {
    height: 80%;
    width: 25%;
@@ -87,8 +86,6 @@
    margin: 0px;
    padding: 0px;
 }
-
-
 
 
 .tooltip-button {
