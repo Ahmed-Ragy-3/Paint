@@ -1,0 +1,196 @@
+.style-bar {
+    background-color: #2E2E2E;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    right: 0;
+    top: 50%;
+    width: 200px;
+    height: 550px;
+    margin-right: 0.5%;
+    padding: 1%;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    border-radius:30px;
+    transform: translateY(-50%);
+    gap: 2%;
+}
+
+.UndoRedo {
+    display: flex;
+    gap: 5%;
+    align-items: center;
+    justify-content: center;
+    padding: 1%;
+    background-color: transparent;
+    width: 90%;
+    height: 10%;
+}
+
+.UndoRedo .btn, .length-and-width-btn {
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    padding: 1%;
+}
+
+.v-btn, .h-btn {
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    padding: 2%;
+}
+
+.UndoRedo .btn img, .length-and-width-btn img{
+    height: 100%;
+    width: 100%;
+    margin: 0%;
+    padding: 0%;
+    border: 0%;
+    transition: filter 0.1s ease; 
+}
+
+.UndoRedo .btn:hover img, .v-btn:hover img, .h-btn:hover img, .length-and-width-btn:hover img {
+    filter: opacity(80%);
+    cursor: pointer;
+    
+}
+
+.UndoRedo .btn:active img, .v-btn:active img, .h-btn:active img, .length-and-width-btn:active img {
+    filter: opacity(60%);
+    cursor: pointer;
+}
+
+.Fill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5%;
+    padding: 1%;
+    background-color:transparent;
+    width: 90%;
+    height: 10%;
+}
+  
+.fill-lable, .stroke-lable, .length-and-width-label {
+    font-family: sans-serif;
+    font-size: 170%;
+    font-weight: bold;
+    color: #C0C0C0;
+}
+
+.opacity-lable{
+    font-family: sans-serif;
+    font-size: 140%;
+    font-weight: bold;
+    color: #C0C0C0;
+}
+
+.fill-color-picker, .stroke-color-picker {
+    width: 40%;
+    height: 60%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fill-color-picker:hover, .stroke-color-picker:hover{
+    transform: scale(1.0025);
+}
+
+.fill-color-picker:active, .stroke-color-picker:active {
+    transform: scale(1.05);
+}
+
+.Stroke {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1%;
+    padding: 2%;
+    background-color:transparent;
+    width: 90%;
+    height: 15%;
+}
+
+.stroke-color-width {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4%;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
+
+.stroke-width {
+    width: 35%;
+    height: 55%;
+    background-color: gray;
+    border-radius: 5px;
+    font-size: 100%;
+}
+
+.length-and-width-input {
+    width: 35%;
+    height: 80%;
+    background-color: gray;
+    border-radius: 5px;
+    font-size: 100%;
+}
+
+.opacity-input{
+    width: 35%;
+    height: 80%;
+    background-color: gray;
+    border-radius: 5px;
+    font-size: 100%;
+}
+
+.Opacity {
+    display: flex;
+    gap: 5%;
+    padding: 2%;
+    background-color: transparent;
+    width: 90%;
+    height: 5%;
+}
+
+.Align {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10%;
+    padding: 2%;
+    background-color: transparent;
+    width: 90%;
+    height: 10%;
+}
+
+.length-and-width {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5%;
+    background-color: transparent;
+    width: 90%;
+    height: 20%;
+}
+
+.length-and-width-line {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;;
+    gap: 5%;
+}
+
+.length-and-width-btn img{
+    transform: rotate(-45deg);
+}

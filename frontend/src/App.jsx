@@ -1,10 +1,10 @@
-import { Stage, Layer } from 'react-konva';
+
 import ToolBar from "./ToolBar";
-import UpperBar from './UpperBar/UpperBar';
+import StyleBar from './StyleBar/StyleBar';
 import ZoomBar from "./ZoomBar";
 
-import createShape from '../create.js';
-import data from "../sample.json";
+
+import Canvas from './Canvas.jsx';
 
 // import './AppStyle.css'
 
@@ -12,17 +12,8 @@ import data from "../sample.json";
 function App() {
   return (
     <>
-      <Stage width={1250} height={680}>
-        <Layer>
-          {
-            data.shapes.map((shape) => {
-              createShape(shape)
-            })
-          }
-        </Layer>
-      </Stage>
-
-      <UpperBar/>
+      <Canvas/>
+      <StyleBar/>
       <ToolBar/>
       <ZoomBar/>
     </>
