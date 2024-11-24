@@ -13,56 +13,44 @@ import brush from './assets/brush-tool.svg';
 import text from './assets/textIcon.svg';
 import addImage from './assets/add-image.svg';
 
-
-export default function ToolBar({data, setData, setActiveTool}) {
-
-  function getId() {
-    return data.length
-  }
-
+export default function ToolBar({ setActiveTool }) {
   return (
-    <div className='toolbar'>
-
-      <button data-tooltip="Move tool">
+    <div className="toolbar">
+      <button title="Move tool" onClick={() => { setActiveTool("move") }}>
         <img src={move_tool} alt="Move Tool" />
       </button>
-      
-      <button data-tooltip="My">
+
+      <button title="Line Tool" onClick={() => { setActiveTool("line") }}>
         <img src={line} alt="Line Tool" />
       </button>
-      
-      <button data-tooltip="My Custom Tooltip">
+
+      <button title="Polygon Tool" onClick={() => { setActiveTool("polygon") }}>
         <img src={polygon} alt="Polygon Tool" />
       </button>
-      
-      <button data-tooltip="My Custom Tooltip">
+
+      <button title="Triangle Tool" onClick={() => { setActiveTool("triangle") }}>
         <img src={triangle} alt="Triangle Tool" />
       </button>
-      
-      <button data-tooltip="My Custom Tooltip">
-        <img 
-          src={rectangle} 
-          alt="Rectangle Tool" 
-          onClick={() => {setActiveTool('Rectangle')}
-          }/>
-      </button>
-      
-      <button data-tooltip="My Custom Tooltip">
-        <img src={circle} alt="Circle Tool" />
-      </button>
-      
-      <button data-tooltip="My Custom Tooltip">
-        <img src={brush} alt="Brush Tool" />
-      </button>
-      
-      <button data-tooltip="My Custom Tooltip">
-        <img src={text} alt="Text Tool" />
-      </button>
-      
-      <button data-tooltip="My Custom Tooltip">
-        <img src={addImage} alt="Add Image Tool" />
+
+      <button title="Rectangle Tool" onClick={() => { setActiveTool("rectangle") }}>
+        <img src={rectangle} alt="Rectangle Tool" />
       </button>
 
+      <button title="Circle Tool" onClick={() => { setActiveTool("circle") }}>
+        <img src={circle} alt="Circle Tool" />
+      </button>
+
+      <button title="Brush Tool" onClick={() => { setActiveTool("brush") }}>
+        <img src={brush} alt="Brush Tool" />
+      </button>
+
+      <button title="Text Tool" onClick={() => { setActiveTool("text") }}>
+        <img src={text} alt="Text Tool" />
+      </button>
+
+      <button title="Add Image Tool" onClick={() => { setActiveTool("add image") }}>
+        <img src={addImage} alt="Add Image Tool" />
+      </button>
     </div>
   );
 }

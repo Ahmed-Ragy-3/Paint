@@ -6,13 +6,14 @@ import ZoomBar from "./ZoomBar";
 import { useState } from 'react';
 
 function App() {
-  const [data, setData] = useState([]);
-  const [activeTool, setActiveTool] = useState(null);
+  const [data, setData] = useState([])
+  const [activeTool, setActiveTool] = useState("")
+
   return (
     <>
       <Canvas data={data} setData={setData} activeTool={activeTool}/>
       <StyleBar/>
-      <ToolBar data={data} setData={setData} setActiveTool={setActiveTool}/>
+      <ToolBar setActiveTool={setActiveTool}/>
       <ZoomBar/>
     </>
   );
