@@ -13,7 +13,7 @@ function App() {
     <>
       <Canvas data={data} setData={setData} activeTool={activeTool}/>
       <StyleBar/>
-      <ToolBar setActiveTool={setActiveTool}/>
+      <ToolBar activeTool={activeTool} setActiveTool={setActiveTool}/>
       <ZoomBar/>
     </>
   );

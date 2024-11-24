@@ -85,6 +85,21 @@ export default function Canvas({data, setData, activeTool}) {
       })
       
       setInitialPoint([x, y])
+    } else if (activeTool === 'ellipse') {
+      setCurrentShape({
+        type: 'Ellipse',
+        id: data.length,
+        centerX: x,
+        centerY: y,
+        strokeWidth: 2,
+        strokeColor: 'black',
+        fill: 'blue',
+        opacity: 1,
+        radiusX: 0,
+        radiusY: 0
+      });
+
+      setInitialPoint([x, y])
     }
   }
   
@@ -100,6 +115,14 @@ export default function Canvas({data, setData, activeTool}) {
         centerY: (initialPoint[1] + y) / 2,
         width: Math.abs(x - initialPoint[0]),
         height: Math.abs(y - initialPoint[1])
+      }));
+    } else if (activeTool === 'ellipse') {
+      setCurrentShape((prevShape) => ({
+        ...prevShape,
+        centerX: (initialPoint[0] + x) / 2,
+        centerY: (initialPoint[1] + y) / 2,
+        radiusX: Math.abs(x - initialPoint[0]),
+        radiusY: Math.abs(y - initialPoint[1])
       }));
     }
   };

@@ -13,42 +13,78 @@ import brush from './assets/brush-tool.svg';
 import text from './assets/textIcon.svg';
 import addImage from './assets/add-image.svg';
 
-export default function ToolBar({ setActiveTool }) {
+export default function ToolBar({ activeTool, setActiveTool }) {
   return (
     <div className="toolbar">
-      <button title="Move tool" onClick={() => { setActiveTool("move") }}>
+      <button 
+        title="Move tool" 
+        onClick={() => { setActiveTool("move") }}
+        className={activeTool === "move" ? "active" : ""}
+      >
         <img src={move_tool} alt="Move Tool" />
       </button>
 
-      <button title="Line Tool" onClick={() => { setActiveTool("line") }}>
+      <button 
+        title="Line Tool" 
+        onClick={() => { setActiveTool("line") }}
+        className={activeTool === "line" ? "active" : ""}
+      >
         <img src={line} alt="Line Tool" />
       </button>
 
-      <button title="Polygon Tool" onClick={() => { setActiveTool("polygon") }}>
+      <button 
+        title="Polygon Tool" 
+        onClick={() => { setActiveTool("polygon") }}
+        className={activeTool === "polygon" ? "active" : ""}
+      >
         <img src={polygon} alt="Polygon Tool" />
       </button>
 
-      <button title="Triangle Tool" onClick={() => { setActiveTool("triangle") }}>
+      <button 
+        title="Triangle Tool" 
+        onClick={() => { setActiveTool("triangle") }}
+        className={activeTool === "triangle" ? "active" : ""}
+      >
         <img src={triangle} alt="Triangle Tool" />
       </button>
 
-      <button title="Rectangle Tool" onClick={() => { setActiveTool("rectangle") }}>
+      <button 
+        title="Rectangle Tool" 
+        onClick={() => { setActiveTool("rectangle") }}
+        className={activeTool === "rectangle" ? "active" : ""}
+      >
         <img src={rectangle} alt="Rectangle Tool" />
       </button>
 
-      <button title="Circle Tool" onClick={() => { setActiveTool("circle") }}>
+      <button 
+        title="Ellipse Tool" 
+        onClick={() => { setActiveTool("ellipse") }}
+        className={activeTool === "ellipse" ? "active" : ""}
+      >
         <img src={circle} alt="Circle Tool" />
       </button>
 
-      <button title="Brush Tool" onClick={() => { setActiveTool("brush") }}>
+      <button 
+        title="Brush Tool" 
+        onClick={() => { setActiveTool("brush") }}
+        className={activeTool === "brush" ? "active" : ""}
+      >
         <img src={brush} alt="Brush Tool" />
       </button>
 
-      <button title="Text Tool" onClick={() => { setActiveTool("text") }}>
+      <button 
+        title="Text Tool" 
+        onClick={() => { setActiveTool("text") }}
+        className={activeTool === "text" ? "active" : ""}
+      >
         <img src={text} alt="Text Tool" />
       </button>
 
-      <button title="Add Image Tool" onClick={() => { setActiveTool("add image") }}>
+      <button 
+        title="Add Image Tool" 
+        onClick={() => { setActiveTool("add image") }}
+        className={activeTool === "add image" ? "active" : ""}
+      >
         <img src={addImage} alt="Add Image Tool" />
       </button>
     </div>

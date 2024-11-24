@@ -43,6 +43,16 @@
    cursor: pointer;
 }
 
+
+.toolbar button.active {
+   background-color: #171717b9; 
+   border-radius: 10px;
+}
+
+.toolbar button.active img {
+   filter: brightness(1.3);
+}
+
 .zoom-bar {
    display: flex;
    align-items: center;

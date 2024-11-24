@@ -28,8 +28,8 @@ function createEllipse(shape) {
       stroke={shape.strokeColor}
       fill={shape.fill}
       opacity={shape.opacity}
-      radiusX={shape.width / 2}  // radiusX is half of the width
-      radiusY={shape.height / 2} // radiusY is half of the height
+      radiusX={shape.radiusX}  // radiusX is half of the width
+      radiusY={shape.radiusY} // radiusY is half of the height
    />
 }
    
