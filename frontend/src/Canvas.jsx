@@ -1,11 +1,8 @@
 /* eslint-disable react/prop-types */
-
 import { useEffect, useState } from 'react';
 import { Layer, Stage } from 'react-konva';
 
 import createShape from './create.jsx';
-// import dataJson from "../sample.json";
-
 import './Canvas.css';
 
 export default function Canvas({data, setData, activeTool, setActiveTool}) {
@@ -14,11 +11,40 @@ export default function Canvas({data, setData, activeTool, setActiveTool}) {
   const [initialPoint, setInitialPoint] = useState([0, 0])
     
   const [currentShape, setCurrentShape] = useState(null)
-  // const [isDrawing, setIsDrawing] = useState(false)
+  // const [selectedShape, setSelectedShape] = useState(null)
 
   function getId() {
     return data.length
   }
+
+  useEffect(() => {
+    const removeLastPoint = (points) => {
+      return points.slice(0, -2);
+    }
+    
+    const handleKeyDown = (e) => {
+      if (activeTool === 'polygon' && currentShape) {
+        if (e.key === 'Escape') {
+          setCurrentShape((prevShape) => {
+            const updatedPoints = removeLastPoint(prevShape.points);
+            const finalizedShape = { ...prevShape, points: updatedPoints };
+            setData((prevData) => [...prevData, finalizedShape]);
+            return null;
+          });
+        } else if (e.key === 'Backspace') {
+          setCurrentShape((prevShape) => {
+            const updatedPoints = removeLastPoint(prevShape.points);
+            return { ...prevShape, points: updatedPoints };
+          });
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [activeTool, currentShape, setData]);
 
   useEffect(() => {
     switch (activeTool) {
@@ -57,14 +83,16 @@ export default function Canvas({data, setData, activeTool, setActiveTool}) {
     if (!currentShape) return;
 
     console.log(currentShape)
+    if(activeTool == "rectangle" || activeTool == "ellipse") {
+      setData([...data, currentShape]);
+      setCurrentShape(null);
 
-    setData([...data, currentShape]);
-    setCurrentShape(null);
-    // setActiveTool()
+    }//else if(activeTool == "polygon") {}
   }
   
   const handleMouseDown = (e) => {
     const { x, y } = e.target.getStage().getPointerPosition();
+    
     if (activeTool === "move") {
       setData((prevData) =>
         prevData.map((shape) => ({
@@ -89,6 +117,7 @@ export default function Canvas({data, setData, activeTool, setActiveTool}) {
       })
       
       setInitialPoint([x, y])
+
     } else if (activeTool === 'ellipse') {
       setCurrentShape({
         type: 'Ellipse',
@@ -105,6 +134,25 @@ export default function Canvas({data, setData, activeTool, setActiveTool}) {
       });
 
       setInitialPoint([x, y])
+
+    } else if (activeTool === 'polygon') {
+      if (!currentShape) {
+        setCurrentShape({
+          type: 'Polygon',
+          draggable: false,
+          id: data.length,
+          points: [x, y],
+          strokeWidth: 4,
+          strokeColor: 'black',
+          opacity: 1,
+        });
+      } else {
+        setCurrentShape((prevShape) => ({
+          ...prevShape,
+          points: [...prevShape.points, x, y],
+        }));
+      }
+
     }
   }
   
@@ -131,6 +179,16 @@ export default function Canvas({data, setData, activeTool, setActiveTool}) {
         radiusX: Math.abs(x - initialPoint[0]),
         radiusY: Math.abs(y - initialPoint[1])
       }));
+
+    } else if (activeTool === 'polygon') {
+      setCurrentShape((prevShape) => {
+        const updatedPoints = [...prevShape.points];
+    
+        updatedPoints[updatedPoints.length - 2] = x;
+        updatedPoints[updatedPoints.length - 1] = y;
+    
+        return {...prevShape, points: updatedPoints,};
+      });
     }
   };
   
