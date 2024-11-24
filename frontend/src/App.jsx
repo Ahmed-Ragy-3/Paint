@@ -11,7 +11,7 @@ function App() {
 
   return (
     <>
-      <Canvas data={data} setData={setData} activeTool={activeTool}/>
+      <Canvas data={data} setData={setData} activeTool={activeTool} setActiveTool={setActiveTool}/>
       <StyleBar/>
       <ToolBar activeTool={activeTool} setActiveTool={setActiveTool}/>
       <ZoomBar/>

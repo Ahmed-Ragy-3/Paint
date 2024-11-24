@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Layer, Stage } from 'react-konva';
 
 import createShape from './create.jsx';
@@ -8,11 +8,11 @@ import createShape from './create.jsx';
 
 import './Canvas.css';
 
-export default function Canvas({data, setData, activeTool}) {
+export default function Canvas({data, setData, activeTool, setActiveTool}) {
   
   // const canvasRef = useRef()
   const [initialPoint, setInitialPoint] = useState([0, 0])
-  
+    
   const [currentShape, setCurrentShape] = useState(null)
   // const [isDrawing, setIsDrawing] = useState(false)
 
@@ -20,40 +20,38 @@ export default function Canvas({data, setData, activeTool}) {
     return data.length
   }
 
-  // useEffect(() => {
-  //   switch (activeTool) {
-  //     case "move":
+  useEffect(() => {
+    switch (activeTool) {
+      case "line":
           
-  //       break;
-  //     case "line":
+        break;
+      case "polygon":
           
-  //       break;
-  //     case "polygon":
+        break;
+      case "triangle":
           
-  //       break;
-  //     case "triangle":
+        break;
+      case "rectangle":
           
-  //       break;
-  //     case "rectangle":
+        break;
+      case "circle":
           
-  //       break;
-  //     case "circle":
+        break;
+      case "brush":
           
-  //       break;
-  //     case "brush":
+        break;
+      case "text":
           
-  //       break;
-  //     case "text":
+        break;
+      case "add image":
           
-  //       break;
-  //     case "add image":
-          
-  //       break;
+        break;
     
-  //     default:
-  //       break;
-  //   }
-  // }, [activeTool])
+      default:
+        break;
+    }
+    
+  }, [activeTool, setData])
 
   const handleMouseUp = () => {
     if (!currentShape) return;
@@ -62,23 +60,29 @@ export default function Canvas({data, setData, activeTool}) {
 
     setData([...data, currentShape]);
     setCurrentShape(null);
-    
+    // setActiveTool()
   }
   
   const handleMouseDown = (e) => {
     const { x, y } = e.target.getStage().getPointerPosition();
-    
-    if (activeTool === 'rectangle') {
+    if (activeTool === "move") {
+      setData((prevData) =>
+        prevData.map((shape) => ({
+          ...shape,
+          draggable: true,
+        })))
+    } else if (activeTool === 'rectangle') {
       
       console.log(`${x} - ${y}`)
       setCurrentShape({
         type: 'Rectangle',
+        draggable: false,
         id: data.length,
         centerX: x,
         centerY: y,
         strokeWidth: 2,
-        strokeColor: 'blue',
-        fill: 'blue',
+        strokeColor: 'black',
+        fill: 'transparent',
         opacity: 1,
         width: 0,
         height: 0
@@ -88,12 +92,13 @@ export default function Canvas({data, setData, activeTool}) {
     } else if (activeTool === 'ellipse') {
       setCurrentShape({
         type: 'Ellipse',
+        draggable: false,
         id: data.length,
         centerX: x,
         centerY: y,
         strokeWidth: 2,
         strokeColor: 'black',
-        fill: 'blue',
+        fill: 'transparent',
         opacity: 1,
         radiusX: 0,
         radiusY: 0
@@ -107,15 +112,17 @@ export default function Canvas({data, setData, activeTool}) {
     if (!currentShape) return;
     // we should make a switch
     const { x, y } = e.target.getStage().getPointerPosition();
-    
+
     if (activeTool === 'rectangle') {
+      let w = Math.abs(x - initialPoint[0]);
       setCurrentShape((prevShape) => ({
         ...prevShape,
         centerX: (initialPoint[0] + x) / 2,
         centerY: (initialPoint[1] + y) / 2,
-        width: Math.abs(x - initialPoint[0]),
-        height: Math.abs(y - initialPoint[1])
+        width: w,
+        height: e.evt.shiftKey ? w : Math.abs(y - initialPoint[1])
       }));
+
     } else if (activeTool === 'ellipse') {
       setCurrentShape((prevShape) => ({
         ...prevShape,

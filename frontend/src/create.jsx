@@ -21,7 +21,7 @@ export default createShape;
 function createEllipse(shape) {
    return <Ellipse
       key={shape.id}
-      draggable
+      draggable={shape.draggable}
       x={shape.centerX}         // centerX is the center, no need to adjust
       y={shape.centerY}         // centerY is the center, no need to adjust
       strokeWidth={shape.strokeWidth}
@@ -36,7 +36,7 @@ function createEllipse(shape) {
 function createRectangle(shape) {
    return <Rect
       key={shape.id}   
-      draggable
+      draggable={shape.draggable}
       x={shape.centerX - shape.width / 2}  // Adjust x to top-left corner
       y={shape.centerY - shape.height / 2} // Adjust y to top-left corner
       strokeWidth={shape.strokeWidth}
@@ -51,7 +51,7 @@ function createRectangle(shape) {
 function createTriangle(shape) {
    return <Line
       key={shape.id}   
-      draggable
+      draggable={shape.draggable}
       points={shape.points}
       stroke={shape.strokeColor}
       strokeWidth={shape.strokeWidth}
@@ -64,7 +64,7 @@ function createTriangle(shape) {
 function createText(shape) {
    return <Text
       key={shape.id}   
-      draggable 
+      draggable={shape.draggable}
       text={shape.text}
       fontSize={shape.fontSize} 
       fill={shape.fill} 
@@ -76,7 +76,7 @@ function createText(shape) {
 function createPolygon(shape) {
    return <Line
       key={shape.id}   
-      draggable
+      draggable={shape.draggable}
       points={shape.points}
       fill={shape.fill}
       stroke={shape.strokeColor}
@@ -88,7 +88,7 @@ function createPolygon(shape) {
 function createLine(shape) {
    return <Line
       key={shape.id}   
-      draggable
+      draggable={shape.draggable}
       points={shape.points}
       stroke={shape.strokeColor}
       strokeWidth={shape.strokeWidth}
