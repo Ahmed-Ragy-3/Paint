@@ -14,7 +14,7 @@ import text from './assets/textIcon.svg';
 import addImage from './assets/add-image.svg';
 
 
-export default function ToolBar({data, setData}) {
+export default function ToolBar({data, setData, setActiveTool}) {
 
   function getId() {
     return data.length
@@ -40,24 +40,11 @@ export default function ToolBar({data, setData}) {
       </button>
       
       <button data-tooltip="My Custom Tooltip">
-        <img src={rectangle} alt="Rectangle Tool" onClick={() => {
-          setData([...data, 
-            {
-              type: "Rectangle",
-              id: getId(),
-              centerX : 200,
-              centerY : 100,
-              strokeWidth: 2,
-              strokeColor: "blue",
-              fill: "yellow",
-              opacity: 1,
-              width: 100,
-              height: 60
-            }
-          ])
-          console.log(data)
-
-        }}/>
+        <img 
+          src={rectangle} 
+          alt="Rectangle Tool" 
+          onClick={() => {setActiveTool('Rectangle')}
+          }/>
       </button>
       
       <button data-tooltip="My Custom Tooltip">

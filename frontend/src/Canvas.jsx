@@ -8,25 +8,43 @@ import createShape from './create.jsx';
 
 import './Canvas.css'
 
-export default function Canvas({data}) {
+export default function Canvas({data, setData, activeTool}) {
+
+  const handleCanvasClick = (e) => {
+    // we should make a switch
+    const { x, y } = e.target.getStage().getPointerPosition();
+    if (activeTool === 'Rectangle') {
+      setData([
+        ...data,
+        {
+          type: 'Rectangle',
+          id: data.length,
+          centerX: x,
+          centerY: y,
+          strokeWidth: 2,
+          strokeColor: 'blue',
+          fill: 'yellow',
+          opacity: 1,
+          width: 100,
+          height: 60,
+        },
+      ]);
+    }
+  };
   
   return (
     <Stage
       className="konva-container"
       width={window.innerWidth}
       height={window.innerHeight}
+      onClick={handleCanvasClick}
     >
-      {
-        console.log(window.innerWidth)
-        // console.log(window.innerHeight)
-      }
       <Layer>
         {
-          data.map((shape) => {
-            return createShape(shape);
-          })
+          data.map( (shape) => { return createShape(shape); } )
         }
       </Layer>
+
     </Stage>
   )
 }
