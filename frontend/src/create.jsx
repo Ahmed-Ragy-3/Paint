@@ -1,5 +1,5 @@
 // import React from "react";
-import { Rect, Text, Line, Ellipse } from 'react-konva';
+import { Rect, Text, Line, Ellipse, RegularPolygon } from 'react-konva';
 
 function createShape(shape) {
    // console.log(shape)
@@ -56,8 +56,8 @@ function createTriangle(shape) {
       stroke={shape.strokeColor}
       strokeWidth={shape.strokeWidth}
       fill={shape.fill}
-      opacity={shape.opacity}
       closed={true}
+      opacity={shape.opacity}
    />
 }
 

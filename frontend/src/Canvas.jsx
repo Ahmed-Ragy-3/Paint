@@ -9,6 +9,7 @@ export default function Canvas({data, setData, activeTool, setActiveTool}) {
   
   // const canvasRef = useRef()
   const [initialPoint, setInitialPoint] = useState([0, 0])
+  const [shapeDone, setShapeDone] = useState(false)
     
   const [currentShape, setCurrentShape] = useState(null)
   // const [selectedShape, setSelectedShape] = useState(null)
@@ -79,15 +80,28 @@ export default function Canvas({data, setData, activeTool, setActiveTool}) {
     
   }, [activeTool, setData])
 
-  const handleMouseUp = () => {
+  const handleMouseUp = (e) => {
+    const { x, y } = e.target.getStage().getPointerPosition();
     if (!currentShape) return;
 
     console.log(currentShape)
     if(activeTool == "rectangle" || activeTool == "ellipse") {
       setData([...data, currentShape]);
       setCurrentShape(null);
-
-    }//else if(activeTool == "polygon") {}
+      
+    }//else if(activeTool == "polygon") {} 
+    else if (activeTool === 'triangle') {
+      if(shapeDone) {
+        setData([...data, currentShape]);
+        setCurrentShape(null);
+        setShapeDone(false)
+      } else {
+        setCurrentShape((prevShape) => ({
+          ...prevShape,
+          points: [prevShape.points[0], prevShape.points[1], prevShape.points[2], prevShape.points[3], x, y],
+        }));
+      }
+    }
   }
   
   const handleMouseDown = (e) => {
@@ -101,7 +115,7 @@ export default function Canvas({data, setData, activeTool, setActiveTool}) {
         })))
     } else if (activeTool === 'rectangle') {
       
-      console.log(`${x} - ${y}`)
+      // console.log(`${x} - ${y}`)
       setCurrentShape({
         type: 'Rectangle',
         draggable: false,
@@ -152,7 +166,21 @@ export default function Canvas({data, setData, activeTool, setActiveTool}) {
           points: [...prevShape.points, x, y],
         }));
       }
-
+    } else if (activeTool === 'triangle') {
+      if (!currentShape) {
+          setCurrentShape({
+          type: 'Triangle',
+          id: data.length,
+          draggable: false,
+          points: [x, y, x, y, x, y],
+          strokeColor: 'black',
+          strokeWidth: 2,
+          fill: 'transparent',
+          opacity: 1,
+        });
+      } else {
+        setShapeDone(true) 
+      }
     }
   }
   
@@ -174,10 +202,10 @@ export default function Canvas({data, setData, activeTool, setActiveTool}) {
     } else if (activeTool === 'ellipse') {
       setCurrentShape((prevShape) => ({
         ...prevShape,
-        centerX: (initialPoint[0] + x) / 2,
-        centerY: (initialPoint[1] + y) / 2,
+        // centerX: (initialPoint[0] + x) / 2,
+        // centerY: (initialPoint[1] + y) / 2,
         radiusX: Math.abs(x - initialPoint[0]),
-        radiusY: Math.abs(y - initialPoint[1])
+        radiusY: e.evt.shiftKey ? radiusX : Math.abs(y - initialPoint[1])
       }));
 
     } else if (activeTool === 'polygon') {
@@ -189,6 +217,11 @@ export default function Canvas({data, setData, activeTool, setActiveTool}) {
     
         return {...prevShape, points: updatedPoints,};
       });
+    } else if (activeTool === 'triangle') { 
+      setCurrentShape((prevShape) => ({
+        ...prevShape,
+        points: [prevShape.points[0], prevShape.points[1], x, y, prevShape.points[4], prevShape.points[5]],
+      }));
     }
   };
   
