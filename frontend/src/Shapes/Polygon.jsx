@@ -7,7 +7,7 @@ const polygon = {
    strokeColor: 'black',
    opacity: 1,
 
-   onMouseMove: function(setCurrentShape) {
+   onMouseMove: function(setCurrentShape, x, y) {
       setCurrentShape((prevShape) => {
          const updatedPoints = [...prevShape.points];
      
@@ -19,6 +19,8 @@ const polygon = {
    },
 
    onMouseDown: function() {
-      setCurrentShape(this)
+      // setCurrentShape(this)
    }
 }
+
+export default polygon;

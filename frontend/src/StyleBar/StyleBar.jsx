@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 // import UndoRedo from './UndoRedo';
 import Fill from './Fill';
 import Stroke from './Stroke';
@@ -11,7 +13,7 @@ import redo from './icons/redo.svg';
 import v_align from './icons/vertical-align.svg';
 import h_align from './icons/horizontal-align.svg';
 
-function StyleBar() {
+function StyleBar({ fillColor, setFillColor }) {
   return (
     <div className="style-bar">
       
@@ -27,7 +29,7 @@ function StyleBar() {
 
       </div>
 
-      <Fill/>
+      <Fill fillColor={fillColor} setFillColor={setFillColor}/>
       <Stroke/>
       <Opacity/>
 

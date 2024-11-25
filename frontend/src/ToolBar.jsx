@@ -66,8 +66,8 @@ export default function ToolBar({ activeTool, setActiveTool }) {
 
       <button 
         title="Brush Tool" 
-        onClick={() => { setActiveTool("brush") }}
-        className={activeTool === "brush" ? "active" : ""}
+        onClick={() => { setActiveTool("free") }}
+        className={activeTool === "free" ? "active" : ""}
       >
         <img src={brush} alt="Brush Tool" />
       </button>

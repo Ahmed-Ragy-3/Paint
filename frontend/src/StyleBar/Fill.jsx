@@ -1,10 +1,11 @@
-import { useState } from 'react';
+// import { useState } from 'react';
+/* eslint-disable react/prop-types */
 
-export default function Fill() {
-  const [fillColor, setFillColor] = useState('#ffffff');
+export default function Fill({ fillColor, setFillColor }) {
 
-  const handleFillColorChange = (event) => {setFillColor(event.target.value)
-    console.log(fillColor)
+  const handleFillColorChange = (e) => {
+    setFillColor(e.target.value)
+    // console.log(fillColor)
   };
 
   return (

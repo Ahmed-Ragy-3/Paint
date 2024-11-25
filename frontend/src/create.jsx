@@ -1,5 +1,5 @@
 // import React from "react";
-import { Rect, Text, Line, Ellipse, RegularPolygon } from 'react-konva';
+import { Rect, Text, Line, Ellipse } from 'react-konva';
 
 function createShape(shape) {
    // console.log(shape)
@@ -10,6 +10,7 @@ function createShape(shape) {
       case "Polygon":   return createPolygon(shape);
       case "Line":      return createLine(shape);
       case "Text":      return createText(shape);
+      case "Free":      return createFreeDraw(shape);
       default: return null;
    }
 }
@@ -93,5 +94,21 @@ function createLine(shape) {
       stroke={shape.strokeColor}
       strokeWidth={shape.strokeWidth}
       lineJoin="round"
+      // lineCap="round"
    />
 }
+
+function createFreeDraw(shape) {
+   return <Line
+      key={shape.id}   
+      points={shape.points}
+      draggable={shape.draggable}
+      stroke={shape.strokeColor}
+      strokeWidth={shape.strokeWidth}
+      tension={0.5}
+      lineJoin="round"
+      lineCap="round"
+   />
+}
+
+

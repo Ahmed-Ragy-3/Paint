@@ -2,7 +2,7 @@ const line = {
    type: "Line",
    id: 0,
    draggable: false,
-   points: [0, 0, 0, 0],
+   points: [],
    strokeColor: "black",
    strokeWidth: 2,
    opacity: 1,
@@ -16,11 +16,8 @@ const line = {
    },
 
    onMouseDown: function(x, y, num) {
-      this.points[0] = x
-      this.points[1] = y
-      this.points[2] = x
-      this.points[3] = y
       this.id = num
+      this.points = [x, y, x, y]
 
       return this
    },
