@@ -2,21 +2,31 @@ package Paint.Deadline.models;
 
 
 import Paint.Deadline.Abstract.Shape;
-import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@Entity
 @EqualsAndHashCode(callSuper = false)
 public class Rectangle extends Shape {
+    public Rectangle(String color , int strokeWidth , boolean draggable , double length , double width )
+    {
+        super(color, strokeWidth, draggable);
+        setLength(length);
+        setWidth(width);
+        setColor(color);
+        setStrokeWidth(strokeWidth);
+        setDraggable(draggable);
+    }
 
     private double length;
     private double width;
 
-    @Override
-    public double area() {
-        return Double.valueOf(length*width);
+    public static Rectangle clone(Rectangle rectangle)
+    {
+        return new Rectangle(rectangle.getColor(),
+        rectangle.getStrokeWidth(),
+        rectangle.isDraggable(),
+        rectangle.getLength(),
+        rectangle.getWidth());
     }
-
 }

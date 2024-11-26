@@ -1,21 +1,26 @@
 {
   "shapes": [
     {
-      "type": "Rectangle",
-      "centerX": 100,
-      "centerY": 150,
-      "color": "red",
-      "strokeWidth": 2,
-      "width": 200,
-      "length": 100
-    },
+    "type": "Line",
+    "id": 0,
+    "color": "black",
+    "strokeWidth": 5,
+    "draggable": true,
+    "x1": 0.0,
+    "x2": 0.0,
+    "y1": 0.0,
+    "y2": 0.0
+},
     {
-      "type": "Circle",
-      "centerX": 400,
-      "centerY": 250,
-      "color": "blue",
-      "strokeWidth": 3,
-      "radius": 50
-    }
+    "type": "Line",
+    "id": 1,
+    "color": "black",
+    "strokeWidth": 5,
+    "draggable": true,
+    "x1": 0.0,
+    "x2": 0.0,
+    "y1": 0.0,
+    "y2": 0.0
+}
   ]
 }
