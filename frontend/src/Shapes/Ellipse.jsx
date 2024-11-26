@@ -1,50 +1,65 @@
-const ellipse = {
-   type: 'Ellipse',
-   draggable: false,
-   id: 0,
-   centerX: 0,
-   centerY: 0,
-   strokeWidth: 2,
-   strokeColor: 'black',
-   fill: 'transparent',
-   opacity: 1,
-   radiusX: 0,
-   radiusY: 0,
+import { useAppContext } from '../AppContext'; 
 
-   onMouseUp: function(e, shapeDone, setShapeDone, data, setData, currentShape, setCurrentShape, initialPoint) {
+const Ellipse = () => {
+   const { 
+            initialPoint, setInitialPoint,
+            shapeDone, setShapeDone,
+            currentShape, setCurrentShape,
+            data, setData 
+         } = useAppContext();
+
+   const onMouseUp = (e) => {
       const { x, y } = e.target.getStage().getPointerPosition();
-      if(shapeDone) {
+      if (shapeDone) {
          setData([...data, currentShape]);
          setCurrentShape(null);
-         setShapeDone(false)
+         setShapeDone(false);
       } else {
          let radX = Math.abs(x - initialPoint[0]);
          setCurrentShape((prevShape) => ({
             ...prevShape,
             radiusX: radX,
-            radiusY: e.evt.shiftKey ? radX : Math.abs(y - initialPoint[1])
+            radiusY: e.evt.shiftKey ? radX : Math.abs(y - initialPoint[1]),
          }));
       }
-   },
+   };
 
-   onMouseMove: function(e, shapeDone, setShapeDone, currentShape, setCurrentShape, initialPoint, secondPointDone, setSecondPointDone) {
+   const onMouseMove = (e) => {
       const { x, y } = e.target.getStage().getPointerPosition();
       let radX = Math.abs(x - initialPoint[0]);
       setCurrentShape((prevShape) => ({
          ...prevShape,
          radiusX: radX,
-         radiusY: e.evt.shiftKey ? radX : Math.abs(y - initialPoint[1])
+         radiusY: e.evt.shiftKey ? radX : Math.abs(y - initialPoint[1]),
       }));
-      setShapeDone(true)
-   },
+      setShapeDone(true);
+   };
 
-   onMouseDown: function(x, y, num) {
-      this.centerX = x
-      this.centerY = y
-      this.id = num
+   const onMouseDown = (e) => {
+      const { x, y } = e.target.getStage().getPointerPosition();
+      setInitialPoint([x, y]);
 
-      return this
-   }
-}
+      if (!currentShape) {
+         const newEllipse = {
+            type: 'Ellipse',
+            draggable: false,
+            id: data.length,
+            centerX: x,
+            centerY: y,
+            strokeWidth: 2,
+            strokeColor: 'black',
+            fill: 'transparent',
+            opacity: 1,
+            radiusX: 0,
+            radiusY: 0,
+         };
+         setCurrentShape(newEllipse);
+       } else {
+         setShapeDone(true) 
+       }
+   };
 
-export default ellipse
+   return { onMouseUp, onMouseMove, onMouseDown };
+};
+
+export default Ellipse;

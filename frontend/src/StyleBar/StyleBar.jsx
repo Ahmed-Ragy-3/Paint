@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
 
+import { useAppContext } from '../AppContext';
+
 // import UndoRedo from './UndoRedo';
 import Fill from './Fill';
 import Stroke from './Stroke';
@@ -13,7 +15,19 @@ import redo from './icons/redo.svg';
 import v_align from './icons/vertical-align.svg';
 import h_align from './icons/horizontal-align.svg';
 
-function StyleBar({ fillColor, setFillColor }) {
+function StyleBar() {
+
+  const {
+    initialPoint, setInitialPoint,
+        shapeDone, setShapeDone,
+        currentShape, setCurrentShape,
+        selectedShape, setSelectedShape,
+        secondPointDone, setSecondPointDone,
+        data, setData,
+        activeTool, setActiveTool,
+        fillColor, setFillColor,
+  } = useAppContext();
+
   return (
     <div className="style-bar">
       

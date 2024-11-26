@@ -1,31 +1,44 @@
 /* eslint-disable react/prop-types */
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Layer, Stage } from 'react-konva';
 
-import rectangle from './Shapes/Rectangle.jsx';
-import ellipse from './Shapes/Ellipse.jsx';
-import triangle from './Shapes/Triangle.jsx';
-import line from './Shapes/Line.jsx';
+import { useAppContext } from './AppContext';
+
+import Rectangle from './Shapes/Rectangle.jsx';
+import Ellipse from './Shapes/Ellipse.jsx';
+import Triangle from './Shapes/Triangle.jsx';
+import Line from './Shapes/Line.jsx';
+
 import polygon from './Shapes/Polygon.jsx';
 import free from './Shapes/Free.jsx'
 
 import createShape from './create.jsx';
 
-export default function Canvas({data, setData, activeTool, setActiveTool, fillColor}) {
+export default function Canvas() {
+
+  const { onMouseUp: ellipseOnMouseUp, onMouseMove: ellipseOnMouseMove, onMouseDown: ellipseOnMouseDown } = Ellipse();
+  const { onMouseUp: linenOnMouseUp, onMouseMove: linenOnMouseMove, onMouseDown: lineOnMouseDown } = Line();
+  const { onMouseUp: trianglenOnMouseUp, onMouseMove: trianglenOnMouseMove, onMouseDown: triangleOnMouseDown } = Triangle();
+  const { onMouseUp: rectangleOnMouseUp, onMouseMove: rectangleOnMouseMove, onMouseDown: rectangleOnMouseDown } = Rectangle();
   
-  const [initialPoint, setInitialPoint] = useState([0, 0])
-  const [shapeDone, setShapeDone] = useState(false)
-  const [currentShape, setCurrentShape] = useState(null)
-  const [selectedShape, setSelectedShape] = useState(null)
-  const [secondPointDone,setSecondPointDone]= useState(false)
+  const {
+        initialPoint, setInitialPoint,
+        shapeDone, setShapeDone,
+        currentShape, setCurrentShape,
+        selectedShape, setSelectedShape,
+        secondPointDone, setSecondPointDone,
+        data, setData,
+        activeTool, setActiveTool,
+        fillColor, setFillColor,
+      } = useAppContext();
 
   // function getId() {
   //   return data.length
   // }
-
+  
   useEffect(() => {
-
+    
     // handle draggable attribute
     if (activeTool === "move") {
       setData((prevData) =>
@@ -63,7 +76,7 @@ export default function Canvas({data, setData, activeTool, setActiveTool, fillCo
         }
       }
     }
-
+    
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
@@ -73,56 +86,42 @@ export default function Canvas({data, setData, activeTool, setActiveTool, fillCo
   /////////////////////////////////////////////////////////////////////////////////////////////
   const handleMouseUp = (e) => {
     if (!currentShape) return;
-
+    
     if(activeTool == "free") {
       setData([...data, currentShape]);
       setCurrentShape(null);
-    } else if (activeTool == "ellipse" || activeTool == "rectangle" || activeTool === 'triangle' || activeTool == "line") {
-      currentShape.onMouseUp(e, shapeDone, setShapeDone, data, setData, currentShape, setCurrentShape, initialPoint, secondPointDone, setSecondPointDone)
+      
+    } else if (activeTool == "rectangle") {
+      rectangleOnMouseUp(e)
+    } else if (activeTool == "line") {
+      linenOnMouseUp(e)
+    } else if (activeTool === 'ellipse') {
+      ellipseOnMouseUp(e)
+    } else if (activeTool === 'triangle') {
+      trianglenOnMouseUp(e)
     }
-
+    
     console.log(data)
   }
   
-
+  
   ////////////////////////////////////////////////////////////////////////////
   const handleMouseDown = (e) => {
     const { x, y } = e.target.getStage().getPointerPosition();
     setInitialPoint([x, y]);
     
     if (activeTool === 'rectangle') {
-      if (!currentShape) {
-        setCurrentShape(rectangle.onMouseDown(x, y, data.length));
-      } else {
-        setShapeDone(true) 
-      }
-
+      rectangleOnMouseDown(e)
     } else if (activeTool === 'line') {
-      if (!currentShape) {
-        setCurrentShape(line.onMouseDown(x, y, data.length));
-      } else {
-        setShapeDone(true) 
-      }
-
+      lineOnMouseDown(e)
     } else if (activeTool === 'ellipse') {
-      if (!currentShape) {
-        setCurrentShape(ellipse.onMouseDown(x, y, data.length));
-      } else {
-        setShapeDone(true) 
-      }
+      ellipseOnMouseDown(e)
+    } else if (activeTool === 'triangle') {
+      triangleOnMouseDown(e)
 
     } else if (activeTool === 'polygon') {
       setCurrentShape(polygon.onMouseDown(x, y, data.length));
-      
-    } else if (activeTool === 'triangle') {
-      if (!currentShape) {
-          setCurrentShape(triangle.onMouseDown(x, y, data.length));
-      } else if (!secondPointDone) {
-        setSecondPointDone(true)
-        console.log("true in down")
-      } else {
-        setShapeDone(true) 
-      }
+
     } else if (activeTool === 'free') {
       setCurrentShape(free.onMouseDown(x, y, data.length))
     }
@@ -132,8 +131,14 @@ export default function Canvas({data, setData, activeTool, setActiveTool, fillCo
   const handleMouseMove = (e) => {
     if (!currentShape) return;
     
-    if (activeTool === 'rectangle' || activeTool === 'ellipse' || activeTool === 'triangle' || activeTool === 'line') {
-      currentShape.onMouseMove(e, shapeDone, setShapeDone, currentShape, setCurrentShape, initialPoint, secondPointDone, setSecondPointDone)
+    if (activeTool === 'rectangle') {
+      rectangleOnMouseMove(e)
+    } else if (activeTool === 'ellipse') {
+      ellipseOnMouseMove(e)
+    } else if (activeTool === 'line') {
+      linenOnMouseMove(e)
+    } else if (activeTool === 'triangle') {
+      trianglenOnMouseMove(e)
       
     } else if (activeTool === 'free') {
       // console.log(currentShape.type)

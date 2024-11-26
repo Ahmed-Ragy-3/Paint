@@ -1,26 +1,19 @@
-const triangle = {
-   type: 'Triangle',
-   id: 0,
-   draggable: false,
-   points: [0, 0, 0, 0, 0, 0],
-   strokeColor: 'black',
-   strokeWidth: 2,
-   fill: 'transparent',
-   opacity: 1,
-   moved: false, // Changed from a number to a boolean for clarity
+import { useAppContext } from '../AppContext';
 
-   onMouseMove: function (
-      e,
-      shapeDone,
-      setShapeDone,
-      currentShape,
-      setCurrentShape,
-      initialPoint,
-      secondPointDone,
-      setSecondPointDone
-   ) {
+const Triangle = () => {
+   const {
+      shapeDone, setShapeDone,
+      currentShape, setCurrentShape,
+      data, setData,
+      secondPointDone, setSecondPointDone
+   } = useAppContext();
+
+   let moved = false;
+
+   function onMouseMove(e) {
       const { x, y } = e.target.getStage().getPointerPosition();
-      this.moved = true; // Mark as moved whenever the mouse moves
+      
+      moved = true;
 
       if (!secondPointDone) {
          setCurrentShape((prevShape) => ({
@@ -35,32 +28,20 @@ const triangle = {
          }));
          console.log('Updating third point...');
       }
-   },
+   }
 
-   onMouseUp: function (
-      e,
-      shapeDone,
-      setShapeDone,
-      data,
-      setData,
-      currentShape,
-      setCurrentShape,
-      initialPoint,
-      secondPointDone,
-      setSecondPointDone
-   ) {
+   function onMouseUp(e) {
       const { x, y } = e.target.getStage().getPointerPosition();
 
       if (shapeDone) {
-         this.moved = false; // Reset moved flag
+         moved = false;
          setData([...data, currentShape]);
          setCurrentShape(null);
          setShapeDone(false);
          setSecondPointDone(false);
       } else if (!secondPointDone) {
-         if (!this.moved) {
-            console.log('Mouse did not move. No update needed.');
-            return; // No action if the mouse didn't move
+         if (!moved) {
+            return;
          }
          setCurrentShape((prevShape) => ({
             ...prevShape,
@@ -75,14 +56,35 @@ const triangle = {
          }));
          console.log('Third point finalized.');
       }
-   },
+   }
 
-   onMouseDown: function (x, y, num) {
-      this.points = [x, y, x, y, x, y];
-      this.id = num;
-      this.moved = false; // Reset moved flag on mouse down
-      return this;
-   },
+   function onMouseDown(e) {
+      const { x, y } = e.target.getStage().getPointerPosition();
+
+      if (!currentShape) {
+         const newTriangle = {
+            type: 'Triangle',
+            draggable: false,
+            id: data.length,
+            points: [x, y, x, y, x, y],
+            strokeColor: 'black',
+            strokeWidth: 2,
+            fill: 'transparent',
+            opacity: 1,
+         };
+         setCurrentShape(newTriangle);
+      } else if (!secondPointDone) {
+         setSecondPointDone(true);
+      } else {
+         setShapeDone(true);
+      }
+   }
+
+   return {
+      onMouseDown,
+      onMouseMove,
+      onMouseUp,
+   };
 };
 
-export default triangle;
+export default Triangle;

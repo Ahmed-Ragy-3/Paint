@@ -3,6 +3,8 @@
 import './bars.css';
 // import createShape from './create.jsx';
 
+import { useAppContext } from './AppContext';
+
 import move_tool from './assets/move-tool.svg';
 import line from './assets/line-icon.svg';
 import polygon from './assets/polygon.svg';
@@ -13,7 +15,19 @@ import brush from './assets/brush-tool.svg';
 import text from './assets/textIcon.svg';
 import addImage from './assets/add-image.svg';
 
-export default function ToolBar({ activeTool, setActiveTool }) {
+export default function ToolBar() {
+
+  const {
+    initialPoint, setInitialPoint,
+        shapeDone, setShapeDone,
+        currentShape, setCurrentShape,
+        selectedShape, setSelectedShape,
+        secondPointDone, setSecondPointDone,
+        data, setData,
+        activeTool, setActiveTool,
+        fillColor, setFillColor,
+  } = useAppContext();
+  
   return (
     <div className="toolbar">
       <button 

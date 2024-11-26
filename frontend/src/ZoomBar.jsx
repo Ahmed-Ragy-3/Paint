@@ -2,7 +2,21 @@ import hand from './assets/hand.svg';
 import zoom_in from './assets/zoom-in.svg';
 import zoom_out from './assets/zoom-out.svg';
 
+import { useAppContext } from './AppContext';
+
 export default function ZoomBar() {
+
+  const {
+    initialPoint, setInitialPoint,
+        shapeDone, setShapeDone,
+        currentShape, setCurrentShape,
+        selectedShape, setSelectedShape,
+        secondPointDone, setSecondPointDone,
+        data, setData,
+        activeTool, setActiveTool,
+        fillColor, setFillColor,
+  } = useAppContext();
+  
   return (
     <div className="zoom-bar">
 
