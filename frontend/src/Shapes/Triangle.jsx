@@ -7,40 +7,82 @@ const triangle = {
    strokeWidth: 2,
    fill: 'transparent',
    opacity: 1,
+   moved: false, // Changed from a number to a boolean for clarity
 
-   onMouseMove: function(e, currentShape, setCurrentShape, initialPoint) {
+   onMouseMove: function (
+      e,
+      shapeDone,
+      setShapeDone,
+      currentShape,
+      setCurrentShape,
+      initialPoint,
+      secondPointDone,
+      setSecondPointDone
+   ) {
       const { x, y } = e.target.getStage().getPointerPosition();
-      setCurrentShape((prevShape) => ({
-         ...prevShape,
-         points: [prevShape.points[0], prevShape.points[1], x, y, prevShape.points[4], prevShape.points[5]],
-      }));
-   },
+      this.moved = true; // Mark as moved whenever the mouse moves
 
-   onMouseDown: function(x, y, num) {
-      this.points[0] = x
-      this.points[1] = y
-      this.points[2] = x
-      this.points[3] = y
-      this.points[4] = x
-      this.points[5] = y
-      this.id = num
-
-      return this
-   },
-
-   onMouseUp: function(e, shapeDone, setShapeDone, data, setData, currentShape, setCurrentShape) {
-      const { x, y } = e.target.getStage().getPointerPosition();
-      if(shapeDone) {
-         setData([...data, currentShape]);
-         setCurrentShape(null);
-         setShapeDone(false)
+      if (!secondPointDone) {
+         setCurrentShape((prevShape) => ({
+            ...prevShape,
+            points: [prevShape.points[0], prevShape.points[1], x, y, prevShape.points[4], prevShape.points[5]],
+         }));
+         console.log('Updating second point...');
       } else {
          setCurrentShape((prevShape) => ({
             ...prevShape,
             points: [prevShape.points[0], prevShape.points[1], prevShape.points[2], prevShape.points[3], x, y],
          }));
+         console.log('Updating third point...');
       }
-   }
-}
+   },
 
-export default triangle
+   onMouseUp: function (
+      e,
+      shapeDone,
+      setShapeDone,
+      data,
+      setData,
+      currentShape,
+      setCurrentShape,
+      initialPoint,
+      secondPointDone,
+      setSecondPointDone
+   ) {
+      const { x, y } = e.target.getStage().getPointerPosition();
+
+      if (shapeDone) {
+         this.moved = false; // Reset moved flag
+         setData([...data, currentShape]);
+         setCurrentShape(null);
+         setShapeDone(false);
+         setSecondPointDone(false);
+      } else if (!secondPointDone) {
+         if (!this.moved) {
+            console.log('Mouse did not move. No update needed.');
+            return; // No action if the mouse didn't move
+         }
+         setCurrentShape((prevShape) => ({
+            ...prevShape,
+            points: [prevShape.points[0], prevShape.points[1], x, y, prevShape.points[4], prevShape.points[5]],
+         }));
+         setSecondPointDone(true);
+         console.log('Second point finalized.');
+      } else {
+         setCurrentShape((prevShape) => ({
+            ...prevShape,
+            points: [prevShape.points[0], prevShape.points[1], prevShape.points[2], prevShape.points[3], x, y],
+         }));
+         console.log('Third point finalized.');
+      }
+   },
+
+   onMouseDown: function (x, y, num) {
+      this.points = [x, y, x, y, x, y];
+      this.id = num;
+      this.moved = false; // Reset moved flag on mouse down
+      return this;
+   },
+};
+
+export default triangle;

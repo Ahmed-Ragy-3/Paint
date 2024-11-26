@@ -18,6 +18,7 @@ export default function Canvas({data, setData, activeTool, setActiveTool, fillCo
   const [shapeDone, setShapeDone] = useState(false)
   const [currentShape, setCurrentShape] = useState(null)
   const [selectedShape, setSelectedShape] = useState(null)
+  const [secondPointDone,setSecondPointDone]= useState(false)
 
   // function getId() {
   //   return data.length
@@ -73,11 +74,11 @@ export default function Canvas({data, setData, activeTool, setActiveTool, fillCo
   const handleMouseUp = (e) => {
     if (!currentShape) return;
 
-    if(activeTool == "rectangle" || activeTool == "ellipse" || activeTool == "free") {
+    if(activeTool == "free") {
       setData([...data, currentShape]);
       setCurrentShape(null);
-    } else if (activeTool === 'triangle' || activeTool == "line") {
-      currentShape.onMouseUp(e, shapeDone, setShapeDone, data, setData, currentShape, setCurrentShape)
+    } else if (activeTool == "ellipse" || activeTool == "rectangle" || activeTool === 'triangle' || activeTool == "line") {
+      currentShape.onMouseUp(e, shapeDone, setShapeDone, data, setData, currentShape, setCurrentShape, initialPoint, secondPointDone, setSecondPointDone)
     }
 
     console.log(data)
@@ -90,17 +91,25 @@ export default function Canvas({data, setData, activeTool, setActiveTool, fillCo
     setInitialPoint([x, y]);
     
     if (activeTool === 'rectangle') {
-      setCurrentShape(rectangle.onMouseDown(x, y, data.length));
+      if (!currentShape) {
+        setCurrentShape(rectangle.onMouseDown(x, y, data.length));
+      } else {
+        setShapeDone(true) 
+      }
 
     } else if (activeTool === 'line') {
       if (!currentShape) {
-        setCurrentShape(line.onMouseDown(x, y, data.length))
+        setCurrentShape(line.onMouseDown(x, y, data.length));
       } else {
         setShapeDone(true) 
       }
 
     } else if (activeTool === 'ellipse') {
-      setCurrentShape(ellipse.onMouseDown(x, y, data.length));
+      if (!currentShape) {
+        setCurrentShape(ellipse.onMouseDown(x, y, data.length));
+      } else {
+        setShapeDone(true) 
+      }
 
     } else if (activeTool === 'polygon') {
       setCurrentShape(polygon.onMouseDown(x, y, data.length));
@@ -108,6 +117,9 @@ export default function Canvas({data, setData, activeTool, setActiveTool, fillCo
     } else if (activeTool === 'triangle') {
       if (!currentShape) {
           setCurrentShape(triangle.onMouseDown(x, y, data.length));
+      } else if (!secondPointDone) {
+        setSecondPointDone(true)
+        console.log("true in down")
       } else {
         setShapeDone(true) 
       }
@@ -121,7 +133,7 @@ export default function Canvas({data, setData, activeTool, setActiveTool, fillCo
     if (!currentShape) return;
     
     if (activeTool === 'rectangle' || activeTool === 'ellipse' || activeTool === 'triangle' || activeTool === 'line') {
-      currentShape.onMouseMove(e, currentShape, setCurrentShape, initialPoint)
+      currentShape.onMouseMove(e, shapeDone, setShapeDone, currentShape, setCurrentShape, initialPoint, secondPointDone, setSecondPointDone)
       
     } else if (activeTool === 'free') {
       // console.log(currentShape.type)

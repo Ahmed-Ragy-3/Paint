@@ -7,12 +7,13 @@ const line = {
    strokeWidth: 2,
    opacity: 1,
 
-   onMouseMove: function(e, currentShape, setCurrentShape, initialPoint) {
+   onMouseMove: function(e, shapeDone, setShapeDone, currentShape, setCurrentShape, initialPoint) {
       const { x, y } = e.target.getStage().getPointerPosition();
       setCurrentShape((prevShape) => ({
          ...prevShape,
          points: [prevShape.points[0], prevShape.points[1], x, y],
       }));
+      setShapeDone(true)
    },
 
    onMouseDown: function(x, y, num) {
@@ -22,7 +23,7 @@ const line = {
       return this
    },
 
-   onMouseUp: function(e, shapeDone, setShapeDone, data, setData, currentShape, setCurrentShape) {
+   onMouseUp: function(e, shapeDone, setShapeDone, data, setData, currentShape, setCurrentShape, initialPoint) {
       const { x, y } = e.target.getStage().getPointerPosition();
       if(shapeDone) {
          setData([...data, currentShape]);

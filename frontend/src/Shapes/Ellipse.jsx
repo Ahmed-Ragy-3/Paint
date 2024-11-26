@@ -11,16 +11,31 @@ const ellipse = {
    radiusX: 0,
    radiusY: 0,
 
-   onMouseMove: function(e, currentShape, setCurrentShape, initialPoint) {
+   onMouseUp: function(e, shapeDone, setShapeDone, data, setData, currentShape, setCurrentShape, initialPoint) {
+      const { x, y } = e.target.getStage().getPointerPosition();
+      if(shapeDone) {
+         setData([...data, currentShape]);
+         setCurrentShape(null);
+         setShapeDone(false)
+      } else {
+         let radX = Math.abs(x - initialPoint[0]);
+         setCurrentShape((prevShape) => ({
+            ...prevShape,
+            radiusX: radX,
+            radiusY: e.evt.shiftKey ? radX : Math.abs(y - initialPoint[1])
+         }));
+      }
+   },
+
+   onMouseMove: function(e, shapeDone, setShapeDone, currentShape, setCurrentShape, initialPoint, secondPointDone, setSecondPointDone) {
       const { x, y } = e.target.getStage().getPointerPosition();
       let radX = Math.abs(x - initialPoint[0]);
       setCurrentShape((prevShape) => ({
          ...prevShape,
-         // centerX: (initialPoint[0] + x) / 2,
-         // centerY: (initialPoint[1] + y) / 2,
          radiusX: radX,
          radiusY: e.evt.shiftKey ? radX : Math.abs(y - initialPoint[1])
       }));
+      setShapeDone(true)
    },
 
    onMouseDown: function(x, y, num) {
