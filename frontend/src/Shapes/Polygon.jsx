@@ -12,10 +12,7 @@ export const polygon = {
 
 const Polygon = () => {
    const {
-      initialPoint, setInitialPoint,
-      shapeDone, setShapeDone,
       currentShape, setCurrentShape,
-      data, setData
    } = useAppContext();
 
    function onMouseMove(e) {

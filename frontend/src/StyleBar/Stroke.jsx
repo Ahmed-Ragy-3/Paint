@@ -14,7 +14,7 @@ export default function Stroke() {
   return (
     <div className="Stroke">
 
-      <label className='stroke-lable'>Stroke</label>
+      <label className='stroke-label'>Stroke</label>
 
       <div className='stroke-color-width'>
         

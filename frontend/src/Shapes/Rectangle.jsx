@@ -66,11 +66,7 @@ const Rectangle = () => {
       }
    }
 
-   return {
-      onMouseDown,
-      onMouseMove,
-      onMouseUp,
-   };
+   return { onMouseDown, onMouseMove, onMouseUp }
 };
 
 export default Rectangle;

@@ -15,8 +15,7 @@ import Free from './Shapes/Free.jsx'
 
 import createShape from './create.jsx';
 
-const shapeHandlers = {
-  // move: {},
+const events = {
   rectangle: Rectangle,
   ellipse: Ellipse,
   line: Line,
@@ -42,10 +41,9 @@ export default function Canvas() {
   //   return data.length
   // }
 
-  const { onMouseUp, onMouseMove, onMouseDown } = activeTool && activeTool !== "move" ? shapeHandlers[activeTool]() : {};
+  const { onMouseUp, onMouseMove, onMouseDown } = activeTool && activeTool !== "move" ? events[activeTool]() : {};
   
   useEffect(() => {
-    
     // handle draggable attribute move tool is active
     setData((prevData) =>
       prevData.map((shape) => ({
@@ -81,7 +79,7 @@ export default function Canvas() {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [activeTool, currentShape, setData]);
-    
+  
   
   const handleMouseDown = (e) => {
     const { x, y } = e.target.getStage().getPointerPosition();

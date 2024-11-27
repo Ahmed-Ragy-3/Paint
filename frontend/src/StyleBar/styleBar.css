@@ -75,14 +75,14 @@
     height: 10%;
 }
   
-.fill-label, .stroke-lable, .length-and-width-label {
+.fill-label, .stroke-label, .length-and-width-label {
     font-family: sans-serif;
     font-size: 170%;
     font-weight: bold;
     color: #C0C0C0;
 }
 
-.opacity-lable{
+.opacity-label{
     font-family: sans-serif;
     font-size: 140%;
     font-weight: bold;
@@ -144,16 +144,22 @@
     font-size: 100%;
 }
 
-.opacity-input{
-    width: 35%;
-    height: 90%;
+.opacity-input {
+    width: 80%;
+    height: 95%;
     background-color: gray;
     border-radius: 5px;
     font-size: 100%;
+    margin-top: 2px;
 }
 
 .Opacity {
+    
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 5%;
     padding-top: 2%;

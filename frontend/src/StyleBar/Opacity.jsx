@@ -10,11 +10,11 @@ export default function Size() {
   return (
     <div className="Opacity" >
 
-        <label className='opacity-lable'>Opacity</label>
-
+        <label className='opacity-label'>Opacity</label>
+        
         <input
           className='opacity-input'
-          type="number"
+          type="range"
           min={0}
           max={100}
           value={opacity}
