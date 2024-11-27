@@ -15,12 +15,8 @@ export const AppProvider = ({ children }) => {
   const [isDrawing, setIsDrawing] = useState(false)
   
   const [selectedShape, setSelectedShape] = useState(null)
-  const [data, setData] = useState([])
-  const [activeTool, setActiveTool] = useState("")
-  const [fillColor, setFillColor] = useState('#ffffff');
-  const [isDrawing, setIsDrawing] = useState(true)
-  const [initialPoint, setInitialPoint] = useState([0, 0]);
   const [secondPointDone,setSecondPointDone]= useState(false);
+  
   const [isEditing, setIsEditing] = useState(false);
   const [userText, setUserText] = useState('');
 
