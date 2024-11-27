@@ -16,6 +16,7 @@ import text from './assets/textIcon.svg';
 import addImage from './assets/add-image.svg';
 
 import {polygon} from './Shapes/Polygon.jsx';
+import { useEffect } from 'react';
 
 export default function ToolBar() {
 
@@ -27,7 +28,7 @@ export default function ToolBar() {
   return (
     <div className="toolbar">
       <button 
-        title="Move tool" 
+        title="Move tool (v)" 
         onClick={() => { setActiveTool("move") }}
         className={activeTool === "move" ? "active" : ""}
       >

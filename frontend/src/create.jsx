@@ -1,23 +1,23 @@
 // import React from "react";
 import { Rect, Text, Line, Ellipse } from 'react-konva';
 
-function createShape(shape) {
-   // console.log(shape)
+function createShape(shape, handleClick) {
+   // console.log(shape, handleClick)
    switch (shape.type) {
-      case "Ellipse":   return createEllipse(shape);
-      case "Rectangle": return createRectangle(shape);
-      case "Triangle":  return createTriangle(shape);
-      case "Polygon":   return createPolygon(shape);
-      case "Line":      return createLine(shape);
-      case "Text":      return createText(shape);
-      case "Free":      return createFreeDraw(shape);
+      case "Ellipse":   return createEllipse(shape, handleClick);
+      case "Rectangle": return createRectangle(shape, handleClick);
+      case "Triangle":  return createTriangle(shape, handleClick);
+      case "Polygon":   return createPolygon(shape, handleClick);
+      case "Line":      return createLine(shape, handleClick);
+      case "Text":      return createText(shape, handleClick);
+      case "Free":      return createFreeDraw(shape, handleClick);
       default: return null;
    }
 }
 
 export default createShape;
 
-function createEllipse(shape) {
+function createEllipse(shape, handleClick) {
    return <Ellipse
       key={shape.id}
       draggable={shape.draggable}
@@ -29,10 +29,13 @@ function createEllipse(shape) {
       opacity={shape.opacity}
       radiusX={shape.radiusX}  // radiusX is half of the width
       radiusY={shape.radiusY} // radiusY is half of the height
+      
+      onClick={() => {handleClick(shape.id)}}
    />
 }
    
-function createRectangle(shape) {
+function createRectangle(shape, handleClick) {
+   // console.log()
    return <Rect
       key={shape.id}   
       draggable={shape.draggable}
@@ -44,17 +47,12 @@ function createRectangle(shape) {
       opacity={shape.opacity}
       height={shape.height}
       width={shape.width}
-
-      // onClick={() => {
-      //    // const shape = e.target;
-      //    // console.log(shape)
-      //    // selectedShape = e.target;
-      //    // setSelectedShape(shape);
-      // }}
+      
+      onClick={() => {handleClick(shape.id)}}
    />
 }
 
-function createTriangle(shape) {
+function createTriangle(shape, handleClick) {
    return <Line
       key={shape.id}   
       draggable={shape.draggable}
@@ -64,11 +62,13 @@ function createTriangle(shape) {
       fill={shape.fill}
       closed={true}
       opacity={shape.opacity}
+      
+      onClick={() => {handleClick(shape.id)}}
    />
 }
 
-function createText(shape) {
-   return <Text
+function createText(shape, handleClick) {
+   return <Konva.Text
       key={shape.id}   
       x={shape.centerX}
       y={shape.centerY}
@@ -76,10 +76,12 @@ function createText(shape) {
       fontSize={shape.fontSize} 
       fill={shape.fill} 
       draggable={shape.draggable}
+      
+      onClick={() => {handleClick(shape.id)}}
    />
 }
 
-function createPolygon(shape) {
+function createPolygon(shape, handleClick) {
    return <Line
       key={shape.id}   
       draggable={shape.draggable}
@@ -89,10 +91,12 @@ function createPolygon(shape) {
       strokeWidth={shape.strokeWidth}
       closed={shape.closed}
       // {...shape}
+      
+      onClick={() => {handleClick(shape.id)}}
    />
 }
 
-function createLine(shape) {
+function createLine(shape, handleClick) {
    return <Line
       key={shape.id}   
       draggable={shape.draggable}
@@ -101,10 +105,12 @@ function createLine(shape) {
       strokeWidth={shape.strokeWidth}
       lineJoin="round"
       // lineCap="round"
+      
+      onClick={() => {handleClick(shape.id)}}
    />
 }
 
-function createFreeDraw(shape) {
+function createFreeDraw(shape, handleClick) {
    return <Line
       key={shape.id}   
       points={shape.points}
@@ -114,6 +120,8 @@ function createFreeDraw(shape) {
       tension={0.5}
       lineJoin="round"
       lineCap="round"
+      
+      onClick={() => {handleClick(shape.id)}}
    />
 }
 

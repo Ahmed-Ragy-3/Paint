@@ -13,7 +13,6 @@ const rectangle = {
    strokeColor: 'black',
    fill: 'blue',
    opacity: 1,
-   // onClick: null
 };
 
 const Rectangle = () => {
@@ -22,17 +21,8 @@ const Rectangle = () => {
       data, setData,
       initialPoint, setInitialPoint,
       isDrawing, setIsDrawing,
-      selectedShape, setSelectedShape,
       styleBar, setStyleBar
    } = useAppContext();
-   
-   /////////////////
-   // const handleClick = (e) => {
-   //    const shape = e.target;
-   //    console.log(shape)
-   //    setSelectedShape(shape);
-   // };
-   ///////////////
 
    function onMouseUp(e) {
       if(isDrawing) {

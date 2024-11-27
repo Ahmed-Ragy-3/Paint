@@ -1,23 +1,23 @@
 import { useAppContext } from '../AppContext';
 
 const text = {
-    type: 'Text',
-    id: 0,
-    x: 0,
-    y: 0,
-    text: '',
-    fontSize: 20,
-    fill: 'black',
-    draggable: true,
+  type: 'Text',
+  id: 0,
+  x: 0,
+  y: 0,
+  text: '',
+  fontSize: 20,
+  fill: 'black',
+  draggable: true,
 };
 
 const Text = () => {
-   const {
-        currentShape, setCurrentShape,
-        data, setData,
-   } = useAppContext();
+  const {
+    currentShape, setCurrentShape,
+    data, setData,
+  } = useAppContext();
 
-   const onMouseDown = (e) => {
+  const onMouseDown = (e) => {
     const { x, y } = e.target.getStage().getPointerPosition();
     console.log(x, y);
 
@@ -37,15 +37,15 @@ const Text = () => {
     console.log(data);
   };
 
-   const onMouseMove = (e) => {
+  const onMouseMove = (e) => {
     return;
-   };
+  };
 
-   const onMouseUp = (e) => {
+  const onMouseUp = (e) => {
     return;
-   };
+  };
 
-   return { onMouseDown, onMouseMove, onMouseUp };
+  return { onMouseDown, onMouseMove, onMouseUp };
 };
 
 export default Text;

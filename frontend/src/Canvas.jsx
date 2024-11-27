@@ -40,42 +40,92 @@ export default function Canvas() {
   const transformerRef = useRef(null);
   const shapeRef = useRef(null)
 
-  const [selectedShape, setSelectedShape] = useState(null)
-  
-  useEffect(() => {
-    // Update the transformer whenever the selected shape changes
-    if (selectedShape) {
-      transformerRef.current.nodes([selectedShape]);
-      transformerRef.current.getLayer().batchDraw();
-    }
-  }, [selectedShape]);
-
-  useEffect(() => {
-    consol.log(selectedShape)
-    setSelectedShape({...selectedShape, fill: styleBar.fillColor})
-    // selectedShape.fill
-  }, [styleBar])
-
-  // function getId() {
-  //   return data.length
-  // }
-
+  const [selectedId, setSelectedId] = useState(null)
   const { onMouseUp, onMouseMove, onMouseDown } = activeTool && activeTool !== "move" ? events[activeTool]() : {};
   
-  useEffect(() => {
-    // handle draggable attribute move tool is active
-    setData((prevData) =>
-      prevData.map((shape) => ({
-        ...shape,
-        draggable: activeTool === 'move',
-      }))
-    );
+  // useEffect(() => {
+  //   // Update the transformer whenever the selected shape changes
+  //   if (selectedId) {
+  //     transformerRef.current.nodes([shapeRef.current]);
+  //     transformerRef.current.getLayer().batchDraw();
+  //   }
+  // }, [selectedId]);
 
-    const removeLastPoint = (points) => {
-      return points.slice(0, -2);
-    }
+  useEffect(() => {
+    // console.log("for selected Id: ")
+    // console.log(data[selectedId])
+    // console.log(selectedId)
+    const s = data[selectedId];
+  
+    setData((prevData) => 
+      prevData.map((shape) =>
+        shape.id === selectedId
+          ? {
+              ...shape,
+              opacity: styleBar.opacity,
+              strokeColor: styleBar.strokeColor,
+              strokeWidth: styleBar.strokeWidth,
+              fill: styleBar.fillColor,
+              height: styleBar.height,
+              width: styleBar.width,
+            }
+          : shape
+      )
+    );
+  }, [styleBar, selectedId, setData]);
+  
+  
+  // function getId() {
+    //   return data.length
+    // }
     
+    
+    useEffect(() => {
+      // handle draggable attribute move tool is active
+      setData((prevData) =>
+        prevData.map((shape) => ({
+          ...shape,
+          draggable: activeTool === 'move',
+        }))
+      );
+      
+      const removeLastPoint = (points) => {
+        return points.slice(0, -2);
+      }
+      
     const handleKeyDown = (e) => {
+
+      switch (e.key) {
+        case 'v':
+          setActiveTool('move')
+          break;
+        case 'l':
+          setActiveTool('line')
+          break;
+        case 'r':
+          setActiveTool('rectangle')
+          break;
+        case 't':
+          setActiveTool('triangle')
+          break;
+        case 'p':
+          setActiveTool('polygon')
+          break;
+        case 'e':
+          setActiveTool('ellipse')
+          break;
+        case 't':
+          setActiveTool('text')
+          break;
+        case 'b':
+          setActiveTool('free')
+          break;
+      
+        default:
+          break;
+      }
+
+
       if (activeTool === 'polygon' && currentShape) {
         if (e.key === 'Escape') {
           setCurrentShape((prevShape) => {
@@ -102,8 +152,22 @@ export default function Canvas() {
   }, [activeTool, currentShape, setData]);
   
   
-  const handleClick = (e) => {
-    setSelectedShape(e.target)
+  const handleClick = (id) => {
+    // console.log("ojqbwdiu;qfufwgf;iuewgf;web;fwe;feb'fuewufhwejllehwFHuwefewihf'ihhee")
+    console.log(id)
+    setSelectedId(id)
+    const s = data[id]
+
+    setStyleBar({
+      opacity: s.opacity,
+      strokeColor: s.strokeColor,
+      strokeWidth: s.strokeWidth,
+      fillColor: s.fill,
+      height: s.height,
+      width: s.width,
+      link: false,
+    })
+    // console.log(data[selectedId])
   }
 
   const handleMouseDown = (e) => {
@@ -154,19 +218,17 @@ export default function Canvas() {
           cursor: cursorStyle(),
           // position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' , transform: 'none'
         }}
-
-        onClick={handleClick}
       >
         <Layer>
           {currentShape && createShape(currentShape)}
           
           {
             data.map((shape) => {
-              return createShape(shape, shapeRef);
+              return createShape(shape, handleClick);
             })
           }
 
-          {selectedShape && (
+          {selectedId !== null && (
             <Transformer
               ref={transformerRef}
               rotateEnabled={true}

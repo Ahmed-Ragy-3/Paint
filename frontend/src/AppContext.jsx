@@ -11,7 +11,6 @@ export const AppProvider = ({ children }) => {
   const [activeTool, setActiveTool] = useState("")
   const [initialPoint, setInitialPoint] = useState([0, 0])
   const [isDrawing, setIsDrawing] = useState(false)
-  // const [selectedShape, setSelectedShape] = useState(null)
   const [secondPointDone,setSecondPointDone]= useState(false);
 
   
@@ -32,7 +31,6 @@ export const AppProvider = ({ children }) => {
       value={{
         initialPoint, setInitialPoint,
         currentShape, setCurrentShape,
-        // selectedShape, setSelectedShape,
         data, setData,
         activeTool, setActiveTool,
         isDrawing, setIsDrawing,

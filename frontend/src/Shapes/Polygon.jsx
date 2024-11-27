@@ -47,6 +47,7 @@ const Polygon = () => {
             ...prevShape,
             points: [...prevShape.points, currentShape.points[0], currentShape.points[1], x, y],
             closed: true,
+            // fill: styleB
          }));
          
          return;
