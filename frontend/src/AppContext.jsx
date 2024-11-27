@@ -15,19 +15,14 @@ export const AppProvider = ({ children }) => {
   const [isDrawing, setIsDrawing] = useState(false)
   
   const [selectedShape, setSelectedShape] = useState(null)
-  const [secondPointDone,setSecondPointDone]= useState(false)
-  
-
-  const [styleBar, setStyleBar] = useState({
-    fillColor: '#e6e6e6',
-    width: 10,
-    height: 10,
-    ratio: 1,
-    link: false,
-    opacity: 1,
-    strokeColor: '#000000',
-    strokeWidth: 5,
-  });
+  const [data, setData] = useState([])
+  const [activeTool, setActiveTool] = useState("")
+  const [fillColor, setFillColor] = useState('#ffffff');
+  const [isDrawing, setIsDrawing] = useState(true)
+  const [initialPoint, setInitialPoint] = useState([0, 0]);
+  const [secondPointDone,setSecondPointDone]= useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [userText, setUserText] = useState('');
 
   return (
     <AppContext.Provider
@@ -36,12 +31,13 @@ export const AppProvider = ({ children }) => {
         shapeDone, setShapeDone,
         currentShape, setCurrentShape,
         selectedShape, setSelectedShape,
-        secondPointDone, setSecondPointDone,
         data, setData,
         activeTool, setActiveTool,
-        
-        styleBar, setStyleBar,
-        isDrawing, setIsDrawing
+        fillColor, setFillColor,
+        isDrawing, setIsDrawing,
+        secondPointDone, setSecondPointDone,
+        isEditing, setIsEditing,
+        userText, setUserText
       }}
     >
       {children}

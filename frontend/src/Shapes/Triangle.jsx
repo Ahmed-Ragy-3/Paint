@@ -1,11 +1,22 @@
 import { useAppContext } from '../AppContext';
 
+const triangle = {
+   type: 'Triangle',
+   draggable: false,
+   id: 0,
+   points: [0, 0, 0, 0, 0, 0],
+   strokeColor: 'black',
+   strokeWidth: 2,
+   fill: 'transparent',
+   opacity: 1,
+};
+
 const Triangle = () => {
    const {
-      shapeDone, setShapeDone,
       currentShape, setCurrentShape,
       data, setData,
-      secondPointDone, setSecondPointDone
+      secondPointDone, setSecondPointDone,
+      isDrawing, setIsDrawing,
    } = useAppContext();
 
    let moved = false;
@@ -20,24 +31,24 @@ const Triangle = () => {
             ...prevShape,
             points: [prevShape.points[0], prevShape.points[1], x, y, prevShape.points[4], prevShape.points[5]],
          }));
-         console.log('Updating second point...');
+         // console.log('Updating second point...');
       } else {
          setCurrentShape((prevShape) => ({
             ...prevShape,
             points: [prevShape.points[0], prevShape.points[1], prevShape.points[2], prevShape.points[3], x, y],
          }));
-         console.log('Updating third point...');
+         // console.log('Updating third point...');
       }
    }
 
    function onMouseUp(e) {
       const { x, y } = e.target.getStage().getPointerPosition();
 
-      if (shapeDone) {
+      if (!isDrawing) {
          moved = false;
          setData([...data, currentShape]);
          setCurrentShape(null);
-         setShapeDone(false);
+         setIsDrawing(true);
          setSecondPointDone(false);
       } else if (!secondPointDone) {
          if (!moved) {
@@ -48,13 +59,13 @@ const Triangle = () => {
             points: [prevShape.points[0], prevShape.points[1], x, y, prevShape.points[4], prevShape.points[5]],
          }));
          setSecondPointDone(true);
-         console.log('Second point finalized.');
+         // console.log('Second point finalized.');
       } else {
          setCurrentShape((prevShape) => ({
             ...prevShape,
             points: [prevShape.points[0], prevShape.points[1], prevShape.points[2], prevShape.points[3], x, y],
          }));
-         console.log('Third point finalized.');
+         // console.log('Third point finalized.');
       }
    }
 
@@ -62,21 +73,13 @@ const Triangle = () => {
       const { x, y } = e.target.getStage().getPointerPosition();
 
       if (!currentShape) {
-         const newTriangle = {
-            type: 'Triangle',
-            draggable: false,
-            id: data.length,
-            points: [x, y, x, y, x, y],
-            strokeColor: 'black',
-            strokeWidth: 2,
-            fill: 'transparent',
-            opacity: 1,
-         };
-         setCurrentShape(newTriangle);
+         triangle.id = data.length
+         triangle.points = [x, y, x, y, x, y],
+         setCurrentShape(triangle);
       } else if (!secondPointDone) {
          setSecondPointDone(true);
       } else {
-         setShapeDone(true);
+         setIsDrawing(false);
       }
    }
 

@@ -69,8 +69,8 @@ function createText(shape) {
       text={shape.text}
       fontSize={shape.fontSize} 
       fill={shape.fill} 
-      x={shape.centerX}  // Text positioning starts at the top-left corner
-      y={shape.centerY}  // Text positioning starts at the top-left corner
+      x={shape.centerX}
+      y={shape.centerY}
    />
 }
 

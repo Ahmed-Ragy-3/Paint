@@ -7,14 +7,6 @@ import { useAppContext } from './AppContext';
 export default function ZoomBar() {
 
   const {
-    initialPoint, setInitialPoint,
-        shapeDone, setShapeDone,
-        currentShape, setCurrentShape,
-        selectedShape, setSelectedShape,
-        secondPointDone, setSecondPointDone,
-        data, setData,
-        activeTool, setActiveTool,
-        fillColor, setFillColor,
   } = useAppContext();
   
   return (
