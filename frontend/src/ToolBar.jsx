@@ -20,14 +20,8 @@ import {polygon} from './Shapes/Polygon.jsx';
 export default function ToolBar() {
 
   const {
-    initialPoint, setInitialPoint,
-    shapeDone, setShapeDone,
     currentShape, setCurrentShape,
-    selectedShape, setSelectedShape,
-    secondPointDone, setSecondPointDone,
-    data, setData,
     activeTool, setActiveTool,
-    fillColor, setFillColor,
   } = useAppContext();
 
   return (

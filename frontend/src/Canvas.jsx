@@ -9,7 +9,7 @@ import Rectangle from './Shapes/Rectangle.jsx';
 import Ellipse from './Shapes/Ellipse.jsx';
 import Triangle from './Shapes/Triangle.jsx';
 import Line from './Shapes/Line.jsx';
-
+import Text from './Shapes/Text.jsx';
 import Polygon from './Shapes/Polygon.jsx';
 import Free from './Shapes/Free.jsx'
 
@@ -22,16 +22,15 @@ const events = {
   triangle: Triangle,
   polygon: Polygon,
   free: Free,
+  text: Text
 };
 
 
 export default function Canvas() {
   const {
     initialPoint, setInitialPoint,
-    shapeDone, setShapeDone,
     currentShape, setCurrentShape,
     selectedShape, setSelectedShape,
-    secondPointDone, setSecondPointDone,
     data, setData,
     activeTool, setActiveTool,
     fillColor, setFillColor,
@@ -115,30 +114,30 @@ export default function Canvas() {
 
   //////////////////////////////////////////////////////////////////////////////
   return (
-    <Stage
-      className="konva-container"
-      width={window.innerWidth}
-      height={window.innerHeight}
-      
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-      onMouseMove={handleMouseMove}
+      <Stage
+        className="konva-container"
+        width={window.innerWidth}
+        height={window.innerHeight}
+        
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
 
-      style={{
-        backgroundColor: !selectedShape && fillColor,
-        cursor: cursorStyle(),
-      }}
-    >
+        style={{
+          backgroundColor: !selectedShape && fillColor,
+          cursor: cursorStyle(),
+          // position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' 
+        }}
+        >
+        <Layer>
+          {currentShape && createShape(currentShape)}
+          {
+            data.map((shape) => {
+              return createShape(shape);
+            })
+          }
+        </Layer>
 
-      <Layer>
-        {currentShape && createShape(currentShape)}
-        {
-          data.map((shape) => {
-            return createShape(shape);
-          })
-        }
-      </Layer>
-
-    </Stage>
+      </Stage>
   )
 }

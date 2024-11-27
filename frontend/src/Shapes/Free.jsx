@@ -12,8 +12,6 @@ const free = {
 
 const Free = () => {
    const {
-      initialPoint, setInitialPoint,
-      shapeDone, setShapeDone,
       currentShape, setCurrentShape,
       data, setData
    } = useAppContext();

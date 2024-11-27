@@ -18,13 +18,6 @@ import h_align from './icons/horizontal-align.svg';
 function StyleBar() {
 
   const {
-    initialPoint, setInitialPoint,
-        shapeDone, setShapeDone,
-        currentShape, setCurrentShape,
-        selectedShape, setSelectedShape,
-        secondPointDone, setSecondPointDone,
-        data, setData,
-        activeTool, setActiveTool,
         fillColor, setFillColor,
   } = useAppContext();
 

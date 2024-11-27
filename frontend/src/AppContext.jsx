@@ -5,14 +5,17 @@ const AppContext = createContext();
 
 // Create a provider component
 export const AppProvider = ({ children }) => {
-  const [initialPoint, setInitialPoint] = useState([0, 0])
   const [shapeDone, setShapeDone] = useState(false)
   const [currentShape, setCurrentShape] = useState(null)
   const [selectedShape, setSelectedShape] = useState(null)
-  const [secondPointDone,setSecondPointDone]= useState(false)
   const [data, setData] = useState([])
   const [activeTool, setActiveTool] = useState("")
   const [fillColor, setFillColor] = useState('#ffffff');
+  const [isDrawing, setIsDrawing] = useState(true)
+  const [initialPoint, setInitialPoint] = useState([0, 0]);
+  const [secondPointDone,setSecondPointDone]= useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [userText, setUserText] = useState('');
 
   return (
     <AppContext.Provider
@@ -21,10 +24,13 @@ export const AppProvider = ({ children }) => {
         shapeDone, setShapeDone,
         currentShape, setCurrentShape,
         selectedShape, setSelectedShape,
-        secondPointDone, setSecondPointDone,
         data, setData,
         activeTool, setActiveTool,
         fillColor, setFillColor,
+        isDrawing, setIsDrawing,
+        secondPointDone, setSecondPointDone,
+        isEditing, setIsEditing,
+        userText, setUserText
       }}
     >
       {children}

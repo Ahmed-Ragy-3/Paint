@@ -1,19 +1,33 @@
 import { useAppContext } from '../AppContext'; 
 
+const ellipse = {
+   type: 'Ellipse',
+   draggable: false,
+   id: 0,
+   centerX: 0,
+   centerY: 0,
+   strokeWidth: 2,
+   strokeColor: 'black',
+   fill: 'transparent',
+   opacity: 1,
+   radiusX: 0,
+   radiusY: 0,
+};
+
 const Ellipse = () => {
    const {
       initialPoint, setInitialPoint,
-      shapeDone, setShapeDone,
       currentShape, setCurrentShape,
-      data, setData
+      data, setData,
+      isDrawing, setIsDrawing
    } = useAppContext();
 
    const onMouseUp = (e) => {
       const { x, y } = e.target.getStage().getPointerPosition();
-      if (shapeDone) {
+      if (!isDrawing) {
          setData([...data, currentShape]);
          setCurrentShape(null);
-         setShapeDone(false);
+         setIsDrawing(true);
       } else {
          let radX = Math.abs(x - initialPoint[0]);
          setCurrentShape((prevShape) => ({
@@ -32,7 +46,7 @@ const Ellipse = () => {
          radiusX: radX,
          radiusY: e.evt.shiftKey ? radX : Math.abs(y - initialPoint[1]),
       }));
-      setShapeDone(true);
+      setIsDrawing(false);
    };
 
    const onMouseDown = (e) => {
@@ -40,23 +54,13 @@ const Ellipse = () => {
       setInitialPoint([x, y]);
 
       if (!currentShape) {
-         const newEllipse = {
-            type: 'Ellipse',
-            draggable: false,
-            id: data.length,
-            centerX: x,
-            centerY: y,
-            strokeWidth: 2,
-            strokeColor: 'black',
-            fill: 'transparent',
-            opacity: 1,
-            radiusX: 0,
-            radiusY: 0,
-         };
-         setCurrentShape(newEllipse);
-       } else {
-         setShapeDone(true) 
-       }
+         ellipse.id = data.length;
+         ellipse.centerX = x;
+         ellipse.centerY = y;
+         setCurrentShape(ellipse);
+      } else {
+         setIsDrawing(false) 
+      }
    };
 
    return { onMouseUp, onMouseMove, onMouseDown };

@@ -1,19 +1,28 @@
 import { useAppContext } from '../AppContext'; 
 
+const line = {
+   type: 'Line',
+   draggable: false,
+   id: 0,
+   points: [0, 0, 0, 0],
+   strokeColor: 'black',
+   strokeWidth: 2,
+   opacity: 1,
+};
+
 const Line = () => {
    const {
-      initialPoint, setInitialPoint,
-      shapeDone, setShapeDone,
       currentShape, setCurrentShape,
       data, setData,
+      isDrawing, setIsDrawing,
    } = useAppContext();
 
    function onMouseUp(e) {
       const { x, y } = e.target.getStage().getPointerPosition();
-      if (shapeDone) {
+      if (!isDrawing) {
          setData([...data, currentShape]);
          setCurrentShape(null);
-         setShapeDone(false);
+         setIsDrawing(true);
       } else {
          setCurrentShape((prevShape) => ({
             ...prevShape,
@@ -28,25 +37,17 @@ const Line = () => {
          ...prevShape,
          points: [prevShape.points[0], prevShape.points[1], x, y],
       }));
-      setShapeDone(true);
+      setIsDrawing(false);
    }
 
    function onMouseDown(e) {
       const { x, y } = e.target.getStage().getPointerPosition();
-      setInitialPoint([x, y]);
       if (!currentShape) {
-         const newLine = {
-            type: 'Line',
-            draggable: false,
-            id: data.length,
-            points: [x, y, x, y],
-            strokeColor: 'black',
-            strokeWidth: 2,
-            opacity: 1,
-         };
-         setCurrentShape(newLine);
+         line.id = data.length;
+         line.points = [x, y, x, y];
+         setCurrentShape(line);
       } else {
-         setShapeDone(true) 
+         setIsDrawing(false) 
       }
    }
 
