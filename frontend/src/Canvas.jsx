@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import { useEffect } from 'react';
-import { Layer, Stage } from 'react-konva';
+import { Transformer, Layer, Stage } from 'react-konva';
 
 import { useAppContext } from './AppContext';
 
@@ -28,13 +28,12 @@ const events = {
 export default function Canvas() {
   const {
     initialPoint, setInitialPoint,
-    shapeDone, setShapeDone,
     currentShape, setCurrentShape,
     selectedShape, setSelectedShape,
-    secondPointDone, setSecondPointDone,
     data, setData,
     activeTool, setActiveTool,
-    fillColor, setFillColor,
+    styleBar, setStyleBar,
+    isDrawing, setIsDrawing
   } = useAppContext();
 
   // function getId() {
@@ -63,6 +62,8 @@ export default function Canvas() {
             const updatedPoints = removeLastPoint(prevShape.points);
             const finalizedShape = { ...prevShape, points: updatedPoints };
             setData((prevData) => [...prevData, finalizedShape]);
+            setCurrentShape(null)
+            setIsDrawing(false)
             return null;
           });
         } else if (e.key === 'Backspace') {
@@ -125,8 +126,9 @@ export default function Canvas() {
       onMouseMove={handleMouseMove}
 
       style={{
-        backgroundColor: !selectedShape && fillColor,
+        backgroundColor: !selectedShape && styleBar.fillColor,
         cursor: cursorStyle(),
+        opacity: !selectedShape && styleBar.opacity,
       }}
     >
 
@@ -136,7 +138,14 @@ export default function Canvas() {
           data.map((shape) => {
             return createShape(shape);
           })
+
         }
+        {selectedShape && (
+          <Transformer
+            ref={selectedShape}
+            flipEnabled={false}
+          />
+        )}
       </Layer>
 
     </Stage>

@@ -82,7 +82,8 @@ function createPolygon(shape) {
       fill={shape.fill}
       stroke={shape.strokeColor}
       strokeWidth={shape.strokeWidth}
-      closed={false}
+      closed={shape.closed}
+      // {...shape}
    />
 }
 

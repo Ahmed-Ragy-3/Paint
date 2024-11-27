@@ -2,7 +2,6 @@
 
 import { useAppContext } from '../AppContext';
 
-// import UndoRedo from './UndoRedo';
 import Fill from './Fill';
 import Stroke from './Stroke';
 import Size from './Size';
@@ -17,16 +16,7 @@ import h_align from './icons/horizontal-align.svg';
 
 function StyleBar() {
 
-  const {
-    initialPoint, setInitialPoint,
-        shapeDone, setShapeDone,
-        currentShape, setCurrentShape,
-        selectedShape, setSelectedShape,
-        secondPointDone, setSecondPointDone,
-        data, setData,
-        activeTool, setActiveTool,
-        fillColor, setFillColor,
-  } = useAppContext();
+  const { styleBar, setStyleBar } = useAppContext();
 
   return (
     <div className="style-bar">
@@ -43,9 +33,9 @@ function StyleBar() {
 
       </div>
 
-      <Fill fillColor={fillColor} setFillColor={setFillColor}/>
-      <Stroke/>
-      <Opacity/>
+      <Fill styleBar={styleBar} setStyleBar={setStyleBar}/>
+      <Stroke styleBar={styleBar} setStyleBar={setStyleBar}/>
+      <Opacity styleBar={styleBar} setStyleBar={setStyleBar}/>
 
       <div className="Align">
       
@@ -59,7 +49,7 @@ function StyleBar() {
 
       </div>
 
-      <Size/>
+      <Size styleBar={styleBar} setStyleBar={setStyleBar}/>
       
     </div>
   );

@@ -1,42 +1,35 @@
-import { useState } from 'react';
 
-import link from './icons/link.svg';
 import unlink from './icons/unlink.svg';
+import link from './icons/link.svg';
 
-export default function Size() {
-  const [width, setWidth] = useState(10);
-  const [height, setHeight] = useState(10);
-  const [ratio, setRatio] = useState(1);
-  const [linkDimensions, setLinkDimensions] = useState(false);
+export default function Size({ styleBar, setStyleBar }) {
+  // const {styleBar, setStyleBar} = useAppContext();
 
   const handleWidthChange = (e) => {
     const newWidth = e.target.value;
-
-    if (linkDimensions) {
-      setWidth(newWidth);
-      setHeight(newWidth / ratio);
-    } else {
-      setWidth(newWidth);
-    }
+    setStyleBar({...styleBar, width: newWidth, height: link ? newWidth / ratio : height})
+    // setWidth(newWidth);
+    // if (styleBar.link) {
+    //   setHeight(newWidth / ratio);
+    // }
   };
-
+  
   const handleHeightChange = (e) => {
     const newHeight = e.target.value;
-
-    if (linkDimensions) {
-      setHeight(newHeight);
-      setWidth(newHeight * ratio);
-    } else {
-      setHeight(newHeight);
-    }
+    setStyleBar({...styleBar, height: newHeight, width: link ? newHeight * ratio : width})
+    
+    // setHeight(newHeight);
+    // if (link) {
+    //   setWidth(newHeight * ratio);
+    // }
   };
 
   const handleLinkToggle = () => {
-    setLinkDimensions((prev) => !prev);
+    // setlink((prev) => !prev);
 
-    if (!linkDimensions) {
-      setRatio(width / height);
-    }
+    // if (!link) {
+    //   setRatio(width / height);
+    // }
   };
 
   return (
@@ -46,7 +39,7 @@ export default function Size() {
         <input
           className="length-and-width-input"
           type="number"
-          value={width}
+          value={styleBar.width}
           min={0}
           onChange={handleWidthChange}
           title="Change Width Value"
@@ -58,7 +51,7 @@ export default function Size() {
         onClick={handleLinkToggle}
         title="Link Width and Height"
       >
-        {linkDimensions ? <img src={unlink} alt="unlink" /> : <img src={link} alt="link" />}
+        {styleBar.link ? <img src={unlink} alt="unlink" /> : <img src={link} alt="link" />}
       </button>
 
       <div className="length-and-width-line">
@@ -66,7 +59,7 @@ export default function Size() {
         <input
           className="length-and-width-input"
           type="number"
-          value={height}
+          value={styleBar.height}
           min={0}
           onChange={handleHeightChange}
           title="Change Height Value"

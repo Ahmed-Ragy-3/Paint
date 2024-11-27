@@ -1,18 +1,33 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 // Create the context
 const AppContext = createContext();
 
 // Create a provider component
 export const AppProvider = ({ children }) => {
+  const [data, setData] = useState([])
+  const [currentShape, setCurrentShape] = useState(null)
+  const [activeTool, setActiveTool] = useState("")
+  
   const [initialPoint, setInitialPoint] = useState([0, 0])
   const [shapeDone, setShapeDone] = useState(false)
-  const [currentShape, setCurrentShape] = useState(null)
+
+  const [isDrawing, setIsDrawing] = useState(false)
+  
   const [selectedShape, setSelectedShape] = useState(null)
   const [secondPointDone,setSecondPointDone]= useState(false)
-  const [data, setData] = useState([])
-  const [activeTool, setActiveTool] = useState("")
-  const [fillColor, setFillColor] = useState('#ffffff');
+  
+
+  const [styleBar, setStyleBar] = useState({
+    fillColor: '#e6e6e6',
+    width: 10,
+    height: 10,
+    ratio: 1,
+    link: false,
+    opacity: 1,
+    strokeColor: '#000000',
+    strokeWidth: 5,
+  });
 
   return (
     <AppContext.Provider
@@ -24,7 +39,9 @@ export const AppProvider = ({ children }) => {
         secondPointDone, setSecondPointDone,
         data, setData,
         activeTool, setActiveTool,
-        fillColor, setFillColor,
+        
+        styleBar, setStyleBar,
+        isDrawing, setIsDrawing
       }}
     >
       {children}

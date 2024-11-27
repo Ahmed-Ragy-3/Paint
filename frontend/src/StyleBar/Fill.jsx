@@ -1,10 +1,10 @@
 // import { useState } from 'react';
 /* eslint-disable react/prop-types */
 
-export default function Fill({ fillColor, setFillColor }) {
+export default function Fill({ styleBar, setStyleBar }) {
 
   const handleFillColorChange = (e) => {
-    setFillColor(e.target.value)
+    setStyleBar({...styleBar, fillColor: e.target.value})
     // console.log(fillColor)
   };
 
@@ -16,7 +16,7 @@ export default function Fill({ fillColor, setFillColor }) {
       <input
         className='fill-color-picker' 
         type='color' 
-        value={fillColor} 
+        value={styleBar.fillColor} 
         onChange={handleFillColorChange}
         title='Pick Fill Color'
       />

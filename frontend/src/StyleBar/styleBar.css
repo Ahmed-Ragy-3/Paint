@@ -82,7 +82,7 @@
     color: #C0C0C0;
 }
 
-.opacity-label{
+.opacity-label {
     font-family: sans-serif;
     font-size: 140%;
     font-weight: bold;
@@ -98,7 +98,7 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.fill-color-picker:hover, .stroke-color-picker:hover{
+.fill-color-picker:hover, .stroke-color-picker:hover {
     transform: scale(1.0025);
 }
 

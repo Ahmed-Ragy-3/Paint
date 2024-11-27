@@ -1,10 +1,9 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 
-export default function Size() {
-  const [opacity, setOpacity] = useState(50);
+export default function Opacity({ styleBar, setStyleBar }) {
 
   const handleOpacityChange = (e) => {
-    setOpacity(e.target.value)
+    setStyleBar({...styleBar, opacity: e.target.value / 100})
   };
 
   return (
@@ -17,9 +16,9 @@ export default function Size() {
           type="range"
           min={0}
           max={100}
-          value={opacity}
+          value={styleBar.opacity * 100}
           onChange={handleOpacityChange}
-          title='Change Oacity Value'
+          title='Change Opacity'
         />
 
     </div>

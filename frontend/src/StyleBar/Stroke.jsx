@@ -1,14 +1,13 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 
-export default function Stroke() {
-  const [strokeColor, setStrokeColor] = useState('#000000');
-  const [strokeWidth, setStrokeWidth] = useState(5);
+export default function Stroke({ styleBar, setStyleBar }) {
 
   const handleStrokeColorChange = (e) => {
-    setStrokeColor(e.target.value)
+    setStyleBar({...styleBar, strokeColor: e.target.value})
   };
+  
   const handleStrokeWidthChange = (e) => {
-    setStrokeWidth(e.target.value)
+    setStyleBar({...styleBar, strokeWidth: e.target.value})
   };
 
   return (
@@ -21,7 +20,7 @@ export default function Stroke() {
         <input 
           className='stroke-color-picker' 
           type='color' 
-          value={strokeColor} 
+          value={styleBar.strokeColor} 
           onChange={handleStrokeColorChange}
           title='Pick Stroke Color'
         />
@@ -30,7 +29,7 @@ export default function Stroke() {
           className='stroke-width'
           type="number"
           min={0}
-          value={strokeWidth}
+          value={styleBar.strokeWidth}
           onChange={handleStrokeWidthChange}
           title='Change Stroke Width'
         />
