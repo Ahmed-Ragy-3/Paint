@@ -1,12 +1,12 @@
 import { useAppContext } from '../AppContext'; 
 
 const Ellipse = () => {
-   const { 
-            initialPoint, setInitialPoint,
-            shapeDone, setShapeDone,
-            currentShape, setCurrentShape,
-            data, setData 
-         } = useAppContext();
+   const {
+      initialPoint, setInitialPoint,
+      shapeDone, setShapeDone,
+      currentShape, setCurrentShape,
+      data, setData
+   } = useAppContext();
 
    const onMouseUp = (e) => {
       const { x, y } = e.target.getStage().getPointerPosition();

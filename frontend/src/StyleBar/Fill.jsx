@@ -11,9 +11,9 @@ export default function Fill({ fillColor, setFillColor }) {
   return (
     <div className="Fill">
 
-      <label className='fill-lable'>Fill</label>
+      <label className='fill-label'>Fill</label>
       
-      <input 
+      <input
         className='fill-color-picker' 
         type='color' 
         value={fillColor} 

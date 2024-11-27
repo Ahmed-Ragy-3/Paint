@@ -7,7 +7,7 @@ import { useAppContext } from './AppContext';
 
 import move_tool from './assets/move-tool.svg';
 import line from './assets/line-icon.svg';
-import polygon from './assets/polygon.svg';
+import polygon_icon from './assets/polygon.svg';
 import triangle from './assets/triangle.svg';
 import rectangle from './assets/rectangle.svg';
 import circle from './assets/circle.svg';
@@ -15,19 +15,21 @@ import brush from './assets/brush-tool.svg';
 import text from './assets/textIcon.svg';
 import addImage from './assets/add-image.svg';
 
+import {polygon} from './Shapes/Polygon.jsx';
+
 export default function ToolBar() {
 
   const {
     initialPoint, setInitialPoint,
-        shapeDone, setShapeDone,
-        currentShape, setCurrentShape,
-        selectedShape, setSelectedShape,
-        secondPointDone, setSecondPointDone,
-        data, setData,
-        activeTool, setActiveTool,
-        fillColor, setFillColor,
+    shapeDone, setShapeDone,
+    currentShape, setCurrentShape,
+    selectedShape, setSelectedShape,
+    secondPointDone, setSecondPointDone,
+    data, setData,
+    activeTool, setActiveTool,
+    fillColor, setFillColor,
   } = useAppContext();
-  
+
   return (
     <div className="toolbar">
       <button 
@@ -48,10 +50,13 @@ export default function ToolBar() {
 
       <button 
         title="Polygon Tool" 
-        onClick={() => { setActiveTool("polygon") }}
+        onClick={() => {
+          setCurrentShape(polygon)
+          setActiveTool("polygon") 
+        }}
         className={activeTool === "polygon" ? "active" : ""}
       >
-        <img src={polygon} alt="Polygon Tool" />
+        <img src={polygon_icon} alt="Polygon Tool" />
       </button>
 
       <button 

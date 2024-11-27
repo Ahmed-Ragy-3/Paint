@@ -1,3 +1,5 @@
+import { useAppContext } from '../AppContext'; 
+
 const free = {
    type: "Free",
    id: 0,
@@ -6,21 +8,37 @@ const free = {
    strokeColor: "black",
    strokeWidth: 5,
    opacity: 1,
+}
 
-   onMouseMove: function(e, setCurrentShape) {
+const Free = () => {
+   const {
+      initialPoint, setInitialPoint,
+      shapeDone, setShapeDone,
+      currentShape, setCurrentShape,
+      data, setData
+   } = useAppContext();
+
+   function onMouseMove(e) {
       const { x, y } = e.target.getStage().getPointerPosition();
       setCurrentShape((prevShape) => ({
          ...prevShape,
          points: [...prevShape.points, x, y],
       }));
-   },
-
-   onMouseDown: function(x, y, num) {
-      this.id = num
-      this.points = [x, y]
-
-      return this
    }
+   
+   function onMouseDown(e) {
+      const { x, y } = e.target.getStage().getPointerPosition();
+      free.id = data.length
+      free.points = [x, y]
+      setCurrentShape(free);
+   }
+
+   function onMouseUp(e) {
+      setData([...data, currentShape]);
+      setCurrentShape(null);
+   }
+
+   return { onMouseDown, onMouseMove, onMouseUp }
 }
 
-export default free;
+export default Free;

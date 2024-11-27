@@ -75,7 +75,7 @@
     height: 10%;
 }
   
-.fill-lable, .stroke-lable, .length-and-width-label {
+.fill-label, .stroke-lable, .length-and-width-label {
     font-family: sans-serif;
     font-size: 170%;
     font-weight: bold;
