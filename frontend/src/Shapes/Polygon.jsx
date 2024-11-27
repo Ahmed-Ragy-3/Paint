@@ -6,7 +6,7 @@ export const polygon = {
    id: 0,
    fill: 'grey',
    points: [],
-   strokeWidth: 4,
+   strokeWidth: 4, 
    strokeColor: 'black',
    opacity: 1,
    closed: false,

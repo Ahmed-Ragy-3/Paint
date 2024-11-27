@@ -1,9 +1,11 @@
+import { useAppContext } from '../AppContext';
 
 import unlink from './icons/unlink.svg';
 import link from './icons/link.svg';
 
-export default function Size({ styleBar, setStyleBar }) {
-  // const {styleBar, setStyleBar} = useAppContext();
+export default function Size() {
+
+  const {styleBar, setStyleBar} = useAppContext();
 
   const handleWidthChange = (e) => {
     const newWidth = e.target.value;

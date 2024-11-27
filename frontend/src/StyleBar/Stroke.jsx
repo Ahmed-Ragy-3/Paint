@@ -1,6 +1,9 @@
-import { useContext } from 'react';
+import { useAppContext } from '../AppContext';
 
-export default function Stroke({ styleBar, setStyleBar }) {
+export default function Stroke() {
+  const {
+    styleBar, setStyleBar
+  } = useAppContext();
 
   const handleStrokeColorChange = (e) => {
     setStyleBar({...styleBar, strokeColor: e.target.value})

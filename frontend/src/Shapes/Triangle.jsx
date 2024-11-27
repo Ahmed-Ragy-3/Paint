@@ -7,7 +7,7 @@ const triangle = {
    points: [0, 0, 0, 0, 0, 0],
    strokeColor: 'black',
    strokeWidth: 2,
-   fill: 'transparent',
+   fill: 'transparent', 
    opacity: 1,
 };
 
@@ -44,11 +44,11 @@ const Triangle = () => {
    function onMouseUp(e) {
       const { x, y } = e.target.getStage().getPointerPosition();
 
-      if (!isDrawing) {
+      if (isDrawing) {
          moved = false;
          setData([...data, currentShape]);
          setCurrentShape(null);
-         setIsDrawing(true);
+         setIsDrawing(false);
          setSecondPointDone(false);
       } else if (!secondPointDone) {
          if (!moved) {
@@ -79,7 +79,7 @@ const Triangle = () => {
       } else if (!secondPointDone) {
          setSecondPointDone(true);
       } else {
-         setIsDrawing(false);
+         setIsDrawing(true);
       }
    }
 

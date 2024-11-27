@@ -1,11 +1,14 @@
-// import { useState } from 'react';
+import { useAppContext } from '../AppContext';
 /* eslint-disable react/prop-types */
 
-export default function Fill({ styleBar, setStyleBar }) {
+export default function Fill() {
+
+  const {
+    styleBar, setStyleBar,
+  } = useAppContext();
 
   const handleFillColorChange = (e) => {
     setStyleBar({...styleBar, fillColor: e.target.value})
-    // console.log(fillColor)
   };
 
   return (

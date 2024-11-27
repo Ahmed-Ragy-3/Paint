@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useRef, useState } from 'react';
+import { Transformer } from 'react-konva';
 
 // Create the context
 const AppContext = createContext();
@@ -8,32 +9,35 @@ export const AppProvider = ({ children }) => {
   const [data, setData] = useState([])
   const [currentShape, setCurrentShape] = useState(null)
   const [activeTool, setActiveTool] = useState("")
-  
   const [initialPoint, setInitialPoint] = useState([0, 0])
-  const [shapeDone, setShapeDone] = useState(false)
-
   const [isDrawing, setIsDrawing] = useState(false)
-  
-  const [selectedShape, setSelectedShape] = useState(null)
+  // const [selectedShape, setSelectedShape] = useState(null)
   const [secondPointDone,setSecondPointDone]= useState(false);
+
   
-  const [isEditing, setIsEditing] = useState(false);
-  const [userText, setUserText] = useState('');
+  const [styleBar, setStyleBar] = useState({
+    opacity: 0,
+    strokeColor: "#ffffff",
+    strokeWidth: 0,
+    fillColor: "#ffffff",
+    height: 0,
+    width: 0,
+    link: false,
+    
+  });
+  
 
   return (
     <AppContext.Provider
       value={{
         initialPoint, setInitialPoint,
-        shapeDone, setShapeDone,
         currentShape, setCurrentShape,
-        selectedShape, setSelectedShape,
+        // selectedShape, setSelectedShape,
         data, setData,
         activeTool, setActiveTool,
-        fillColor, setFillColor,
         isDrawing, setIsDrawing,
         secondPointDone, setSecondPointDone,
-        isEditing, setIsEditing,
-        userText, setUserText
+        styleBar, setStyleBar,
       }}
     >
       {children}

@@ -5,7 +5,7 @@ const line = {
    draggable: false,
    id: 0,
    points: [0, 0, 0, 0],
-   strokeColor: 'black',
+   strokeColor: 'black', 
    strokeWidth: 2,
    opacity: 1,
 };
@@ -19,10 +19,10 @@ const Line = () => {
 
    function onMouseUp(e) {
       const { x, y } = e.target.getStage().getPointerPosition();
-      if (!isDrawing) {
+      if (isDrawing) {
          setData([...data, currentShape]);
          setCurrentShape(null);
-         setIsDrawing(true);
+         setIsDrawing(false);
       } else {
          setCurrentShape((prevShape) => ({
             ...prevShape,
@@ -37,7 +37,7 @@ const Line = () => {
          ...prevShape,
          points: [prevShape.points[0], prevShape.points[1], x, y],
       }));
-      setIsDrawing(false);
+      setIsDrawing(true);
    }
 
    function onMouseDown(e) {
@@ -47,7 +47,7 @@ const Line = () => {
          line.points = [x, y, x, y];
          setCurrentShape(line);
       } else {
-         setIsDrawing(false) 
+         setIsDrawing(true)
       }
    }
 

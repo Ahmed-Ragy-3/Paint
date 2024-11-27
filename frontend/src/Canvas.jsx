@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 
-import { useEffect } from 'react';
-import { Transformer, Layer, Stage } from 'react-konva';
+import { useState, useEffect, useRef } from 'react';
+import { Layer, Stage } from 'react-konva';
+import { Transformer } from 'react-konva';
 
 import { useAppContext } from './AppContext';
 
@@ -30,12 +31,30 @@ export default function Canvas() {
   const {
     initialPoint, setInitialPoint,
     currentShape, setCurrentShape,
-    selectedShape, setSelectedShape,
     data, setData,
     activeTool, setActiveTool,
     styleBar, setStyleBar,
-    isDrawing, setIsDrawing
+    isDrawing, setIsDrawing,
   } = useAppContext();
+
+  const transformerRef = useRef(null);
+  const shapeRef = useRef(null)
+
+  const [selectedShape, setSelectedShape] = useState(null)
+  
+  useEffect(() => {
+    // Update the transformer whenever the selected shape changes
+    if (selectedShape) {
+      transformerRef.current.nodes([selectedShape]);
+      transformerRef.current.getLayer().batchDraw();
+    }
+  }, [selectedShape]);
+
+  useEffect(() => {
+    consol.log(selectedShape)
+    setSelectedShape({...selectedShape, fill: styleBar.fillColor})
+    // selectedShape.fill
+  }, [styleBar])
 
   // function getId() {
   //   return data.length
@@ -83,6 +102,10 @@ export default function Canvas() {
   }, [activeTool, currentShape, setData]);
   
   
+  const handleClick = (e) => {
+    setSelectedShape(e.target)
+  }
+
   const handleMouseDown = (e) => {
     const { x, y } = e.target.getStage().getPointerPosition();
     setInitialPoint([x, y]);
@@ -127,18 +150,36 @@ export default function Canvas() {
         onMouseMove={handleMouseMove}
 
         style={{
-          backgroundColor: !selectedShape && fillColor,
+          backgroundColor: !shapeRef && styleBar.fillColor,
           cursor: cursorStyle(),
-          // position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' 
+          // position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' , transform: 'none'
         }}
-        >
+
+        onClick={handleClick}
+      >
         <Layer>
           {currentShape && createShape(currentShape)}
+          
           {
             data.map((shape) => {
-              return createShape(shape);
+              return createShape(shape, shapeRef);
             })
           }
+
+          {selectedShape && (
+            <Transformer
+              ref={transformerRef}
+              rotateEnabled={true}
+              resizeEnabled={true}
+              boundBoxFunc={(oldBox, newBox) => {
+                if (newBox.width < 5 || newBox.height < 5) {
+                  // console.log()
+                  return oldBox;
+                }
+                return newBox;
+              }}
+            />
+          )}
         </Layer>
 
       </Stage>

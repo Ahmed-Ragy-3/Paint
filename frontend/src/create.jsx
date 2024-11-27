@@ -15,8 +15,6 @@ function createShape(shape) {
    }
 }
 
-// npm install react-konva konva
-
 export default createShape;
 
 function createEllipse(shape) {
@@ -46,6 +44,13 @@ function createRectangle(shape) {
       opacity={shape.opacity}
       height={shape.height}
       width={shape.width}
+
+      // onClick={() => {
+      //    // const shape = e.target;
+      //    // console.log(shape)
+      //    // selectedShape = e.target;
+      //    // setSelectedShape(shape);
+      // }}
    />
 }
 
@@ -65,12 +70,12 @@ function createTriangle(shape) {
 function createText(shape) {
    return <Text
       key={shape.id}   
-      draggable={shape.draggable}
+      x={shape.centerX}
+      y={shape.centerY}
       text={shape.text}
       fontSize={shape.fontSize} 
       fill={shape.fill} 
-      x={shape.centerX}
-      y={shape.centerY}
+      draggable={shape.draggable}
    />
 }
 

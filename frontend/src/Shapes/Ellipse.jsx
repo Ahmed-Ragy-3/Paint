@@ -4,7 +4,7 @@ const ellipse = {
    type: 'Ellipse',
    draggable: false,
    id: 0,
-   centerX: 0,
+   centerX: 0, 
    centerY: 0,
    strokeWidth: 2,
    strokeColor: 'black',
@@ -24,10 +24,10 @@ const Ellipse = () => {
 
    const onMouseUp = (e) => {
       const { x, y } = e.target.getStage().getPointerPosition();
-      if (!isDrawing) {
+      if (isDrawing) {
          setData([...data, currentShape]);
          setCurrentShape(null);
-         setIsDrawing(true);
+         setIsDrawing(false);
       } else {
          let radX = Math.abs(x - initialPoint[0]);
          setCurrentShape((prevShape) => ({
@@ -46,7 +46,7 @@ const Ellipse = () => {
          radiusX: radX,
          radiusY: e.evt.shiftKey ? radX : Math.abs(y - initialPoint[1]),
       }));
-      setIsDrawing(false);
+      setIsDrawing(true);
    };
 
    const onMouseDown = (e) => {
@@ -59,7 +59,7 @@ const Ellipse = () => {
          ellipse.centerY = y;
          setCurrentShape(ellipse);
       } else {
-         setIsDrawing(false) 
+         setIsDrawing(true) 
       }
    };
 

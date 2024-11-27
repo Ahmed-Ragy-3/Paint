@@ -1,6 +1,10 @@
-import { useContext } from 'react';
+import { useAppContext } from '../AppContext';
 
-export default function Opacity({ styleBar, setStyleBar }) {
+export default function Opacity() {
+
+  const {
+    styleBar, setStyleBar
+  } = useAppContext();
 
   const handleOpacityChange = (e) => {
     setStyleBar({...styleBar, opacity: e.target.value / 100})

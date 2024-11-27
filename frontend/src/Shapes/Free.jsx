@@ -5,7 +5,7 @@ const free = {
    id: 0,
    points: [],
    draggable: true,
-   strokeColor: "black",
+   strokeColor: "black", 
    strokeWidth: 5,
    opacity: 1,
 }

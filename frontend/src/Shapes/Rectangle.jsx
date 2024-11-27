@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useAppContext } from '../AppContext';
 
 const rectangle = {
@@ -6,12 +7,13 @@ const rectangle = {
    id: 0,
    centerX: 0,
    centerY: 0,
-   width: 0,
+   width: 0, 
    height: 0,
    strokeWidth: 2,
    strokeColor: 'black',
    fill: 'blue',
    opacity: 1,
+   // onClick: null
 };
 
 const Rectangle = () => {
@@ -20,13 +22,24 @@ const Rectangle = () => {
       data, setData,
       initialPoint, setInitialPoint,
       isDrawing, setIsDrawing,
+      selectedShape, setSelectedShape,
+      styleBar, setStyleBar
    } = useAppContext();
+   
+   /////////////////
+   // const handleClick = (e) => {
+   //    const shape = e.target;
+   //    console.log(shape)
+   //    setSelectedShape(shape);
+   // };
+   ///////////////
 
    function onMouseUp(e) {
-      if(!isDrawing) {
+      if(isDrawing) {
+
          setData([...data, currentShape]);
          setCurrentShape(null);
-         setIsDrawing(true);
+         setIsDrawing(false);
       } else {
          const { x, y } = e.target.getStage().getPointerPosition();
          let w = Math.abs(x - initialPoint[0]);
@@ -51,6 +64,7 @@ const Rectangle = () => {
             centerY: cy,
             width: w,
             height: h,
+            fill: styleBar.fillColor
          }));
       }
    }
@@ -79,8 +93,9 @@ const Rectangle = () => {
          centerY: cy,
          width: w,
          height: h,
+         fill: styleBar.fillColor
       }));
-      setIsDrawing(false);
+      setIsDrawing(true);
    }
 
    function onMouseDown(e) {
@@ -91,9 +106,11 @@ const Rectangle = () => {
          rectangle.id = data.length
          rectangle.centerX = x
          rectangle.centerY = y
+         // rectangle.onClick = handleClick
+         rectangle.fill = styleBar.fillColor;
          setCurrentShape(rectangle);
       } else {
-         setIsDrawing(false);
+         setIsDrawing(true);
       }
    }
 
