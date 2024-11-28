@@ -7,7 +7,7 @@ const ellipse = {
    centerX: 0, 
    centerY: 0,
    strokeWidth: 2,
-   strokeColor: 'black',
+   strokeColor: '#000000',
    fill: 'transparent',
    opacity: 1,
    radiusX: 0,

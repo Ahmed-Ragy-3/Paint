@@ -5,7 +5,7 @@ const triangle = {
    draggable: false,
    id: 0,
    points: [0, 0, 0, 0, 0, 0],
-   strokeColor: 'black',
+   strokeColor: '#000000',
    strokeWidth: 2,
    fill: 'transparent', 
    opacity: 1,

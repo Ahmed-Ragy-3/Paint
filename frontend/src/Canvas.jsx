@@ -10,7 +10,7 @@ import Free from './Shapes/Free.jsx';
 import Line from './Shapes/Line.jsx';
 import Polygon from './Shapes/Polygon.jsx';
 import Rectangle from './Shapes/Rectangle.jsx';
-import Text from './Shapes/Text.jsx';
+import TextTool from './Shapes/Text.jsx';
 import Triangle from './Shapes/Triangle.jsx';
 
 import createShape from './create.jsx';
@@ -22,7 +22,7 @@ const events = {
   triangle: Triangle,
   polygon: Polygon,
   free: Free,
-  text: Text
+  text: TextTool
 };
 
 
@@ -40,51 +40,36 @@ export default function Canvas() {
     redoStack, setRedoStack,
     idsStack, setIdsStack,
     equalTop,
-    undo, redo
+    undo, redo,
+    selectedId, setSelectedId,
+    putShapeInId
   } = useAppContext();
 
-  const transformerRef = useRef(null);
-  const shapeRef = useRef(null)
 
-  const [selectedId, setSelectedId] = useState(null)
   const { onMouseUp, onMouseMove, onMouseDown } = activeTool && activeTool !== "move" ? events[activeTool]() : {};
   const copied = null
-  
 
-  function putShapeInId(id, newShape) {
-    // console.log("putting in id " + id)
-    // console.log("newShape = " + newShape)
-    
-    if(id === null || id >= data.length) {
-      // console.log(".Error in putShapeInId function.")
-      // console.log("data.length = " + data.length)
+  function copy() {
+    if(!copied) {
       return
     }
 
-    setData((prevData) => 
-      prevData.map((shape) => {
-
-        if (shape && shape.id === id) {
-          if (!newShape) {
-            return null
-          } else {
-            return { ...shape, ...newShape }
-          }
-        } else {
-          return shape
-        }
+    fetch('http://localhost:8080/shapes/clone', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-      )
-    );
-  }
-  
-  // useEffect(() => {
-  //   // Update the transformer whenever the selected shape changes
-  //   if (selectedId) {
-  //     transformerRef.current.nodes([shapeRef.current]);
-  //     transformerRef.current.getLayer().batchDraw();
-  //   }
-  // }, [selectedId]);
+      return response.json();
+    })
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+  }  
 
   // useEffect(() => {
   //   undoStack.push(data)
@@ -143,6 +128,9 @@ export default function Canvas() {
         case 'y':
           redo()
           break;
+        case 'c':
+          copy()
+          break;
         default:
           break;
       }
@@ -170,7 +158,7 @@ export default function Canvas() {
       }
     }
 
-  },[setActiveTool, setData, data, currentShape, setCurrentShape, setIsDrawing, activeTool]);
+  }, [setActiveTool, setData, data, currentShape, setCurrentShape, setIsDrawing, activeTool]);
 
   useEffect(() => {
     setData((prevData) =>
@@ -191,12 +179,16 @@ export default function Canvas() {
   }, [handleKeyDown]);
   
 
+  // useEffect(() => {
+  //   undoStack.push(data)
+  //   setUndoStack(undoStack)
+  // }, [styleBar]);
+  
   useEffect(() => {
     console.log("push in undo stack")
-    undoStack.push(data)
-    setUndoStack(undoStack)
+    // Avoid modifying state directly
+    setUndoStack((prevUndoStack) => [...prevUndoStack, data]);
   }, [styleBar]);
-  
   
   useEffect(() => {
 
@@ -217,6 +209,9 @@ export default function Canvas() {
   const handleClick = (id) => {
     console.log("in handle click, id = " + id)
     setSelectedId(id)
+    
+    console.log(selectedId);
+    
     const s = data[id]
 
     setSelectedShapeType(data[id].type)
@@ -242,6 +237,11 @@ export default function Canvas() {
       undoStack.push(data)
       setUndoStack(undoStack)
     }
+
+    if (e.target === e.target.getStage()) {
+      setSelectedId(null);
+    }
+    
     const { x, y } = e.target.getStage().getPointerPosition();
     setInitialPoint([x, y]);
     if (onMouseDown) onMouseDown(e)
@@ -288,9 +288,8 @@ export default function Canvas() {
         onMouseMove={handleMouseMove}
 
         style={{
-          backgroundColor: !shapeRef && styleBar.fill,
+          // backgroundColor: styleBar.fill,
           cursor: cursorStyle(),
-          // position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' , transform: 'none'
         }}
       >
         <Layer>
@@ -302,20 +301,6 @@ export default function Canvas() {
             })
           }
 
-          {selectedId !== null && (
-            <Transformer
-              ref={transformerRef}
-              rotateEnabled={true}
-              resizeEnabled={true}
-              boundBoxFunc={(oldBox, newBox) => {
-                if (newBox.width < 5 || newBox.height < 5) {
-                  // console.log()
-                  return oldBox;
-                }
-                return newBox;
-              }}
-            />
-          )}
         </Layer>
 
       </Stage>

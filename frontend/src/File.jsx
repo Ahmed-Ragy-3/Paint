@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useAppContext } from './AppContext';
 
+import file from './assets/file.svg';
+
 function File() {
   const { data, setData } = useAppContext();
   const [showButtons, setShowButtons] = useState(false);
@@ -23,41 +25,10 @@ function File() {
     
   };
   
-  const XMLToJSON = (e) =>  {
-    const obj = {};
-
-    if (xml.nodeType === 1) {
-      if (xml.attributes.length > 0) {
-        obj['@attributes'] = {};
-        for (let i = 0; i < xml.attributes.length; i++) {
-          const attr = xml.attributes.item(i);
-          obj['@attributes'][attr.nodeName] = attr.nodeValue;
-        }
-      }
-    }
-
-    if (xml.hasChildNodes()) {
-      for (let i = 0; i < xml.childNodes.length; i++) {
-        const item = xml.childNodes.item(i);
-        const nodeName = item.nodeName;
-
-        if (typeof obj[nodeName] === 'undefined') {
-          obj[nodeName] = XMLToJSON(item);
-        } else {
-          if (Array.isArray(obj[nodeName])) {
-            obj[nodeName].push(XMLToJSON(item));
-          } else {
-            obj[nodeName] = [obj[nodeName], XMLToJSON(item)];
-          }
-        }
-      }
-    } else {
-      obj = xml.nodeValue;
-    }
-
-    return obj;
+  function XMLToJSON(xmlString) {
+    // can't do
   }
-
+  
   const handleLoadXML = (e) => {
    const file = e.target.files[0];
    if (file) {
@@ -80,33 +51,55 @@ function File() {
     link.click();
   };
 
-  function JSONToXML(json) {
-    let xml = '';
+  function jsonToXml(json, rootElement = 'root') {
+    const xmlDocument = document.implementation.createDocument('', rootElement, null);
   
-    for (const key in json) {
-      if (json.hasOwnProperty(key)) {
-        const value = json[key];
+    function convertJsonToXml(jsonObj, parentElement) {
+      for (const key in jsonObj) {
+        if (jsonObj.hasOwnProperty(key)) {
+          const value = jsonObj[key];
   
-        if (Array.isArray(value)) {
-          // Handle arrays by wrapping them in their own tags
-          value.forEach((item) => {
-            xml += `<${key}>${JSONToXML(item)}</${key}>`;
-          });
-        } else if (typeof value === 'object') {
-          // Recursively process objects
-          xml += `<${key}>${JSONToXML(value)}</${key}>`;
-        } else {
-          // Handle primitive values (strings, numbers, etc.)
-          xml += `<${key}>${value}</${key}>`;
+          // Create a new key if it's invalid for an XML tag name
+          let validKey = key;
+          if (!/^[A-Za-z_][A-Za-z0-9_-]*$/.test(key)) {
+            validKey = `item_${key}`; // Modify the key to make it a valid tag name
+          }
+  
+          // Create a new element for each key in the JSON
+          const element = xmlDocument.createElement(validKey);
+  
+          if (typeof value === 'object' && !Array.isArray(value)) {
+            // Recursively process objects
+            convertJsonToXml(value, element);
+          } else if (Array.isArray(value)) {
+            // Handle arrays by creating multiple elements for the same key
+            value.forEach((item, index) => {
+              const arrayElement = xmlDocument.createElement(`${validKey}_${index}`);
+              convertJsonToXml(item, arrayElement);
+              element.appendChild(arrayElement);
+            });
+          } else {
+            // Set primitive values (string, number, etc.)
+            const textNode = xmlDocument.createTextNode(value);
+            element.appendChild(textNode);
+          }
+  
+          // Append the created element to the parent
+          parentElement.appendChild(element);
         }
       }
     }
   
-    return xml;
+    // Start the conversion from the root
+    convertJsonToXml(json, xmlDocument.documentElement);
+  
+    // Use XMLSerializer to convert the DOM to an XML string
+    const serializer = new XMLSerializer();
+    return serializer.serializeToString(xmlDocument);
   }
 
   const handleSaveXML = () => {
-    const xmlString = JSONToXML(data); 
+    const xmlString = jsonToXml(data, 'root'); 
     const blob = new Blob([xmlString], { type: 'application/xml' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
@@ -115,17 +108,39 @@ function File() {
   };
 
   return (
-    <div>
+    <div style={{display: 'flex', flexDirection: 'row'}}>
       <div>
-        <button onClick={() => setShowButtons(!showButtons)}>
-          📂
+        <button 
+        style={{
+          height : '100%',
+          backgroundColor : 'transparent',
+          border : 'none',
+          marginTop : '5px',
+          marginLeft : '5px',
+          cursor: 'pointer'
+
+        }}
+        onClick={() => setShowButtons(!showButtons)}>
+          <img src={file} alt="unlink" />
         </button>
       </div>
 
       {showButtons && (
-        <div>
+        <div style={{display: 'flex', flexDirection: 'row', marginTop: '16px', gap: '5px'}}>
           <div>
-            <button onClick={() => jsonFileInputRef.current.click()}>Load JSON File</button>
+            <button 
+              style={{
+                backgroundColor: '#515151',
+                color: '#D4D4D4',
+                padding: '5px 10px',
+                borderRadius: '5px',
+                border: 'none',
+                cursor: 'pointer',
+                fontFamily: 'Roboto',
+                fontSize: '16px',
+                marginBottom: '10px',
+              }}
+              onClick={() => jsonFileInputRef.current.click()}>Load JSON</button>
             <input
               type="file"
               accept=".json"
@@ -136,7 +151,19 @@ function File() {
           </div>
 
           <div>
-            <button onClick={() => xmlFileInputRef.current.click()}>Load XML File</button>
+            <button 
+            style={{
+              backgroundColor: '#515151',
+              color: '#D4D4D4',
+              padding: '5px 10px',
+              borderRadius: '5px',
+              border: 'none',
+              cursor: 'pointer',
+              fontFamily: 'Roboto',
+              fontSize: '16px',
+              marginBottom: '10px',
+            }}
+            onClick={() => xmlFileInputRef.current.click()}>Load XML</button>
             <input
               type="file"
               accept=".xml"
@@ -147,11 +174,35 @@ function File() {
           </div>
 
           <div>
-            <button onClick={handleSaveJSON}>Save JSON File</button>
+            <button 
+            style={{
+              backgroundColor: '#515151',
+              color: '#D4D4D4',
+              padding: '5px 10px',
+              borderRadius: '5px',
+              border: 'none',
+              cursor: 'pointer',
+              fontFamily: 'Roboto',
+              fontSize: '16px',
+              marginBottom: '10px',
+            }}
+            onClick={handleSaveJSON}>Save JSON</button>
           </div>
 
           <div>
-            <button onClick={handleSaveXML}>Save XML File</button>
+            <button 
+            style={{
+              backgroundColor: '#515151',
+              color: '#D4D4D4',
+              padding: '5px 10px',
+              borderRadius: '5px',
+              border: 'none',
+              cursor: 'pointer',
+              fontFamily: 'Roboto',
+              fontSize: '16px',
+              marginBottom: '10px',
+            }}
+            onClick={handleSaveXML}>Save XML</button>
           </div>
         </div>
       )}

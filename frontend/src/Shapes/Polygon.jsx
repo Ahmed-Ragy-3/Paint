@@ -4,10 +4,10 @@ export const polygon = {
    type: 'Polygon',
    draggable: false,
    id: 0,
-   fill: 'grey',
+   fill: '#000000',
    points: [],
    strokeWidth: 2, 
-   strokeColor: 'black',
+   strokeColor: '#000000',
    opacity: 1,
    closed: false,
 }

@@ -7,11 +7,12 @@ const text = {
   y: 0,
   text: '',
   fontSize: 20,
-  fill: 'black',
+  fill: '#000000',
+  opacity: 1,
   draggable: true,
 };
 
-const Text = () => {
+const TextTool = () => {
   const {
     currentShape, setCurrentShape,
     data, setData,
@@ -21,17 +22,19 @@ const Text = () => {
   const onMouseDown = (e) => {
     const { x, y } = e.target.getStage().getPointerPosition();
     console.log(x, y);
-
+  
     if (!currentShape) {
-      text.id = data.length
-      text.x = x
-      text.y = y
-      text.text = 'Enter text here'
-      // text.fill = styleBar.fill
-      setData([...data, text]);
-      setCurrentShape(null); 
+      const newText = {
+        ...text,  // Spread the default text properties
+        id: data.length,
+        x,
+        y,
+        text: 'Enter text here',
+      };
+      setData([...data, newText]);  // Add new text object to data
+      setCurrentShape(null);
     }
-
+  
     console.log(data);
   };
 
@@ -46,4 +49,4 @@ const Text = () => {
   return { onMouseDown, onMouseMove, onMouseUp };
 };
 
-export default Text;
+export default TextTool;

@@ -9,8 +9,8 @@ const rectangle = {
    width: 0, 
    height: 0,
    strokeWidth: 2,
-   strokeColor: 'black',
-   fill: 'blue',
+   strokeColor: '#000000',
+   fill: '#000000',
    opacity: 1,
 };
 

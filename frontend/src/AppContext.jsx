@@ -17,7 +17,8 @@ export const AppProvider = ({ children }) => {
   const [redoStack, setRedoStack] = useState([])
   const [idsStack, setIdsStack]= useState([])
 
-  
+  const [selectedId, setSelectedId] = useState(null)
+
   function undo() {
     console.log(undoStack)
     if(undoStack.length === 0) {
@@ -73,11 +74,36 @@ export const AppProvider = ({ children }) => {
     return true;
   }
   
-  
   function equalTop(arr, element) {
     return arr.length !== 0 && compareArrays(element, arr[arr.length - 1])
   }
 
+  function putShapeInId(id, newShape) {
+    // console.log("putting in id " + id)
+    // console.log("newShape = " + newShape)
+    
+    if(id === null || id >= data.length) {
+      // console.log(".Error in putShapeInId function.")
+      // console.log("data.length = " + data.length)
+      return
+    }
+
+    setData((prevData) => 
+      prevData.map((shape) => {
+
+        if (shape && shape.id === id) {
+          if (!newShape) {
+            return null
+          } else {
+            return { ...shape, ...newShape }
+          }
+        } else {
+          return shape
+        }
+      }
+      )
+    );
+  }  
   
   const [styleBar, setStyleBar] = useState({
     opacity: 1,
@@ -109,6 +135,8 @@ export const AppProvider = ({ children }) => {
         idsStack, setIdsStack,
         equalTop,
         undo, redo,
+        selectedId, setSelectedId,
+        putShapeInId
       }}
     >
       {children}

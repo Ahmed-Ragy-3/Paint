@@ -37,7 +37,7 @@ export default function ToolBar() {
       </button>
 
       <button 
-        title="Line Tool" 
+        title="Line Tool (l)" 
         onClick={() => { setActiveTool("line") }}
         className={activeTool === "line" ? "active" : ""}
       >
@@ -45,7 +45,7 @@ export default function ToolBar() {
       </button>
 
       <button 
-        title="Polygon Tool" 
+        title="Polygon Tool (p)" 
         onClick={() => {
           setCurrentShape(polygon)
           setActiveTool("polygon") 
@@ -56,7 +56,7 @@ export default function ToolBar() {
       </button>
 
       <button 
-        title="Triangle Tool" 
+        title="Triangle Tool (t)" 
         onClick={() => { setActiveTool("triangle") }}
         className={activeTool === "triangle" ? "active" : ""}
       >
@@ -64,7 +64,7 @@ export default function ToolBar() {
       </button>
 
       <button 
-        title="Rectangle Tool" 
+        title="Rectangle Tool (r)" 
         onClick={() => { setActiveTool("rectangle") }}
         className={activeTool === "rectangle" ? "active" : ""}
       >
@@ -72,7 +72,7 @@ export default function ToolBar() {
       </button>
 
       <button 
-        title="Ellipse Tool" 
+        title="Ellipse Tool (e)" 
         onClick={() => { setActiveTool("ellipse") }}
         className={activeTool === "ellipse" ? "active" : ""}
       >
@@ -80,7 +80,7 @@ export default function ToolBar() {
       </button>
 
       <button 
-        title="Brush Tool" 
+        title="Brush Tool (b)" 
         onClick={() => { setActiveTool("free") }}
         className={activeTool === "free" ? "active" : ""}
       >
