@@ -2,7 +2,7 @@ import { useAppContext } from '../AppContext';
 
 export default function Stroke() {
   const {
-    styleBar, setStyleBar
+    styleBar, setStyleBar, selectedShapeType
   } = useAppContext();
 
   const handleStrokeColorChange = (e) => {
@@ -10,11 +10,11 @@ export default function Stroke() {
   };
   
   const handleStrokeWidthChange = (e) => {
-    setStyleBar({...styleBar, strokeWidth: e.target.value})
+    setStyleBar({...styleBar, strokeWidth: parseFloat(e.target.value)})
   };
 
   return (
-    <div className="Stroke">
+    selectedShapeType !== 'Text' && (<div className="Stroke">
 
       <label className='stroke-label'>Stroke</label>
 
@@ -39,6 +39,6 @@ export default function Stroke() {
 
       </div>
 
-    </div>
+    </div>)
   );
 }

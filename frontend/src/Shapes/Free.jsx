@@ -13,7 +13,8 @@ const free = {
 const Free = () => {
    const {
       currentShape, setCurrentShape,
-      data, setData
+      data, setData,
+      styleBar, setStyleBar
    } = useAppContext();
 
    function onMouseMove(e) {
@@ -28,6 +29,7 @@ const Free = () => {
       const { x, y } = e.target.getStage().getPointerPosition();
       free.id = data.length
       free.points = [x, y]
+      free.strokeColor = styleBar.strokeColor;
       setCurrentShape(free);
    }
 

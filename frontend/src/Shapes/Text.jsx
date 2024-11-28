@@ -15,6 +15,7 @@ const Text = () => {
   const {
     currentShape, setCurrentShape,
     data, setData,
+    styleBar, setStyleBar
   } = useAppContext();
 
   const onMouseDown = (e) => {
@@ -22,15 +23,12 @@ const Text = () => {
     console.log(x, y);
 
     if (!currentShape) {
-      const newText = {
-        ...text,
-        id: data.length,
-        x,
-        y,
-        text: 'Enter text here',
-      };
-
-      setData([...data, newText]);
+      text.id = data.length
+      text.x = x
+      text.y = y
+      text.text = 'Enter text here'
+      // text.fill = styleBar.fillColor
+      setData([...data, text]);
       setCurrentShape(null); 
     }
 

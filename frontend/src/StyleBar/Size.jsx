@@ -1,72 +1,99 @@
 import { useAppContext } from '../AppContext';
-
 import unlink from './icons/unlink.svg';
 import link from './icons/link.svg';
+import { useState } from 'react';
 
 export default function Size() {
 
-  const {styleBar, setStyleBar} = useAppContext();
+  const { styleBar, setStyleBar, selectedShapeType } = useAppContext();
+  const [ratio, setRatio] = useState(1);
 
   const handleWidthChange = (e) => {
-    const newWidth = e.target.value;
-    setStyleBar({...styleBar, width: newWidth, height: link ? newWidth / ratio : height})
-    // setWidth(newWidth);
-    // if (styleBar.link) {
-    //   setHeight(newWidth / ratio);
-    // }
+    const newValue = parseFloat(e.target.value);
+    if (selectedShapeType === 'Rectangle') {
+      setStyleBar({
+        ...styleBar,
+        width: newValue,
+        height: styleBar.link ? newValue / ratio : styleBar.height,
+      });
+    } else {
+      const newRadiusY = styleBar.link ? newValue / ratio : styleBar.radiusY;
+      setStyleBar({
+        ...styleBar,
+        radiusX: newValue,
+        radiusY: newRadiusY,
+      });
+    }
   };
-  
+
   const handleHeightChange = (e) => {
-    const newHeight = e.target.value;
-    setStyleBar({...styleBar, height: newHeight, width: link ? newHeight * ratio : width})
-    
-    // setHeight(newHeight);
-    // if (link) {
-    //   setWidth(newHeight * ratio);
-    // }
+    const newValue = parseFloat(e.target.value);
+    if (selectedShapeType === 'Rectangle') {
+      setStyleBar({
+        ...styleBar,
+        width: styleBar.link ? newValue * ratio : styleBar.width,
+        height: newValue,
+      });
+    } else {
+      const newRadiusX = styleBar.link ? newValue * ratio : styleBar.radiusX;
+      setStyleBar({
+        ...styleBar,
+        radiusX: newRadiusX,
+        radiusY: newValue,
+      });
+    }
   };
 
   const handleLinkToggle = () => {
-    // setlink((prev) => !prev);
+    const [dim1, dim2] = selectedShapeType === 'Rectangle'
+      ? [styleBar.width, styleBar.height]
+      : [styleBar.radiusX, styleBar.radiusY];
 
-    // if (!link) {
-    //   setRatio(width / height);
-    // }
+    const newRatio = dim2 !== 0 ? dim1 / dim2 : 1;
+
+    setRatio(newRatio);
+    setStyleBar({ ...styleBar, link: !styleBar.link });
   };
 
   return (
-    <div className="length-and-width">
-      <div className="length-and-width-line">
-        <label className="length-and-width-label">W</label>
-        <input
-          className="length-and-width-input"
-          type="number"
-          value={styleBar.width}
-          min={0}
-          onChange={handleWidthChange}
-          title="Change Width Value"
-        />
-      </div>
+    (selectedShapeType === 'Rectangle' || selectedShapeType === 'Ellipse') && (
+      <div className="length-and-width">
+        <div className="length-and-width-line">
+          <label className="length-and-width-label">
+            {selectedShapeType === 'Rectangle' ? 'W' : 'X'}
+          </label>
+          <input
+            className="length-and-width-input"
+            type="number"
+            value={selectedShapeType === 'Rectangle' ? styleBar.width : styleBar.radiusX}
+            min={0}
+            onChange={handleWidthChange}
+            title={selectedShapeType === 'Rectangle' ? "Change Width Value" : 'Change Radius X Value'}
+          />
+        </div>
 
-      <button
-        className="length-and-width-btn"
-        onClick={handleLinkToggle}
-        title="Link Width and Height"
-      >
-        {styleBar.link ? <img src={unlink} alt="unlink" /> : <img src={link} alt="link" />}
-      </button>
+        <button
+          className="length-and-width-btn"
+          onClick={handleLinkToggle}
+          title="Link Width and Height"
+        >
+          {styleBar.link ? <img src={unlink} alt="unlink" /> : <img src={link} alt="link" />}
+        </button>
 
-      <div className="length-and-width-line">
-        <label className="length-and-width-label">H</label>
-        <input
-          className="length-and-width-input"
-          type="number"
-          value={styleBar.height}
-          min={0}
-          onChange={handleHeightChange}
-          title="Change Height Value"
-        />
+        <div className="length-and-width-line">
+          <label className="length-and-width-label">
+            {selectedShapeType === 'Rectangle' ? 'H' : 'Y'}
+          </label>
+          <input
+            className="length-and-width-input"
+            type="number"
+            value={selectedShapeType === 'Rectangle' ? styleBar.height : styleBar.radiusY}
+            min={0}
+            onChange={handleHeightChange}
+            title={selectedShapeType === 'Rectangle' ? "Change Height Value" : 'Change Radius Y Value'}
+          />
+        </div>
       </div>
-    </div>
+    )
   );
 }

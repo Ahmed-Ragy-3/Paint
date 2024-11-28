@@ -35,6 +35,7 @@ export default function Canvas() {
     activeTool, setActiveTool,
     styleBar, setStyleBar,
     isDrawing, setIsDrawing,
+    selectedShapeType, setSelectedShapeType
   } = useAppContext();
 
   const transformerRef = useRef(null);
@@ -43,56 +44,32 @@ export default function Canvas() {
   const [selectedId, setSelectedId] = useState(null)
   const { onMouseUp, onMouseMove, onMouseDown } = activeTool && activeTool !== "move" ? events[activeTool]() : {};
   
-  // useEffect(() => {
+  {// useEffect(() => {
   //   // Update the transformer whenever the selected shape changes
   //   if (selectedId) {
   //     transformerRef.current.nodes([shapeRef.current]);
   //     transformerRef.current.getLayer().batchDraw();
   //   }
   // }, [selectedId]);
+  } 
 
-  useEffect(() => {
-    // console.log("for selected Id: ")
-    // console.log(data[selectedId])
-    // console.log(selectedId)
-    const s = data[selectedId];
-  
-    setData((prevData) => 
-      prevData.map((shape) =>
-        shape.id === selectedId
-          ? {
-              ...shape,
-              opacity: styleBar.opacity,
-              strokeColor: styleBar.strokeColor,
-              strokeWidth: styleBar.strokeWidth,
-              fill: styleBar.fillColor,
-              height: styleBar.height,
-              width: styleBar.width,
-            }
-          : shape
-      )
-    );
-  }, [styleBar, selectedId, setData]);
-  
-  
   // function getId() {
     //   return data.length
     // }
     
-    
-    useEffect(() => {
-      // handle draggable attribute move tool is active
-      setData((prevData) =>
-        prevData.map((shape) => ({
-          ...shape,
-          draggable: activeTool === 'move',
-        }))
-      );
-      
-      const removeLastPoint = (points) => {
-        return points.slice(0, -2);
-      }
-      
+  useEffect(() => {
+    // handle draggable attribute move tool is active
+    setData((prevData) =>
+      prevData.map((shape) => ({
+        ...shape,
+        draggable: activeTool === 'move',
+      }))
+    );
+
+    const removeLastPoint = (points) => {
+      return points.slice(0, -2);
+    }
+
     const handleKeyDown = (e) => {
 
       switch (e.key) {
@@ -114,13 +91,13 @@ export default function Canvas() {
         case 'e':
           setActiveTool('ellipse')
           break;
-        case 't':
-          setActiveTool('text')
-          break;
+        // case 't':
+        //   setActiveTool('text')
+        //   break;
         case 'b':
           setActiveTool('free')
           break;
-      
+
         default:
           break;
       }
@@ -144,19 +121,48 @@ export default function Canvas() {
         }
       }
     }
-    
+
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [activeTool, currentShape, setData]);
   
+  useEffect(() => {
+    // console.log("for selected Id: ")
+    // console.log(data[selectedId])
+    // console.log(selectedId)
+    // const s = data[selectedId];
+  
+    setData((prevData) => 
+      prevData.map((shape) =>
+        shape.id === selectedId
+          ? {
+              ...shape,
+              opacity: styleBar.opacity,
+              strokeColor: styleBar.strokeColor,
+              strokeWidth: styleBar.strokeWidth,
+              fill: styleBar.fillColor,
+              height: styleBar.height,
+              width: styleBar.width,
+              radiusX: styleBar.radiusX,
+              radiusY: styleBar.radiusY,
+            }
+          : shape
+      )
+    );
+  }, [styleBar, selectedId, setData]);
   
   const handleClick = (id) => {
     // console.log("ojqbwdiu;qfufwgf;iuewgf;web;fwe;feb'fuewufhwejllehwFHuwefewihf'ihhee")
     console.log(id)
+
     setSelectedId(id)
     const s = data[id]
+
+    // console.log(data[id].type);
+    
+    setSelectedShapeType(data[id].type)
 
     setStyleBar({
       opacity: s.opacity,
@@ -165,7 +171,9 @@ export default function Canvas() {
       fillColor: s.fill,
       height: s.height,
       width: s.width,
-      link: false,
+      radiusX: s.radiusX,
+      radiusY: s.radiusY,
+      // link: false,
     })
     // console.log(data[selectedId])
   }

@@ -19,7 +19,8 @@ const Ellipse = () => {
       initialPoint, setInitialPoint,
       currentShape, setCurrentShape,
       data, setData,
-      isDrawing, setIsDrawing
+      isDrawing, setIsDrawing,
+      styleBar, setStyleBar
    } = useAppContext();
 
    const onMouseUp = (e) => {
@@ -57,6 +58,8 @@ const Ellipse = () => {
          ellipse.id = data.length;
          ellipse.centerX = x;
          ellipse.centerY = y;
+         ellipse.fill = styleBar.fillColor;
+         ellipse.strokeColor = styleBar.strokeColor;
          setCurrentShape(ellipse);
       } else {
          setIsDrawing(true) 

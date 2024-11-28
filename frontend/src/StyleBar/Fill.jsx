@@ -5,6 +5,7 @@ export default function Fill() {
 
   const {
     styleBar, setStyleBar,
+    selectedShapeType
   } = useAppContext();
 
   const handleFillColorChange = (e) => {
@@ -12,7 +13,8 @@ export default function Fill() {
   };
 
   return (
-    <div className="Fill">
+     (selectedShapeType !== 'Line' && selectedShapeType !== 'Free')
+     && (<div className="Fill">
 
       <label className='fill-label'>Fill</label>
       
@@ -24,6 +26,6 @@ export default function Fill() {
         title='Pick Fill Color'
       />
       
-    </div>
+    </div>)
   )
 }

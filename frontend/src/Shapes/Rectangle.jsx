@@ -54,7 +54,7 @@ const Rectangle = () => {
             centerY: cy,
             width: w,
             height: h,
-            fill: styleBar.fillColor
+            // fill: styleBar.fillColor
          }));
       }
    }
@@ -83,7 +83,7 @@ const Rectangle = () => {
          centerY: cy,
          width: w,
          height: h,
-         fill: styleBar.fillColor
+         // fill: styleBar.fillColor
       }));
       setIsDrawing(true);
    }
@@ -96,8 +96,8 @@ const Rectangle = () => {
          rectangle.id = data.length
          rectangle.centerX = x
          rectangle.centerY = y
-         // rectangle.onClick = handleClick
          rectangle.fill = styleBar.fillColor;
+         rectangle.strokeColor = styleBar.strokeColor;
          setCurrentShape(rectangle);
       } else {
          setIsDrawing(true);

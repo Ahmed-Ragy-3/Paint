@@ -7,7 +7,7 @@ export default function Opacity() {
   } = useAppContext();
 
   const handleOpacityChange = (e) => {
-    setStyleBar({...styleBar, opacity: e.target.value / 100})
+    setStyleBar({...styleBar, opacity: parseFloat(e.target.value) / 100})
   };
 
   return (

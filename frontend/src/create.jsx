@@ -68,7 +68,7 @@ function createTriangle(shape, handleClick) {
 }
 
 function createText(shape, handleClick) {
-   return <Konva.Text
+   return <Text
       key={shape.id}   
       x={shape.centerX}
       y={shape.centerY}

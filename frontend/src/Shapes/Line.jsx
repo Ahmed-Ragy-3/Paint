@@ -15,6 +15,7 @@ const Line = () => {
       currentShape, setCurrentShape,
       data, setData,
       isDrawing, setIsDrawing,
+      styleBar, setStyleBar
    } = useAppContext();
 
    function onMouseUp(e) {
@@ -45,6 +46,7 @@ const Line = () => {
       if (!currentShape) {
          line.id = data.length;
          line.points = [x, y, x, y];
+         line.strokeColor = styleBar.strokeColor;
          setCurrentShape(line);
       } else {
          setIsDrawing(true)

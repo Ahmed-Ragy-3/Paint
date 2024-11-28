@@ -17,6 +17,7 @@ const Triangle = () => {
       data, setData,
       secondPointDone, setSecondPointDone,
       isDrawing, setIsDrawing,
+      styleBar, setStyleBar
    } = useAppContext();
 
    let moved = false;
@@ -75,6 +76,8 @@ const Triangle = () => {
       if (!currentShape) {
          triangle.id = data.length
          triangle.points = [x, y, x, y, x, y],
+         triangle.fill = styleBar.fillColor;
+         triangle.strokeColor = styleBar.strokeColor;
          setCurrentShape(triangle);
       } else if (!secondPointDone) {
          setSecondPointDone(true);

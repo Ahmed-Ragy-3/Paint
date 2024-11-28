@@ -12,17 +12,20 @@ export const AppProvider = ({ children }) => {
   const [initialPoint, setInitialPoint] = useState([0, 0])
   const [isDrawing, setIsDrawing] = useState(false)
   const [secondPointDone,setSecondPointDone]= useState(false);
+  const [selectedShapeType, setSelectedShapeType] = useState(null);
 
   
   const [styleBar, setStyleBar] = useState({
-    opacity: 0,
-    strokeColor: "#ffffff",
-    strokeWidth: 0,
+    opacity: 1,
+    strokeColor: "#000000",
+    strokeWidth: 2,
     fillColor: "#ffffff",
-    height: 0,
-    width: 0,
+    height: 1,
+    width: 1,
     link: false,
-    
+    //add here
+    radiusX: 1,
+    radiusY: 1,
   });
   
 
@@ -36,6 +39,7 @@ export const AppProvider = ({ children }) => {
         isDrawing, setIsDrawing,
         secondPointDone, setSecondPointDone,
         styleBar, setStyleBar,
+        selectedShapeType, setSelectedShapeType
       }}
     >
       {children}

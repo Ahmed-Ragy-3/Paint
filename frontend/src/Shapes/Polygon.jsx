@@ -6,7 +6,7 @@ export const polygon = {
    id: 0,
    fill: 'grey',
    points: [],
-   strokeWidth: 4, 
+   strokeWidth: 2, 
    strokeColor: 'black',
    opacity: 1,
    closed: false,
@@ -15,7 +15,8 @@ export const polygon = {
 const Polygon = () => {
    const {
       currentShape, setCurrentShape,
-      isDrawing, setIsDrawing
+      isDrawing, setIsDrawing,
+      styleBar, data
    } = useAppContext();
 
    function onMouseMove(e) {
@@ -57,6 +58,9 @@ const Polygon = () => {
          ...prevShape,
          points: [...prevShape.points, x, y, x, y],
          closed: false,
+         id: data.length,
+         fill: styleBar.fillColor,
+         strokeColor: styleBar.strokeColor
          })
       );
       console.log(currentShape)
