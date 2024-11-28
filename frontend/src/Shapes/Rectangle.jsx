@@ -35,26 +35,25 @@ const Rectangle = () => {
          let w = Math.abs(x - initialPoint[0]);
          let h = Math.abs(y - initialPoint[1]);
    
-         let cx = (initialPoint[0] + x) / 2
-         let cy = (initialPoint[1] + y) / 2
+         // let cx = (initialPoint[0] + x) / 2
+         // let cy = (initialPoint[1] + y) / 2
    
          if(e.evt.shiftKey) {
             if(h < w) {
                h = w
-               cy = (initialPoint[1] + h) / 2
+               // cy = (initialPoint[1] + h) / 2
             }else {
                w = h
-               cx = (initialPoint[0] + w) / 2
+               // cx = (initialPoint[0] + w) / 2
             }
          }
    
          setCurrentShape((prevShape) => ({
             ...prevShape,
-            centerX: cx,
-            centerY: cy,
+            centerX: initialPoint[0] - w / 2,
+            centerY: initialPoint[1] - h / 2,
             width: w,
             height: h,
-            // fill: styleBar.fillColor
          }));
       }
    }
@@ -64,26 +63,25 @@ const Rectangle = () => {
       let w = Math.abs(x - initialPoint[0]);
       let h = Math.abs(y - initialPoint[1]);
 
-      let cx = (initialPoint[0] + x) / 2
-      let cy = (initialPoint[1] + y) / 2
+      // let cx = (initialPoint[0] + x) / 2
+      // let cy = (initialPoint[1] + y) / 2
 
       if(e.evt.shiftKey) {
          if(h < w) {
             h = w
-            cy = (initialPoint[1] + h) / 2
+            // cy = (initialPoint[1] + h) / 2
          }else {
             w = h
-            cx = (initialPoint[0] + w) / 2
+            // cx = (initialPoint[0] + w) / 2
          }
       }
 
       setCurrentShape((prevShape) => ({
          ...prevShape,
-         centerX: cx,
-         centerY: cy,
+         centerX: initialPoint[0] - w / 2,
+            centerY: initialPoint[1] - h / 2,
          width: w,
          height: h,
-         // fill: styleBar.fillColor
       }));
       setIsDrawing(true);
    }

@@ -21,26 +21,25 @@ function createEllipse(shape, handleClick) {
    return <Ellipse
       key={shape.id}
       draggable={shape.draggable}
-      x={shape.centerX}         // centerX is the center, no need to adjust
-      y={shape.centerY}         // centerY is the center, no need to adjust
+      x={shape.centerX}
+      y={shape.centerY}
       strokeWidth={shape.strokeWidth}
       stroke={shape.strokeColor}
       fill={shape.fill}
       opacity={shape.opacity}
-      radiusX={shape.radiusX}  // radiusX is half of the width
-      radiusY={shape.radiusY} // radiusY is half of the height
+      radiusX={shape.radiusX}
+      radiusY={shape.radiusY}
       
       onClick={() => {handleClick(shape.id)}}
    />
 }
    
 function createRectangle(shape, handleClick) {
-   // console.log()
    return <Rect
       key={shape.id}   
       draggable={shape.draggable}
-      x={shape.centerX - shape.width / 2}  // Adjust x to top-left corner
-      y={shape.centerY - shape.height / 2} // Adjust y to top-left corner
+      x={shape.centerX }
+      y={shape.centerY }
       strokeWidth={shape.strokeWidth}
       stroke={shape.strokeColor}
       fill={shape.fill}
@@ -88,6 +87,7 @@ function createPolygon(shape, handleClick) {
       points={shape.points}
       fill={shape.fill}
       stroke={shape.strokeColor}
+      opacity={shape.opacity}
       strokeWidth={shape.strokeWidth}
       closed={shape.closed}
       // {...shape}
@@ -102,6 +102,7 @@ function createLine(shape, handleClick) {
       draggable={shape.draggable}
       points={shape.points}
       stroke={shape.strokeColor}
+      opacity={shape.opacity}
       strokeWidth={shape.strokeWidth}
       lineJoin="round"
       // lineCap="round"
@@ -117,6 +118,7 @@ function createFreeDraw(shape, handleClick) {
       draggable={shape.draggable}
       stroke={shape.strokeColor}
       strokeWidth={shape.strokeWidth}
+      opacity={shape.opacity}
       tension={0.5}
       lineJoin="round"
       lineCap="round"
