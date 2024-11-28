@@ -17,18 +17,17 @@ public class CanvasService {
         saveAsXML(canvasData);
     }
 
-    private void saveAsJson(String canvasData) throws IOException {
+    public void saveAsJson(String canvasData) throws IOException {
         Path jsonPath = Path.of("canvas_data.json");
         Files.write(jsonPath, canvasData.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
     }
 
-    private void saveAsXML(String canvasData) throws IOException {
+    public String saveAsXML(String canvasData) throws IOException {
         String xmlData = jsonToXml(canvasData);
-        Path xmlPath = Path.of("canvas_data.xml");
-        Files.write(xmlPath, xmlData.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        return xmlData;
     }
 
-    private String jsonToXml(String json) throws IOException {
+    public String jsonToXml(String json) throws IOException {
         Object jsonObject = new ObjectMapper().readValue(json, Object.class);
         return new XmlMapper().writeValueAsString(jsonObject);
     }

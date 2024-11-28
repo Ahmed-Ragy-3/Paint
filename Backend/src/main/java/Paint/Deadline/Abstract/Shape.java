@@ -3,11 +3,11 @@ package Paint.Deadline.Abstract;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import Paint.Deadline.models.Elipse;
-import Paint.Deadline.models.FreeDrawing;
+import Paint.Deadline.models.Ellipse;
+import Paint.Deadline.models.Free;
 import Paint.Deadline.models.Line;
+import Paint.Deadline.models.Polygon;
 import Paint.Deadline.models.Rectangle;
-import Paint.Deadline.models.Square;
 import Paint.Deadline.models.Triangle;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,26 +18,29 @@ import lombok.Data;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = Rectangle.class, name = "Rectangle"),
-    @JsonSubTypes.Type(value = Elipse.class, name = "Elipse"),
+    @JsonSubTypes.Type(value = Ellipse.class, name = "Ellipse"),
     @JsonSubTypes.Type(value = Triangle.class, name = "Triangle"),
     @JsonSubTypes.Type(value = Line.class, name = "Line"),
-    @JsonSubTypes.Type(value = Square.class, name = "Square"),
-    @JsonSubTypes.Type(value = FreeDrawing.class, name = "FreeDrawing"),
+    @JsonSubTypes.Type(value = Free.class, name = "Free"),
+    @JsonSubTypes.Type(value = Polygon.class, name = "Polygon"),
 })
 public abstract class Shape {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected long id;
 
-    protected String color;
+    protected String stroke;
 
     protected int strokeWidth;
 
     protected boolean draggable;
 
-    public Shape(String color, int strokeWidth, boolean draggable) {
-        this.color = color;
+    protected int opacity;
+
+    public Shape(String color, int strokeWidth, boolean draggable, int opacity) {
+        this.stroke = color;
         this.strokeWidth = strokeWidth;
         this.draggable = draggable;
+        this.opacity = opacity;
     }
 }

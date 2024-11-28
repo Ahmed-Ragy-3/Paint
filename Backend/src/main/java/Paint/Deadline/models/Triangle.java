@@ -1,6 +1,8 @@
 package Paint.Deadline.models;
 
 
+import java.util.List;
+
 import Paint.Deadline.Abstract.Shape;
 import Paint.Deadline.helperClasses.Point;
 import jakarta.persistence.Entity;
@@ -12,29 +14,23 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class Triangle extends Shape {
 
-    public Triangle(String color , int strokeWidth , boolean draggable , Point p1 , Point p2 , Point p3)
+    public Triangle(String color , int strokeWidth , boolean draggable ,int opacity, List<Point> points , String fillColor)
     {
-        super(color, strokeWidth, draggable);
-        setP1(p1);
-        setP2(p2);
-        setP3(p3);
-        setColor(color);
-        setStrokeWidth(strokeWidth);
-        setDraggable(draggable);
+        super(color, strokeWidth, draggable, opacity);
+        setPoints(points);
+        setFill(fillColor);
     }
-    private Point p1;
-    
-    private Point p2;
-    
-    private Point p3;
+    private List<Point> points;
+
+    private String fill;
 
     public static Triangle clone(Triangle triangle)
     {
-        return new Triangle(triangle.color,
+        return new Triangle(triangle.getStroke(),
         triangle.getStrokeWidth(),
         triangle.isDraggable(),
-        triangle.getP1(),
-        triangle.getP2(),
-        triangle.getP3());
+        triangle.getOpacity(),
+        triangle.getPoints(),
+        triangle.getFill());
     }
 }
