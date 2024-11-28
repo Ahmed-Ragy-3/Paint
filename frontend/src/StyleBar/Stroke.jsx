@@ -2,7 +2,9 @@ import { useAppContext } from '../AppContext';
 
 export default function Stroke() {
   const {
-    styleBar, setStyleBar, selectedShapeType
+    styleBar, setStyleBar, selectedShapeType,
+    undoStack, setUndoStack, data,
+    equalTop,
   } = useAppContext();
 
   const handleStrokeColorChange = (e) => {
@@ -14,7 +16,8 @@ export default function Stroke() {
   };
 
   return (
-    selectedShapeType !== 'Text' && (<div className="Stroke">
+    selectedShapeType !== 'Text' && 
+    (<div className="Stroke">
 
       <label className='stroke-label'>Stroke</label>
 
@@ -26,6 +29,15 @@ export default function Stroke() {
           value={styleBar.strokeColor} 
           onChange={handleStrokeColorChange}
           title='Pick Stroke Color'
+
+          // onMouseUp={() => {
+          //   if(!equalTop(undoStack, data)) {
+          //     console.log("push in undo stack")
+              
+          //     undoStack.push(data)
+          //     setUndoStack(undoStack)
+          //   }
+          // }}
         />
 
         <input
@@ -35,6 +47,15 @@ export default function Stroke() {
           value={styleBar.strokeWidth}
           onChange={handleStrokeWidthChange}
           title='Change Stroke Width'
+
+          // onMouseUp={() => {
+          //   if(!equalTop(undoStack, data)) {
+          //     console.log("push in undo stack")
+              
+          //     undoStack.push(data)
+          //     setUndoStack(undoStack)
+          //   }
+          // }}
         />
 
       </div>

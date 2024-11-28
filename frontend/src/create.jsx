@@ -2,7 +2,7 @@
 import { Rect, Text, Line, Ellipse } from 'react-konva';
 
 function createShape(shape, handleClick) {
-   // console.log(shape, handleClick)
+   // console.log("shape.id = " + shape.id)
    switch (shape.type) {
       case "Ellipse":   return createEllipse(shape, handleClick);
       case "Rectangle": return createRectangle(shape, handleClick);
@@ -37,10 +37,10 @@ function createEllipse(shape, handleClick) {
 function createRectangle(shape, handleClick) {
    // console.log()
    return <Rect
-      key={shape.id}   
+      key={shape.id}
       draggable={shape.draggable}
-      x={shape.centerX - shape.width / 2}  // Adjust x to top-left corner
-      y={shape.centerY - shape.height / 2} // Adjust y to top-left corner
+      x={shape.centerX - shape.width / 2}
+      y={shape.centerY - shape.height / 2}
       strokeWidth={shape.strokeWidth}
       stroke={shape.strokeColor}
       fill={shape.fill}
@@ -90,7 +90,6 @@ function createPolygon(shape, handleClick) {
       stroke={shape.strokeColor}
       strokeWidth={shape.strokeWidth}
       closed={shape.closed}
-      // {...shape}
       
       onClick={() => {handleClick(shape.id)}}
    />

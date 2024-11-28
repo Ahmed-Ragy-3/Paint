@@ -9,35 +9,45 @@ import Opacity from './Opacity'
 
 import './styleBar.css';
 
-import undo from './icons/undo.svg';
-import redo from './icons/redo.svg';
-import v_align from './icons/vertical-align.svg';
-import h_align from './icons/horizontal-align.svg';
+import undo_icon from './icons/undo.svg';
+import redo_icon from './icons/redo.svg';
+// import v_align from './icons/vertical-align.svg';
+// import h_align from './icons/horizontal-align.svg';
 
 function StyleBar() {
 
-  const { styleBar, setStyleBar } = useAppContext();
+  const {
+    selectedShapeType,
+    data,
+    styleBar, setStyleBar ,
+    undoStack, setUndoStack,
+    undo, redo
+  } = useAppContext();
 
   return (
+    
     <div className="style-bar">
       
       <div className="UndoRedo">
 
-        <button className="btn" title='Undo'>
-          <img src={undo} />
+        <button className="btn" title='Undo' onClick={undo}>
+          <img src={undo_icon} />
         </button>
 
-        <button className="btn" title='Redo'>
-          <img src={redo} />
+        <button className="btn" title='Redo' onClick={redo}>
+          <img src={redo_icon} />
         </button>
 
       </div>
 
-      <Fill styleBar={styleBar} setStyleBar={setStyleBar}/>
+      {
+        (selectedShapeType !== 'Line' && selectedShapeType !== 'Free') &&
+        <Fill styleBar={styleBar} setStyleBar={setStyleBar}/>
+      }
       <Stroke styleBar={styleBar} setStyleBar={setStyleBar}/>
       <Opacity styleBar={styleBar} setStyleBar={setStyleBar}/>
 
-      <div className="Align">
+      {/* <div className="Align">
       
         <button className="v-btn" title='Vertical Align'>
           <img src={v_align}/>
@@ -47,7 +57,7 @@ function StyleBar() {
           <img src={h_align}/>
         </button>
 
-      </div>
+      </div> */}
 
       <Size styleBar={styleBar} setStyleBar={setStyleBar}/>
       

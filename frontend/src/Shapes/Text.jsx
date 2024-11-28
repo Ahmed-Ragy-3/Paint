@@ -27,7 +27,7 @@ const Text = () => {
       text.x = x
       text.y = y
       text.text = 'Enter text here'
-      // text.fill = styleBar.fillColor
+      // text.fill = styleBar.fill
       setData([...data, text]);
       setCurrentShape(null); 
     }

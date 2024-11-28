@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useAppContext } from '../AppContext';
 
 const rectangle = {
@@ -54,7 +53,7 @@ const Rectangle = () => {
             centerY: cy,
             width: w,
             height: h,
-            // fill: styleBar.fillColor
+            // fill: styleBar.fill
          }));
       }
    }
@@ -83,7 +82,7 @@ const Rectangle = () => {
          centerY: cy,
          width: w,
          height: h,
-         // fill: styleBar.fillColor
+         // fill: styleBar.fill
       }));
       setIsDrawing(true);
    }
@@ -96,7 +95,7 @@ const Rectangle = () => {
          rectangle.id = data.length
          rectangle.centerX = x
          rectangle.centerY = y
-         rectangle.fill = styleBar.fillColor;
+         rectangle.fill = styleBar.fill;
          rectangle.strokeColor = styleBar.strokeColor;
          setCurrentShape(rectangle);
       } else {

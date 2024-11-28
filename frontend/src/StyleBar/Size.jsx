@@ -5,10 +5,20 @@ import { useState } from 'react';
 
 export default function Size() {
 
-  const { styleBar, setStyleBar, selectedShapeType } = useAppContext();
+  const { 
+    data,
+    undoStack, setUndoStack,
+    styleBar, setStyleBar, selectedShapeType,
+    equalTop
+
+  } = useAppContext();
   const [ratio, setRatio] = useState(1);
 
   const handleWidthChange = (e) => {
+    // console.log("push in undo stack")
+    // undoStack.push(data)
+    // setUndoStack(undoStack)
+
     const newValue = parseFloat(e.target.value);
     if (selectedShapeType === 'Rectangle') {
       setStyleBar({
@@ -27,6 +37,10 @@ export default function Size() {
   };
 
   const handleHeightChange = (e) => {
+    // console.log("push in undo stack")
+    // undoStack.push(data)
+    // setUndoStack(undoStack)
+
     const newValue = parseFloat(e.target.value);
     if (selectedShapeType === 'Rectangle') {
       setStyleBar({
@@ -45,6 +59,7 @@ export default function Size() {
   };
 
   const handleLinkToggle = () => {
+
     const [dim1, dim2] = selectedShapeType === 'Rectangle'
       ? [styleBar.width, styleBar.height]
       : [styleBar.radiusX, styleBar.radiusY];
@@ -58,6 +73,7 @@ export default function Size() {
   return (
     (selectedShapeType === 'Rectangle' || selectedShapeType === 'Ellipse') && (
       <div className="length-and-width">
+        
         <div className="length-and-width-line">
           <label className="length-and-width-label">
             {selectedShapeType === 'Rectangle' ? 'W' : 'X'}

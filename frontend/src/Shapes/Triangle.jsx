@@ -76,7 +76,7 @@ const Triangle = () => {
       if (!currentShape) {
          triangle.id = data.length
          triangle.points = [x, y, x, y, x, y],
-         triangle.fill = styleBar.fillColor;
+         triangle.fill = styleBar.fill;
          triangle.strokeColor = styleBar.strokeColor;
          setCurrentShape(triangle);
       } else if (!secondPointDone) {

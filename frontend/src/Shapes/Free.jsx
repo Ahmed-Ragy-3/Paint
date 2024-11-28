@@ -4,7 +4,7 @@ const free = {
    type: "Free",
    id: 0,
    points: [],
-   draggable: true,
+   draggable: false,
    strokeColor: "black", 
    strokeWidth: 5,
    opacity: 1,

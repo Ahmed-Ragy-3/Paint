@@ -1,4 +1,4 @@
-import { useAppContext } from '../AppContext'; 
+import { useAppContext } from '../AppContext';
 
 export const polygon = {
    type: 'Polygon',
@@ -59,7 +59,7 @@ const Polygon = () => {
          points: [...prevShape.points, x, y, x, y],
          closed: false,
          id: data.length,
-         fill: styleBar.fillColor,
+         fill: styleBar.fill,
          strokeColor: styleBar.strokeColor
          })
       );

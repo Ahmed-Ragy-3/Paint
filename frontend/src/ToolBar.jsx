@@ -23,6 +23,7 @@ export default function ToolBar() {
   const {
     currentShape, setCurrentShape,
     activeTool, setActiveTool,
+    undoStack, setUndoStack,
   } = useAppContext();
 
   return (

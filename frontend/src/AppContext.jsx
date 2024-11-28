@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useRef, useState } from 'react';
-import { Transformer } from 'react-konva';
+import React, { createContext, useContext, useState } from 'react';
 
 // Create the context
 const AppContext = createContext();
@@ -14,12 +13,77 @@ export const AppProvider = ({ children }) => {
   const [secondPointDone,setSecondPointDone]= useState(false);
   const [selectedShapeType, setSelectedShapeType] = useState(null);
 
+  const [undoStack, setUndoStack] = useState([])
+  const [redoStack, setRedoStack] = useState([])
+  const [idsStack, setIdsStack]= useState([])
+
+  
+  function undo() {
+    console.log(undoStack)
+    if(undoStack.length === 0) {
+      return
+    }
+
+    const before = data
+    const after = undoStack.pop()
+    
+    setData(after)
+    redoStack.push(before)
+    setRedoStack(redoStack)
+
+    setUndoStack(undoStack)
+  }
+  
+  function redo() {
+    if(redoStack.length === 0) {
+      return
+    }
+    const before = data
+    const after = redoStack.pop()
+
+    setData(after)
+    undoStack.push(before)
+
+    setRedoStack(redoStack)
+    setUndoStack(undoStack)
+  }
+
+  function compareObjects(obj1, obj2) {
+    const keys1 = Object.keys(obj1);
+    const keys2 = Object.keys(obj2);
+
+    if (keys1.length !== keys2.length) return false;
+
+    for (let key of keys1) {
+      if (obj1[key] !== obj2[key]) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  function compareArrays(arr1, arr2) {
+    if (arr1.length !== arr2.length) return false;
+    
+    for (let i = 0; i < arr1.length; i++) {
+      if (!compareObjects(arr1[i], arr2[i])) return false;
+    }
+      
+    return true;
+  }
+  
+  
+  function equalTop(arr, element) {
+    return arr.length !== 0 && compareArrays(element, arr[arr.length - 1])
+  }
+
   
   const [styleBar, setStyleBar] = useState({
     opacity: 1,
     strokeColor: "#000000",
     strokeWidth: 2,
-    fillColor: "#ffffff",
+    fill: "#ffffff",
     height: 1,
     width: 1,
     link: false,
@@ -39,7 +103,12 @@ export const AppProvider = ({ children }) => {
         isDrawing, setIsDrawing,
         secondPointDone, setSecondPointDone,
         styleBar, setStyleBar,
-        selectedShapeType, setSelectedShapeType
+        selectedShapeType, setSelectedShapeType,
+        undoStack, setUndoStack,
+        redoStack, setRedoStack,
+        idsStack, setIdsStack,
+        equalTop,
+        undo, redo,
       }}
     >
       {children}

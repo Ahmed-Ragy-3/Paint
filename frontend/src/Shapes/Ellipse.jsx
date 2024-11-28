@@ -1,4 +1,4 @@
-import { useAppContext } from '../AppContext'; 
+import { useAppContext } from '../AppContext';
 
 const ellipse = {
    type: 'Ellipse',
@@ -58,7 +58,7 @@ const Ellipse = () => {
          ellipse.id = data.length;
          ellipse.centerX = x;
          ellipse.centerY = y;
-         ellipse.fill = styleBar.fillColor;
+         ellipse.fill = styleBar.fill;
          ellipse.strokeColor = styleBar.strokeColor;
          setCurrentShape(ellipse);
       } else {
