@@ -49,34 +49,40 @@ export default function Canvas() {
   const { onMouseUp, onMouseMove, onMouseDown } = activeTool && activeTool !== "move" ? events[activeTool]() : {};
   const copied = null
 
-  function copy() {
-    if(!copied) {
-      return
+  async function copy() {
+    if (!selectedId) {
+      return;
     }
-
-    fetch('http://localhost:8080/shapes/clone', {
-      method: 'POST',
-      headers: {
-      'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => {
+  
+    try {
+      const response = await fetch('http://localhost:8080/shapes/clone', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data[selectedId]),
+      });
+  
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      return response.json();
-    })
-    .then(data => console.log(data))
-    .catch(error => console.error('Error:', error));
-  }  
+  
+      const copiedShape = await response.json();
+      copied = copiedShape
+  
+      console.log(copied);
+    } catch (error) {
+      console.error('Error: ', error);
+    }
+  }
+  
 
   // useEffect(() => {
   //   undoStack.push(data)
   //   setUndoStack(undoStack)
   // }, [selectedId])
 
-  function getId() {
+  function getNewId() {
     if(idsStack.isEmpty()) {
       return data.length;
     }
@@ -129,7 +135,11 @@ export default function Canvas() {
           redo()
           break;
         case 'c':
-          copy()
+          copy(copied)
+          break;
+        case 'v':
+          copied.id = getNewId();
+          setData([...data, copied]);
           break;
         default:
           break;
