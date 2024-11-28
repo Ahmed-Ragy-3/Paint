@@ -1,0 +1,9 @@
+Paint\Deadline\factories\ShapeFactory.class
+Paint\Deadline\DeadlineApplication.class
+Paint\Deadline\helperClasses\Point.class
+Paint\Deadline\controllers\ShapeController.class
+Paint\Deadline\Abstract\Shape.class
+Paint\Deadline\prototypes\ShapePrototype.class
+Paint\Deadline\controllers\CanvasController.class
+Paint\Deadline\services\CanvasService.class
+Paint\Deadline\services\ShapeService.class
