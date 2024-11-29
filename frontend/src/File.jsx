@@ -21,22 +21,56 @@ function File() {
       reader.readAsText(file);
     }
 
-    console.log(data);
-    
   };
   
-  function XMLToJSON(xmlString) {
-    // can't do
+  const XMLToJSON = async (xmlString) => {
+    try {
+      const response = await fetch('http://localhost:8080/canvas/loadXML', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/xml',
+        },
+        body: xmlString,
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const notModifiedJson = await response.json();
+
+      const json = notModifiedJson.item.map((item) => {
+        // Iterate over each key-value pair in the object
+        for (const key in item) {
+          if (item.hasOwnProperty(key)) {
+            // Check if the value is a string that can be converted to a number
+            if (!isNaN(item[key]) && item[key] !== null && item[key] !== '') {
+              // If it's a valid number, convert to number
+              item[key] = key === 'draggable' ? item[key] === "true" : parseFloat(item[key]);
+            }
+          }
+        }
+        return item;
+      });
+
+    console.log(json);
+    
+    return json
+  
+    } catch (error) {
+      console.error('Error: ', error);
+      return [];
+    }
   }
   
   const handleLoadXML = (e) => {
    const file = e.target.files[0];
    if (file) {
-     const reader = new FileReader();
-     reader.onload = () => {
-      const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(reader.result, 'application/xml');
-      setData(XMLToJSON(xmlDoc));
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const xmlString = reader.result;
+        const json = await XMLToJSON(xmlString);
+        setData(json);
      };
      reader.readAsText(file);
    }
@@ -51,55 +85,28 @@ function File() {
     link.click();
   };
 
-  function jsonToXml(json, rootElement = 'root') {
-    const xmlDocument = document.implementation.createDocument('', rootElement, null);
+  const jsonToXml = async (json) => {
+    try {
+      const response = await fetch('http://localhost:8080/canvas/saveXML', {
+        method: 'POST',
+        body: JSON.stringify(json),
+      });
   
-    function convertJsonToXml(jsonObj, parentElement) {
-      for (const key in jsonObj) {
-        if (jsonObj.hasOwnProperty(key)) {
-          const value = jsonObj[key];
-  
-          // Create a new key if it's invalid for an XML tag name
-          let validKey = key;
-          if (!/^[A-Za-z_][A-Za-z0-9_-]*$/.test(key)) {
-            validKey = `item_${key}`; // Modify the key to make it a valid tag name
-          }
-  
-          // Create a new element for each key in the JSON
-          const element = xmlDocument.createElement(validKey);
-  
-          if (typeof value === 'object' && !Array.isArray(value)) {
-            // Recursively process objects
-            convertJsonToXml(value, element);
-          } else if (Array.isArray(value)) {
-            // Handle arrays by creating multiple elements for the same key
-            value.forEach((item, index) => {
-              const arrayElement = xmlDocument.createElement(`${validKey}_${index}`);
-              convertJsonToXml(item, arrayElement);
-              element.appendChild(arrayElement);
-            });
-          } else {
-            // Set primitive values (string, number, etc.)
-            const textNode = xmlDocument.createTextNode(value);
-            element.appendChild(textNode);
-          }
-  
-          // Append the created element to the parent
-          parentElement.appendChild(element);
-        }
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
+  
+      const xmlString = await response.text();
+      return xmlString
+  
+    } catch (error) {
+      console.error('Error: ', error);
+      return '';
     }
-  
-    // Start the conversion from the root
-    convertJsonToXml(json, xmlDocument.documentElement);
-  
-    // Use XMLSerializer to convert the DOM to an XML string
-    const serializer = new XMLSerializer();
-    return serializer.serializeToString(xmlDocument);
   }
 
-  const handleSaveXML = () => {
-    const xmlString = jsonToXml(data, 'root'); 
+  const handleSaveXML = async () => {
+    const xmlString = await jsonToXml(data); 
     const blob = new Blob([xmlString], { type: 'application/xml' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
