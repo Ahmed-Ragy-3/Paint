@@ -21,7 +21,8 @@ function StyleBar() {
     data,
     styleBar, setStyleBar ,
     undoStack, setUndoStack,
-    undo, redo
+    undo, redo,
+    equalTop,
   } = useAppContext();
 
   return (

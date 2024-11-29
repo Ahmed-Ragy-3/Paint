@@ -20,6 +20,7 @@ export const AppProvider = ({ children }) => {
   const [selectedId, setSelectedId] = useState(null)
 
   function undo() {
+    console.log("undoStack")
     console.log(undoStack)
     if(undoStack.length === 0) {
       return
@@ -27,6 +28,8 @@ export const AppProvider = ({ children }) => {
 
     const before = data
     const after = undoStack.pop()
+    // console.log("after = ")
+    // console.log(after)
     
     setData(after)
     redoStack.push(before)
@@ -75,7 +78,11 @@ export const AppProvider = ({ children }) => {
   }
   
   function equalTop(arr, element) {
-    return arr.length !== 0 && compareArrays(element, arr[arr.length - 1])
+    // console.log(arr.length)
+    if(arr.length === 0) {
+      return false
+    }
+    return compareArrays(element, arr[arr.length - 1])
   }
 
   function putShapeInId(id, newShape) {

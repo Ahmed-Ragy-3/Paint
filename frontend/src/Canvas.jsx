@@ -77,10 +77,13 @@ export default function Canvas() {
   }
   
 
+
   // useEffect(() => {
-  //   undoStack.push(data)
-  //   setUndoStack(undoStack)
-  // }, [selectedId])
+  //   if(!equalTop(undoStack, data)) {
+  //     console.log("push in undo stack")
+  //     setUndoStack((prevUndoStack) => [...prevUndoStack, data]);
+  //   }
+  // }, [])
 
   function getNewId() {
     if(idsStack.isEmpty()) {
@@ -195,12 +198,6 @@ export default function Canvas() {
   // }, [styleBar]);
   
   useEffect(() => {
-    console.log("push in undo stack")
-    // Avoid modifying state directly
-    setUndoStack((prevUndoStack) => [...prevUndoStack, data]);
-  }, [styleBar]);
-  
-  useEffect(() => {
 
     putShapeInId(selectedId, 
       {
@@ -241,12 +238,6 @@ export default function Canvas() {
   }
 
   const handleMouseDown = (e) => {
-    if(!equalTop(undoStack, data)) {
-      console.log("push in undo stack")
-      
-      undoStack.push(data)
-      setUndoStack(undoStack)
-    }
 
     if (e.target === e.target.getStage()) {
       setSelectedId(null);
@@ -268,7 +259,7 @@ export default function Canvas() {
 
     if (!currentShape) return;
     if (onMouseUp) onMouseUp(e)
-    console.log(data)
+    // console.log(data)
   }
 
   const cursorStyle = () => {

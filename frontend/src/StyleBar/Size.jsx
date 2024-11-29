@@ -15,9 +15,11 @@ export default function Size() {
   const [ratio, setRatio] = useState(1);
 
   const handleWidthChange = (e) => {
-    // console.log("push in undo stack")
-    // undoStack.push(data)
-    // setUndoStack(undoStack)
+    if(!equalTop(undoStack, data)) {
+      console.log("push in undo stack")
+      
+      setUndoStack((prevUndoStack) => [...prevUndoStack, data]);
+    }
 
     const newValue = parseFloat(e.target.value);
     if (selectedShapeType === 'Rectangle') {
@@ -37,9 +39,11 @@ export default function Size() {
   };
 
   const handleHeightChange = (e) => {
-    // console.log("push in undo stack")
-    // undoStack.push(data)
-    // setUndoStack(undoStack)
+    if(!equalTop(undoStack, data)) {
+      console.log("push in undo stack")
+      
+      setUndoStack((prevUndoStack) => [...prevUndoStack, data]);
+    }
 
     const newValue = parseFloat(e.target.value);
     if (selectedShapeType === 'Rectangle') {
@@ -85,6 +89,14 @@ export default function Size() {
             min={0}
             onChange={handleWidthChange}
             title={selectedShapeType === 'Rectangle' ? "Change Width Value" : 'Change Radius X Value'}
+
+            // onBlur={() => {
+            //   console.log("push in undo stack")
+            //   if(!equalTop(undoStack, data)) {
+                
+            //     setUndoStack((prevUndoStack) => [...prevUndoStack, data]);
+            //   }
+            // }}
           />
         </div>
 
@@ -100,6 +112,7 @@ export default function Size() {
           <label className="length-and-width-label">
             {selectedShapeType === 'Rectangle' ? 'H' : 'Y'}
           </label>
+
           <input
             className="length-and-width-input"
             type="number"
@@ -107,6 +120,14 @@ export default function Size() {
             min={0}
             onChange={handleHeightChange}
             title={selectedShapeType === 'Rectangle' ? "Change Height Value" : 'Change Radius Y Value'}
+
+            // onBlur={() => {
+            //   console.log("push in undo stack")
+            //   if(!equalTop(undoStack, data)) {
+                
+            //     setUndoStack((prevUndoStack) => [...prevUndoStack, data]);
+            //   }
+            // }}
           />
         </div>
       </div>

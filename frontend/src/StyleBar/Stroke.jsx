@@ -30,14 +30,13 @@ export default function Stroke() {
           onChange={handleStrokeColorChange}
           title='Pick Stroke Color'
 
-          // onMouseUp={() => {
-          //   if(!equalTop(undoStack, data)) {
-          //     console.log("push in undo stack")
+          onBlur={() => {
+            if(!equalTop(undoStack, data)) {
+              console.log("push in undo stack")
               
-          //     undoStack.push(data)
-          //     setUndoStack(undoStack)
-          //   }
-          // }}
+              setUndoStack((prevUndoStack) => [...prevUndoStack, data]);
+            }
+          }}
         />
 
         <input
@@ -48,14 +47,13 @@ export default function Stroke() {
           onChange={handleStrokeWidthChange}
           title='Change Stroke Width'
 
-          // onMouseUp={() => {
-          //   if(!equalTop(undoStack, data)) {
-          //     console.log("push in undo stack")
+          onBlur={() => {
+            if(!equalTop(undoStack, data)) {
+              console.log("push in undo stack")
               
-          //     undoStack.push(data)
-          //     setUndoStack(undoStack)
-          //   }
-          // }}
+              setUndoStack((prevUndoStack) => [...prevUndoStack, data]);
+            }
+          }}
         />
 
       </div>

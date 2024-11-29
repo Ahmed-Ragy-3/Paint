@@ -27,14 +27,13 @@ export default function Opacity() {
         onChange={handleOpacityChange}
         title='Change Opacity'
 
-        // onMouseUp={() => {
-        //   if(!equalTop(undoStack, data)) {
-        //     console.log("push in undo stack")
+        onBlur={() => {
+          if(!equalTop(undoStack, data)) {
+            console.log("push in undo stack")
             
-        //     undoStack.push(data)
-        //     setUndoStack(undoStack)
-        //   }
-        // }}
+            setUndoStack((prevUndoStack) => [...prevUndoStack, data]);
+          }
+        }}
       />
 
     </div>

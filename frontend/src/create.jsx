@@ -19,13 +19,13 @@ function createShape(shape, handleClick) {
          return <CreateTriangle shape={shape} handleClick = {handleClick} />
          // return createTriangle(shape, handleClick);
       case "Polygon":   
-         return <CreatePloygon shape={shape} handleClick = {handleClick} />
+         return <CreatePolygon shape={shape} handleClick = {handleClick} />
          // return createPolygon(shape, handleClick);
       case "Line":      
          return <CreateLine shape={shape} handleClick = {handleClick} />
          // return createLine(shape, handleClick);
       case "Text":      
-               return <CreateText shape={shape} handleClick = {handleClick} />
+            return <CreateText shape={shape} handleClick = {handleClick} />
          // return createText(shape, handleClick);
       case "Free":      
          return <CreateFreeDraw shape={shape} handleClick = {handleClick} />
@@ -36,11 +36,11 @@ function createShape(shape, handleClick) {
 
 export default createShape;
 
-function CreateEllipse({shape, handleClick}) {
+function CreateEllipse({ shape, handleClick }) {
    const shapeRef = React.useRef();
    const transformerRef = React.useRef();
 
-   const { selectedId, putShapeInId} = useAppContext();
+   const { selectedId, putShapeInId, equalTop, undoStack, setUndoStack, data } = useAppContext();
 
    useEffect(() => {
       if (selectedId === shape.id && transformerRef.current && shapeRef.current) {
@@ -48,6 +48,13 @@ function CreateEllipse({shape, handleClick}) {
          transformerRef.current.getLayer().batchDraw();
       }
    }, [selectedId, shape.id]);
+
+   const pushToUndoStackIfNeeded = () => {
+      if (!equalTop(undoStack, data)) {
+         console.log("push in undo stack");
+         setUndoStack((prevUndoStack) => [...prevUndoStack, data]);
+      }
+   };
 
    return (
       <React.Fragment>
@@ -65,27 +72,41 @@ function CreateEllipse({shape, handleClick}) {
             onClick={() => handleClick(shape.id)}
             ref={shapeRef}
             
-            onDragEnd={(e) => {
-               shape.centerX = e.target.x();
-               shape.centerY = e.target.y();
-               
-               putShapeInId(shape.id, shape)
+            onDragStart={() => {
+               pushToUndoStackIfNeeded();
             }}
-            
-            onTransformEnd={(e) => {  // there is a problem when changing fill color after changing radiuses
+
+            onDragEnd={(e) => {
+               const updatedShape = { ...shape }; // Clone shape to prevent mutation
+               updatedShape.centerX = e.target.x();
+               updatedShape.centerY = e.target.y();
+
+               putShapeInId(updatedShape.id, updatedShape);
+               pushToUndoStackIfNeeded();
+            }}
+
+            onTransformStart={() => {
+               pushToUndoStackIfNeeded();
+            }}
+
+            onTransformEnd={() => {
                const node = shapeRef.current;
+               const updatedShape = { ...shape }; // Clone shape to avoid mutation
+
+               // Handle scaling
                const scaleX = node.scaleX();
                const scaleY = node.scaleY();
-               
                node.scaleX(1);
                node.scaleY(1);
-               shape.centerX = node.x();
-               shape.centerY = node.y();
-               
-               shape.radiusX = shape.radiusX * scaleX
-               shape.radiusY = shape.radiusY * scaleY
 
-               putShapeInId(shape.id, shape)
+               // Update transformed properties
+               updatedShape.centerX = node.x();
+               updatedShape.centerY = node.y();
+               updatedShape.radiusX = Math.max(5, node.radiusX() * scaleX); // Ensure minimum size
+               updatedShape.radiusY = Math.max(5, node.radiusY() * scaleY);
+
+               putShapeInId(updatedShape.id, updatedShape);
+               pushToUndoStackIfNeeded();
             }}
          />
          {selectedId === shape.id && (
@@ -105,12 +126,13 @@ function CreateEllipse({shape, handleClick}) {
       </React.Fragment>
    );
 }
+
    
 function CreateRectangle({ shape, handleClick }) {
    const shapeRef = React.useRef();
    const transformerRef = React.useRef();
 
-   const { selectedId, putShapeInId} = useAppContext();
+   const { selectedId, putShapeInId, equalTop, undoStack, setUndoStack, data} = useAppContext();
 
    useEffect(() => {
       if (selectedId === shape.id && transformerRef.current && shapeRef.current) {
@@ -118,6 +140,18 @@ function CreateRectangle({ shape, handleClick }) {
          transformerRef.current.getLayer().batchDraw();
       }
    }, [selectedId, shape.id]);
+
+   
+   const pushToUndoStackIfNeeded = () => {
+      if (!equalTop(undoStack, data)) {
+         console.log("push in undo stack");
+         setUndoStack((prevUndoStack) => [...prevUndoStack, data]);
+      }
+   };
+   
+   useEffect(() => {
+      pushToUndoStackIfNeeded()
+   }, [])
 
    return (
       <React.Fragment>
@@ -135,28 +169,45 @@ function CreateRectangle({ shape, handleClick }) {
             onClick={() => handleClick(shape.id)}
             ref={shapeRef}
             
-            onDragEnd={(e) => {
-               shape.centerX = e.target.x();
-               shape.centerY = e.target.y();
-               
-               putShapeInId(shape.id, shape)
+            onDragStart={(e) => {
+               pushToUndoStackIfNeeded();
             }}
-            
+
+            onDragEnd={(e) => {
+               const updatedShape = { ...shape };
+               updatedShape.centerX = e.target.x();
+               updatedShape.centerY = e.target.y();
+             
+               putShapeInId(updatedShape.id, updatedShape);
+             
+               pushToUndoStackIfNeeded();
+            }}
+             
+            onTransformStart={(e) => {
+               pushToUndoStackIfNeeded();
+            }}
+             
             onTransformEnd={(e) => {
                const node = shapeRef.current;
+               const updatedShape = { ...shape }; 
+             
                const scaleX = node.scaleX();
                const scaleY = node.scaleY();
-               
                node.scaleX(1);
                node.scaleY(1);
-               shape.centerX = node.x();
-               shape.centerY = node.y();
-               
-               shape.width = Math.max(5, node.width() * scaleX);
-               shape.height = Math.max(node.height() * scaleY);
-
-               putShapeInId(shape.id, shape)
+             
+               // Update shape properties
+               updatedShape.centerX = node.x();
+               updatedShape.centerY = node.y();
+               updatedShape.width = Math.max(5, node.width() * scaleX);
+               updatedShape.height = Math.max(5, node.height() * scaleY);
+             
+               putShapeInId(updatedShape.id, updatedShape);
+             
+               // Push to undoStack if data has changed
+               pushToUndoStackIfNeeded();
             }}
+             
          />
          {selectedId === shape.id && (
             <Transformer
@@ -334,7 +385,7 @@ function CreateText(shape, handleClick) {
 }
 
 
-function createPolygon(shape, handleClick) {
+function CreatePolygon({ shape, handleClick }) {
    return <Line
       key={shape.id}   
       draggable={shape.draggable}
@@ -350,7 +401,7 @@ function createPolygon(shape, handleClick) {
    />
 }
 
-function createLine(shape, handleClick) {
+function CreateLine({ shape, handleClick }) {
    return <Line
       key={shape.id}   
       draggable={shape.draggable}
@@ -366,7 +417,7 @@ function createLine(shape, handleClick) {
    />
 }
 
-function createFreeDraw(shape, handleClick) {
+function CreateFreeDraw({shape, handleClick}) {
    return <Line
       key={shape.id}   
       points={shape.points}
@@ -380,6 +431,19 @@ function createFreeDraw(shape, handleClick) {
       
       onClick={() => {handleClick(shape.id)}}
       // ref={shapeRef}
+
+      onDragEnd={(e) => {
+         const deltaX = e.target.x() - shape.x;
+         const deltaY = e.target.y() - shape.y;
+
+         const updatedShape = {
+            ...shape,
+            x: shape.x + deltaX,
+            y: shape.y + deltaY,
+         };
+
+         putShapeInId(shape.id, updatedShape);
+      }}
    />
 }
 

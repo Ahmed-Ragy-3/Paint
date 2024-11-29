@@ -16,7 +16,7 @@ export default function Fill() {
   };
 
   return (
-      <div className="Fill">
+    <div className="Fill">
 
       <label className='fill-label'>Fill</label>
       
@@ -26,6 +26,13 @@ export default function Fill() {
         value={styleBar.fill} 
         onChange={handleFillColorChange}
         title='Pick Fill Color'
+
+        onBlur={() => {
+          if(!equalTop(undoStack, data)) {
+            console.log("push in undo stack")
+            setUndoStack((prevUndoStack) => [...prevUndoStack, data]);
+          }
+        }}
       />
       
     </div>
