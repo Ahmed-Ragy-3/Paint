@@ -301,7 +301,7 @@ function CreateText(shape, handleClick) {
                const scaleX = node.scaleX();
                const scaleY = node.scaleY();
                node.scaleX(1);
-               node.scaleY(1);
+               node.scaleY(1); 
 
                const updatedShape = {
                   ...shape,
