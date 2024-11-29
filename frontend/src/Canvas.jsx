@@ -47,7 +47,7 @@ export default function Canvas() {
 
 
   const { onMouseUp, onMouseMove, onMouseDown } = activeTool && activeTool !== "move" ? events[activeTool]() : {};
-  const copied = null
+  let copied = null
 
   async function copy() {
     if (!selectedId) {
