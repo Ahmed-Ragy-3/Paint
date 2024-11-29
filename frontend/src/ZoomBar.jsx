@@ -26,8 +26,8 @@ Send to Back    Ctrl + B'
         height: '3.5%',
         position: 'absolute',
         
-        left: '43%',
-        top: '2%',
+        left: '1.5%',
+        bottom: '7%',
         fontSize: '25px',
         color:'white',
         backgroundColor: '#2E2E2E',
@@ -35,6 +35,7 @@ Send to Back    Ctrl + B'
         justifyContent: 'center',
 
         padding:'5px 0px 5px 15px',
+        cursor: 'pointer',
         // fontFamily: 'Callibri',
       }}
     >
