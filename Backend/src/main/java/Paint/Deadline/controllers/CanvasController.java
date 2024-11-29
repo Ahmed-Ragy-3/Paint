@@ -20,7 +20,6 @@ public class CanvasController {
 
     @PostMapping("/saveJSON")
     public String save(@RequestBody String canvasData) {
-
         return canvasData;
     }
 

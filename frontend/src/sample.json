@@ -5,7 +5,7 @@
       "centerX": 100,
       "centerY": 100,
       "strokeWidth": 2,
-      "strokeColor": "black",
+      "": "black",
       "fill": "grey",
       "opacity": 1,
       "width": 50,
@@ -16,7 +16,7 @@
       "centerX": 200,
       "centerY": 100,
       "strokeWidth": 2,
-      "strokeColor": "blue",
+      "": "blue",
       "fill": "yellow",
       "opacity": 1,
       "width": 100,
@@ -33,7 +33,7 @@
     {
       "type": "Polygon",
       "points": [50, 50, 150, 50, 100, 100],
-      "strokeColor": "red",
+      "": "red",
       "fill": "green",
       "strokeWidth": 3,
       "opacity": 1
@@ -41,7 +41,7 @@
     {
       "type": "Line",
       "points": [200, 200, 300, 300],
-      "strokeColor": "blue",
+      "": "blue",
       "strokeWidth": 4,
       "opacity": 1
     }

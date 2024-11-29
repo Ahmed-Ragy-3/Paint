@@ -1,11 +1,11 @@
-import { useAppContext } from '../AppContext'; 
+import { useAppContext } from '../AppContext';
 
 const free = {
    type: "Free",
    id: 0,
    points: [],
    draggable: false,
-   strokeColor: "#000000", 
+   stroke: "#000000", 
    strokeWidth: 5,
    opacity: 1,
 }
@@ -29,7 +29,7 @@ const Free = () => {
       const { x, y } = e.target.getStage().getPointerPosition();
       free.id = data.length
       free.points = [x, y]
-      free.strokeColor = styleBar.strokeColor;
+      free.stroke = styleBar.stroke;
       setCurrentShape(free);
    }
 

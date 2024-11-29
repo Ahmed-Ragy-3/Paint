@@ -24,6 +24,7 @@ import lombok.Data;
     @JsonSubTypes.Type(value = Free.class, name = "Free"),
     @JsonSubTypes.Type(value = Polygon.class, name = "Polygon"),
 })
+
 public abstract class Shape {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

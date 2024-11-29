@@ -15,7 +15,7 @@
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
-		<java.version>23</java.version> <!-- Use Java 17 or 21 if issues occur -->
+		<java.version>17</java.version> <!-- Use Java 17 or 21 if issues occur -->
 	</properties>
 
 	<dependencies>

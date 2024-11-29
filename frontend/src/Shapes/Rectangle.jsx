@@ -9,7 +9,7 @@ const rectangle = {
    width: 0, 
    height: 0,
    strokeWidth: 2,
-   strokeColor: '#000000',
+   stroke: '#000000',
    fill: '#000000',
    opacity: 1,
 };
@@ -78,7 +78,7 @@ const Rectangle = () => {
       setCurrentShape((prevShape) => ({
          ...prevShape,
          centerX: initialPoint[0] - w / 2,
-            centerY: initialPoint[1] - h / 2,
+         centerY: initialPoint[1] - h / 2,
          width: w,
          height: h,
       }));
@@ -94,7 +94,7 @@ const Rectangle = () => {
          rectangle.centerX = x
          rectangle.centerY = y
          rectangle.fill = styleBar.fill;
-         rectangle.strokeColor = styleBar.strokeColor;
+         rectangle.stroke = styleBar.stroke;
          setCurrentShape(rectangle);
       } else {
          setIsDrawing(true);

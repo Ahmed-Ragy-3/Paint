@@ -7,8 +7,8 @@ export default function Stroke() {
     equalTop,
   } = useAppContext();
 
-  const handleStrokeColorChange = (e) => {
-    setStyleBar({...styleBar, strokeColor: e.target.value})
+  const handleStrokeChange = (e) => {
+    setStyleBar({...styleBar, stroke: e.target.value})
   };
   
   const handleStrokeWidthChange = (e) => {
@@ -26,13 +26,13 @@ export default function Stroke() {
         <input 
           className='stroke-color-picker' 
           type='color' 
-          value={styleBar.strokeColor} 
-          onChange={handleStrokeColorChange}
+          value={styleBar.stroke} 
+          onChange={handleStrokeChange}
           title='Pick Stroke Color'
 
           onBlur={() => {
+            console.log("push in undo stack")
             if(!equalTop(undoStack, data)) {
-              console.log("push in undo stack")
               
               setUndoStack((prevUndoStack) => [...prevUndoStack, data]);
             }
@@ -47,13 +47,13 @@ export default function Stroke() {
           onChange={handleStrokeWidthChange}
           title='Change Stroke Width'
 
-          onBlur={() => {
-            if(!equalTop(undoStack, data)) {
-              console.log("push in undo stack")
-              
-              setUndoStack((prevUndoStack) => [...prevUndoStack, data]);
-            }
-          }}
+        onBlur={() => {
+          console.log("push in undo stack")
+          if(!equalTop(undoStack, data)) {
+            
+            setUndoStack((prevUndoStack) => [...prevUndoStack, data]);
+          }
+        }}
         />
 
       </div>

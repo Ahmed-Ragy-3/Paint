@@ -7,7 +7,7 @@ const ellipse = {
    centerX: 0, 
    centerY: 0,
    strokeWidth: 2,
-   strokeColor: '#000000',
+   stroke: '#000000',
    fill: 'transparent',
    opacity: 1,
    radiusX: 0,
@@ -59,7 +59,7 @@ const Ellipse = () => {
          ellipse.centerX = x;
          ellipse.centerY = y;
          ellipse.fill = styleBar.fill;
-         ellipse.strokeColor = styleBar.strokeColor;
+         ellipse.stroke = styleBar.stroke;
          setCurrentShape(ellipse);
       } else {
          setIsDrawing(true) 

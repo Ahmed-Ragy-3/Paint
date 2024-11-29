@@ -1,11 +1,11 @@
-import { useAppContext } from '../AppContext'; 
+import { useAppContext } from '../AppContext';
 
 const line = {
    type: 'Line',
    draggable: false,
    id: 0,
    points: [0, 0, 0, 0],
-   strokeColor: '#000000', 
+   stroke: '#000000', 
    strokeWidth: 2,
    opacity: 1,
 };
@@ -46,7 +46,7 @@ const Line = () => {
       if (!currentShape) {
          line.id = data.length;
          line.points = [x, y, x, y];
-         line.strokeColor = styleBar.strokeColor;
+         line.stroke = styleBar.stroke;
          setCurrentShape(line);
       } else {
          setIsDrawing(true)

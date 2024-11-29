@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { Layer, Stage, Transformer } from 'react-konva';
+import { useCallback, useEffect } from 'react';
+import { Layer, Stage } from 'react-konva';
 
 import { useAppContext } from './AppContext';
 
@@ -25,6 +25,7 @@ const events = {
   text: TextTool
 };
 
+let copied = null
 
 export default function Canvas() {
 
@@ -42,18 +43,20 @@ export default function Canvas() {
     equalTop,
     undo, redo,
     selectedId, setSelectedId,
-    putShapeInId
+    putShapeInId, pushToUndoStackIfNeeded
   } = useAppContext();
 
 
   const { onMouseUp, onMouseMove, onMouseDown } = activeTool && activeTool !== "move" ? events[activeTool]() : {};
-  let copied = null
 
   async function copy() {
-    if (!selectedId) {
+    // console.log("here")
+    if (selectedId === null) {
+      console.log("selectedId = null")
       return;
     }
-  
+    // console.log("data[selectedId]")
+    // console.log(data[selectedId])
     try {
       const response = await fetch('http://localhost:8080/shapes/clone', {
         method: 'POST',
@@ -70,7 +73,7 @@ export default function Canvas() {
       const copiedShape = await response.json();
       copied = copiedShape
   
-      console.log(copied);
+      // console.log(copied);
     } catch (error) {
       console.error('Error: ', error);
     }
@@ -86,7 +89,7 @@ export default function Canvas() {
   // }, [])
 
   function getNewId() {
-    if(idsStack.isEmpty()) {
+    if(idsStack.length === 0) {
       return data.length;
     }
     return idsStack.pop();
@@ -141,8 +144,14 @@ export default function Canvas() {
           copy(copied)
           break;
         case 'v':
-          copied.id = getNewId();
-          setData([...data, copied]);
+          pushToUndoStackIfNeeded()
+          console.log("copied = ")
+          const newId = getNewId();
+          // console.log(copied)
+          copied.id = newId
+          setData([...data, {...copied, stroke: '#000000'}]);
+          
+          console.log(data)
           break;
         default:
           break;
@@ -202,7 +211,7 @@ export default function Canvas() {
     putShapeInId(selectedId, 
       {
         opacity: styleBar.opacity,
-        strokeColor: styleBar.strokeColor,
+        stroke: styleBar.stroke,
         strokeWidth: styleBar.strokeWidth,
         fill: styleBar.fill,
         height: styleBar.height,
@@ -225,7 +234,7 @@ export default function Canvas() {
 
     setStyleBar({
       opacity: s.opacity,
-      strokeColor: s.strokeColor,
+      stroke: s.stroke,
       strokeWidth: s.strokeWidth,
       fill: s.fill,
       height: s.height,

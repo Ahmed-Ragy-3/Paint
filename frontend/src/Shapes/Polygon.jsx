@@ -7,7 +7,7 @@ export const polygon = {
    fill: '#000000',
    points: [],
    strokeWidth: 2, 
-   strokeColor: '#000000',
+   stroke: '#000000',
    opacity: 1,
    closed: false,
 }
@@ -60,7 +60,7 @@ const Polygon = () => {
          closed: false,
          id: data.length,
          fill: styleBar.fill,
-         strokeColor: styleBar.strokeColor
+         stroke: styleBar.stroke
          })
       );
       console.log(currentShape)

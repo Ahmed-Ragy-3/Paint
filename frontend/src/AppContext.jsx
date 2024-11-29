@@ -85,6 +85,15 @@ export const AppProvider = ({ children }) => {
     return compareArrays(element, arr[arr.length - 1])
   }
 
+
+  const pushToUndoStackIfNeeded = () => {
+    if (!equalTop(undoStack, data)) {
+       console.log("push in undo stack");
+       setUndoStack((prevUndoStack) => [...prevUndoStack, data]);
+    }
+  };
+
+
   function putShapeInId(id, newShape) {
     // console.log("putting in id " + id)
     // console.log("newShape = " + newShape)
@@ -114,7 +123,7 @@ export const AppProvider = ({ children }) => {
   
   const [styleBar, setStyleBar] = useState({
     opacity: 1,
-    strokeColor: "#000000",
+    stroke: "#000000",
     strokeWidth: 2,
     fill: "#ffffff",
     height: 1,
@@ -143,7 +152,8 @@ export const AppProvider = ({ children }) => {
         equalTop,
         undo, redo,
         selectedId, setSelectedId,
-        putShapeInId
+        putShapeInId,
+        pushToUndoStackIfNeeded
       }}
     >
       {children}
