@@ -85,11 +85,11 @@ export const AppProvider = ({ children }) => {
     return compareArrays(element, arr[arr.length - 1])
   }
 
-
-  const pushToUndoStackIfNeeded = () => {
+  const pushToUndoStack = () => {
     if (!equalTop(undoStack, data)) {
-       console.log("push in undo stack");
-       setUndoStack((prevUndoStack) => [...prevUndoStack, data]);
+      console.log("push in undo stack");
+      setRedoStack([])
+      setUndoStack((prevUndoStack) => [...prevUndoStack, data]);
     }
   };
 
@@ -153,7 +153,7 @@ export const AppProvider = ({ children }) => {
         undo, redo,
         selectedId, setSelectedId,
         putShapeInId,
-        pushToUndoStackIfNeeded
+        pushToUndoStack
       }}
     >
       {children}
