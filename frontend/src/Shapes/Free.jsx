@@ -2,7 +2,6 @@ import { useAppContext } from '../AppContext';
 
 import { shape } from '../ToolBar.jsx'
 
-// export let free = {}
 // export const free = {
 //    type: "Free",
 //    id: 0,

@@ -2,11 +2,7 @@ import { useAppContext } from '../AppContext';
 
 import { shape } from '../ToolBar.jsx'
 
-// const ellipse = shape
-// export let ellipse = { x: 10, y: 20, radiusX: 30 };
-// export default ellipse;
-// export let ellipse
-//  = {
+// export const ellipse = {
 //    type: 'Ellipse',
 //    draggable: false,
 //    id: 0,

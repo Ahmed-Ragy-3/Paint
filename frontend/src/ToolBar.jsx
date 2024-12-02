@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 // import { useState } from 'react';
 import './bars.css';
-// import createShape from './create.jsx';
 
 import { useAppContext } from './AppContext';
 
@@ -13,10 +12,6 @@ import rectangle_icon from './assets/rectangle.svg';
 import circle from './assets/circle.svg';
 import brush from './assets/brush-tool.svg';
 import text from './assets/textIcon.svg';
-// import addImage from './assets/add-image.svg';
-
-// export { polygon } from './Shapes/Polygon.jsx';
-
 
 export let shape
 
@@ -45,7 +40,6 @@ export default function ToolBar() {
       }
       
       const shape = await response.json();
-      // console.log(shape)
       return shape
   
     } catch (error) {
@@ -79,9 +73,9 @@ export default function ToolBar() {
         title="Polygon Tool (p)" 
         onClick={async () => {
           shape = await getShape("Polygon")
-          console.log(shape)
+          shape.opacity = 1
+          shape.strokeWidth = 2
           setCurrentShape(shape)
-          setIsDrawing(true)
           setSelectedShapeType("Polygon")
           setActiveTool("polygon") 
         }}
@@ -119,10 +113,6 @@ export default function ToolBar() {
         onClick={async () => {
           shape = await getShape("Ellipse")
           setSelectedShapeType("Ellipse")
-          // console.log(shape);
-          // ellipse = shape
-          // setCurrentShape(ellipse)
-          
           console.log(currentShape);
           setActiveTool("ellipse")
         }}

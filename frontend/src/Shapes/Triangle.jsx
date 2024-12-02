@@ -2,7 +2,7 @@ import { useAppContext } from '../AppContext';
 
 import { shape } from '../ToolBar.jsx'
 
-// export let triangle = {
+// export const triangle = {
 //    type: 'Triangle',
 //    draggable: false,
 //    id: 0,

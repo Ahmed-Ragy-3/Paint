@@ -2,7 +2,6 @@ import { useAppContext } from '../AppContext';
 
 import { shape } from '../ToolBar.jsx'
 
-// export let line = {}
 // export const line = {
 //    type: 'Line',
 //    draggable: false,

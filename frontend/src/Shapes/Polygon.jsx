@@ -1,8 +1,5 @@
 import { useAppContext } from '../AppContext';
 
-// import { shape } from '../ToolBar.jsx'
-
-// export let polygon = {}
 // export const polygon = {
 //    type: 'Polygon',
 //    draggable: false,
