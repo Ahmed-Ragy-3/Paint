@@ -1,14 +1,17 @@
 import { useAppContext } from '../AppContext';
 
-const free = {
-   type: "Free",
-   id: 0,
-   points: [],
-   draggable: false,
-   stroke: "#000000", 
-   strokeWidth: 5,
-   opacity: 1,
-}
+import { shape } from '../ToolBar.jsx'
+
+// export let free = {}
+// export const free = {
+//    type: "Free",
+//    id: 0,
+//    points: [],
+//    draggable: false,
+//    stroke: "#000000", 
+//    strokeWidth: 5,
+//    opacity: 1,
+// }
 
 const Free = () => {
    const {
@@ -27,10 +30,10 @@ const Free = () => {
    
    function onMouseDown(e) {
       const { x, y } = e.target.getStage().getPointerPosition();
-      free.id = data.length
-      free.points = [x, y]
-      free.stroke = styleBar.stroke;
-      setCurrentShape(free);
+      shape.id = data.length
+      shape.points = [x, y]
+      shape.stroke = styleBar.stroke;
+      setCurrentShape(shape);
    }
 
    function onMouseUp(e) {

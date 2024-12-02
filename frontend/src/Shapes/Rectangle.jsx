@@ -1,18 +1,19 @@
 import { useAppContext } from '../AppContext';
 
-const rectangle = {
-   type: 'Rectangle',
-   draggable: false,
-   id: 0,
-   centerX: 0,
-   centerY: 0,
-   width: 0, 
-   height: 0,
-   strokeWidth: 2,
-   stroke: '#000000',
-   fill: '#000000',
-   opacity: 1,
-};
+import { shape } from '../ToolBar.jsx'
+// export const rectangle = {
+//    type: 'Rectangle',
+//    draggable: false,
+//    id: 0,
+//    centerX: 0,
+//    centerY: 0,
+//    width: 0, 
+//    height: 0,
+//    strokeWidth: 2,
+//    stroke: '#000000',
+//    fill: '#000000',
+//    opacity: 1,
+// };
 
 const Rectangle = () => {
    const {
@@ -92,12 +93,12 @@ const Rectangle = () => {
       setInitialPoint([x, y]);
 
       if (!currentShape) {
-         rectangle.id = data.length
-         rectangle.centerX = x
-         rectangle.centerY = y
-         rectangle.fill = styleBar.fill;
-         rectangle.stroke = styleBar.stroke;
-         setCurrentShape(rectangle);
+         shape.id = data.length
+         shape.centerX = x
+         shape.centerY = y
+         shape.fill = styleBar.fill;
+         shape.stroke = styleBar.stroke;
+         setCurrentShape(shape);
       } else {
          setIsDrawing(true);
       }

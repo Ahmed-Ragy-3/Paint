@@ -444,7 +444,7 @@ function CreatePolygon({shape, handleClick}) {
          opacity={shape.opacity}
          strokeWidth={shape.strokeWidth}
          closed={shape.closed}
-         onClick={() => {handleClick(shape.id)}}
+         onClick={() => { handleClick(shape.id)}}
          ref={shapeRef}
          
          onDragEnd={(e) => {

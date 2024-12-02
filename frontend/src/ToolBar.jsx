@@ -6,17 +6,19 @@ import './bars.css';
 import { useAppContext } from './AppContext';
 
 import move_tool from './assets/move-tool.svg';
-import line from './assets/line-icon.svg';
+import line_icon from './assets/line-icon.svg';
 import polygon_icon from './assets/polygon.svg';
-import triangle from './assets/triangle.svg';
-import rectangle from './assets/rectangle.svg';
+import triangle_icon from './assets/triangle.svg';
+import rectangle_icon from './assets/rectangle.svg';
 import circle from './assets/circle.svg';
 import brush from './assets/brush-tool.svg';
 import text from './assets/textIcon.svg';
-import addImage from './assets/add-image.svg';
+// import addImage from './assets/add-image.svg';
 
-import {polygon} from './Shapes/Polygon.jsx';
-import { useEffect } from 'react';
+// export { polygon } from './Shapes/Polygon.jsx';
+
+
+export let shape
 
 export default function ToolBar() {
 
@@ -24,7 +26,32 @@ export default function ToolBar() {
     currentShape, setCurrentShape,
     activeTool, setActiveTool,
     undoStack, setUndoStack,
+    setSelectedShapeType,
+    isDrawing, setIsDrawing
   } = useAppContext();
+
+  async function getShape(shapeName) {
+    try {
+      const response = await fetch('http://localhost:8080/shapes/get-shape', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({shapeType: `${shapeName}`}),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      
+      const shape = await response.json();
+      // console.log(shape)
+      return shape
+  
+    } catch (error) {
+      console.error('Error: ', error);
+    }
+  }
 
   return (
     <div className="toolbar">
@@ -38,16 +65,24 @@ export default function ToolBar() {
 
       <button 
         title="Line Tool (l)" 
-        onClick={() => { setActiveTool("line") }}
+        onClick={async () => {
+          shape = await getShape("Line")
+          setSelectedShapeType("Line")
+          setActiveTool("line")
+        }}
         className={activeTool === "line" ? "active" : ""}
       >
-        <img src={line} alt="Line Tool" />
+        <img src={line_icon} alt="Line Tool" />
       </button>
 
       <button 
         title="Polygon Tool (p)" 
-        onClick={() => {
-          setCurrentShape(polygon)
+        onClick={async () => {
+          shape = await getShape("Polygon")
+          console.log(shape)
+          setCurrentShape(shape)
+          setIsDrawing(true)
+          setSelectedShapeType("Polygon")
           setActiveTool("polygon") 
         }}
         className={activeTool === "polygon" ? "active" : ""}
@@ -57,31 +92,52 @@ export default function ToolBar() {
 
       <button 
         title="Triangle Tool (t)" 
-        onClick={() => { setActiveTool("triangle") }}
+        onClick={async () => {
+          shape = await getShape("Triangle")
+          setSelectedShapeType("Triangle")
+          setActiveTool("triangle")
+        }}
         className={activeTool === "triangle" ? "active" : ""}
       >
-        <img src={triangle} alt="Triangle Tool" />
+        <img src={triangle_icon} alt="Triangle Tool" />
       </button>
 
       <button 
         title="Rectangle Tool (r)" 
-        onClick={() => { setActiveTool("rectangle") }}
+        onClick={async () => {
+          shape = await getShape("Rectangle")
+          setSelectedShapeType("Rectangle")
+          setActiveTool("rectangle")
+        }}
         className={activeTool === "rectangle" ? "active" : ""}
       >
-        <img src={rectangle} alt="Rectangle Tool" />
+        <img src={rectangle_icon} alt="Rectangle Tool" />
       </button>
 
       <button 
         title="Ellipse Tool (e)" 
-        onClick={() => { setActiveTool("ellipse") }}
+        onClick={async () => {
+          shape = await getShape("Ellipse")
+          setSelectedShapeType("Ellipse")
+          // console.log(shape);
+          // ellipse = shape
+          // setCurrentShape(ellipse)
+          
+          console.log(currentShape);
+          setActiveTool("ellipse")
+        }}
         className={activeTool === "ellipse" ? "active" : ""}
       >
         <img src={circle} alt="Circle Tool" />
       </button>
 
-      <button 
+      <button
         title="Brush Tool (b)" 
-        onClick={() => { setActiveTool("free") }}
+        onClick={async () => {
+          shape = await getShape("Free")
+          setSelectedShapeType("Free")
+          setActiveTool("free")
+        }}
         className={activeTool === "free" ? "active" : ""}
       >
         <img src={brush} alt="Brush Tool" />
@@ -89,19 +145,23 @@ export default function ToolBar() {
 
       <button 
         title="Text Tool" 
-        onClick={() => { setActiveTool("text") }}
+        onClick={() => {
+          setActiveTool("text")
+        }}
         className={activeTool === "text" ? "active" : ""}
       >
         <img src={text} alt="Text Tool" />
       </button>
 
-      <button 
+      {/* <button 
         title="Add Image Tool" 
-        onClick={() => { setActiveTool("add image") }}
+        onClick={() => {
+          setActiveTool("add image")
+        }}
         className={activeTool === "add image" ? "active" : ""}
       >
         <img src={addImage} alt="Add Image Tool" />
-      </button>
+      </button> */}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { useAppContext } from '../AppContext';
 
-const text = {
+export let text = {
   type: 'Text',
   id: 0,
   x: 0,

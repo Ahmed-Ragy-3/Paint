@@ -4,7 +4,7 @@ import { useAppContext } from './AppContext';
 import file from './assets/file.svg';
 
 function File() {
-  const { data, setData } = useAppContext();
+  const { data, setData, setUndoStack } = useAppContext();
   const [showButtons, setShowButtons] = useState(false);
 
   const jsonFileInputRef = React.createRef();
@@ -17,6 +17,7 @@ function File() {
       reader.onload = () => {
         const parsedData = JSON.parse(reader.result);
         setData(parsedData);
+        setUndoStack([])
       };
       reader.readAsText(file);
     }
@@ -71,6 +72,7 @@ function File() {
         const xmlString = reader.result;
         const json = await XMLToJSON(xmlString);
         setData(json);
+        setUndoStack([])
      };
      reader.readAsText(file);
    }
@@ -133,32 +135,8 @@ function File() {
       </div>
 
       {showButtons && (
-        <div style={{display: 'flex', flexDirection: 'row', marginTop: '16px', gap: '5px'}}>
-          <div>
-            <button 
-              style={{
-                backgroundColor: '#515151',
-                color: '#D4D4D4',
-                padding: '5px 10px',
-                borderRadius: '5px',
-                border: 'none',
-                cursor: 'pointer',
-                fontFamily: 'Roboto',
-                fontSize: '16px',
-                marginBottom: '10px',
-              }}
-              onClick={() => jsonFileInputRef.current.click()}>Load JSON</button>
-            <input
-              type="file"
-              accept=".json"
-              ref={jsonFileInputRef}
-              style={{ display: 'none' }}
-              onChange={handleLoadJSON}
-            />
-          </div>
-
-          <div>
-            <button 
+        <div style={{ display: 'flex', flexDirection: 'row', marginTop: '16px', gap: '5px', width: 'fit-content', backgroundColor: 'transparent'}}>
+          <button 
             style={{
               backgroundColor: '#515151',
               color: '#D4D4D4',
@@ -170,47 +148,63 @@ function File() {
               fontSize: '16px',
               marginBottom: '10px',
             }}
-            onClick={() => xmlFileInputRef.current.click()}>Load XML</button>
-            <input
-              type="file"
-              accept=".xml"
-              ref={xmlFileInputRef}
-              style={{ display: 'none' }}
-              onChange={handleLoadXML}
-            />
-          </div>
+            onClick={() => jsonFileInputRef.current.click()}>Load JSON</button>
+          <input
+            type="file"
+            accept=".json"
+            ref={jsonFileInputRef}
+            style={{ display: 'none' }}
+            onChange={handleLoadJSON}
+          />
 
-          <div>
-            <button 
-            style={{
-              backgroundColor: '#515151',
-              color: '#D4D4D4',
-              padding: '5px 10px',
-              borderRadius: '5px',
-              border: 'none',
-              cursor: 'pointer',
-              fontFamily: 'Roboto',
-              fontSize: '16px',
-              marginBottom: '10px',
-            }}
-            onClick={handleSaveJSON}>Save JSON</button>
-          </div>
+          <button 
+          style={{
+            backgroundColor: '#515151',
+            color: '#D4D4D4',
+            padding: '5px 10px',
+            borderRadius: '5px',
+            border: 'none',
+            cursor: 'pointer',
+            fontFamily: 'Roboto',
+            fontSize: '16px',
+            marginBottom: '10px',
+          }}
+          onClick={() => xmlFileInputRef.current.click()}>Load XML</button>
+          <input
+            type="file"
+            accept=".xml"
+            ref={xmlFileInputRef}
+            style={{ display: 'none' }}
+            onChange={handleLoadXML}
+          />
 
-          <div>
-            <button 
-            style={{
-              backgroundColor: '#515151',
-              color: '#D4D4D4',
-              padding: '5px 10px',
-              borderRadius: '5px',
-              border: 'none',
-              cursor: 'pointer',
-              fontFamily: 'Roboto',
-              fontSize: '16px',
-              marginBottom: '10px',
-            }}
-            onClick={handleSaveXML}>Save XML</button>
-          </div>
+          <button 
+          style={{
+            backgroundColor: '#515151',
+            color: '#D4D4D4',
+            padding: '5px 10px',
+            borderRadius: '5px',
+            border: 'none',
+            cursor: 'pointer',
+            fontFamily: 'Roboto',
+            fontSize: '16px',
+            marginBottom: '10px',
+          }}
+          onClick={handleSaveJSON}>Save JSON</button>
+
+          <button 
+          style={{
+            backgroundColor: '#515151',
+            color: '#D4D4D4',
+            padding: '5px 10px',
+            borderRadius: '5px',
+            border: 'none',
+            cursor: 'pointer',
+            fontFamily: 'Roboto',
+            fontSize: '16px',
+            marginBottom: '10px',
+          }}
+          onClick={handleSaveXML}>Save XML</button>
         </div>
       )}
     </div>

@@ -1,18 +1,24 @@
 import { useAppContext } from '../AppContext';
 
-const ellipse = {
-   type: 'Ellipse',
-   draggable: false,
-   id: 0,
-   centerX: 0, 
-   centerY: 0,
-   strokeWidth: 2,
-   stroke: '#000000',
-   fill: 'transparent',
-   opacity: 1,
-   radiusX: 0,
-   radiusY: 0,
-};
+import { shape } from '../ToolBar.jsx'
+
+// const ellipse = shape
+// export let ellipse = { x: 10, y: 20, radiusX: 30 };
+// export default ellipse;
+// export let ellipse
+//  = {
+//    type: 'Ellipse',
+//    draggable: false,
+//    id: 0,
+//    centerX: 0, 
+//    centerY: 0,
+//    strokeWidth: 2,
+//    stroke: '#000000',
+//    fill: 'transparent',
+//    opacity: 1,
+//    radiusX: 0,
+//    radiusY: 0,
+// };
 
 const Ellipse = () => {
    const {
@@ -55,12 +61,12 @@ const Ellipse = () => {
       setInitialPoint([x, y]);
 
       if (!currentShape) {
-         ellipse.id = data.length;
-         ellipse.centerX = x;
-         ellipse.centerY = y;
-         ellipse.fill = styleBar.fill;
-         ellipse.stroke = styleBar.stroke;
-         setCurrentShape(ellipse);
+         shape.id = data.length;
+         shape.centerX = x;
+         shape.centerY = y;
+         shape.fill = styleBar.fill;
+         shape.stroke = styleBar.stroke;
+         setCurrentShape(shape);
       } else {
          setIsDrawing(true) 
       }

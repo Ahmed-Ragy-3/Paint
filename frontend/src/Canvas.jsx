@@ -79,8 +79,6 @@ export default function Canvas() {
     }
   }
   
-
-
   // useEffect(() => {
   //   if(!equalTop(undoStack, data)) {
   //     console.log("push in undo stack")

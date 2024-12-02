@@ -1,14 +1,17 @@
 import { useAppContext } from '../AppContext';
 
-const line = {
-   type: 'Line',
-   draggable: false,
-   id: 0,
-   points: [0, 0, 0, 0],
-   stroke: '#000000', 
-   strokeWidth: 2,
-   opacity: 1,
-};
+import { shape } from '../ToolBar.jsx'
+
+// export let line = {}
+// export const line = {
+//    type: 'Line',
+//    draggable: false,
+//    id: 0,
+//    points: [0, 0, 0, 0],
+//    stroke: '#000000', 
+//    strokeWidth: 2,
+//    opacity: 1,
+// };
 
 const Line = () => {
    const {
@@ -44,10 +47,10 @@ const Line = () => {
    function onMouseDown(e) {
       const { x, y } = e.target.getStage().getPointerPosition();
       if (!currentShape) {
-         line.id = data.length;
-         line.points = [x, y, x, y];
-         line.stroke = styleBar.stroke;
-         setCurrentShape(line);
+         shape.id = data.length;
+         shape.points = [x, y, x, y];
+         shape.stroke = styleBar.stroke;
+         setCurrentShape(shape);
       } else {
          setIsDrawing(true)
       }

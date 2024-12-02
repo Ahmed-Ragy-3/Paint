@@ -1,15 +1,17 @@
 import { useAppContext } from '../AppContext';
 
-const triangle = {
-   type: 'Triangle',
-   draggable: false,
-   id: 0,
-   points: [0, 0, 0, 0, 0, 0],
-   stroke: '#000000',
-   strokeWidth: 2,
-   fill: 'transparent', 
-   opacity: 1,
-};
+import { shape } from '../ToolBar.jsx'
+
+// export let triangle = {
+//    type: 'Triangle',
+//    draggable: false,
+//    id: 0,
+//    points: [0, 0, 0, 0, 0, 0],
+//    stroke: '#000000',
+//    strokeWidth: 2,
+//    fill: 'transparent', 
+//    opacity: 1,
+// };
 
 const Triangle = () => {
    const {
@@ -74,11 +76,11 @@ const Triangle = () => {
       const { x, y } = e.target.getStage().getPointerPosition();
 
       if (!currentShape) {
-         triangle.id = data.length
-         triangle.points = [x, y, x, y, x, y],
-         triangle.fill = styleBar.fill;
-         triangle.stroke = styleBar.stroke;
-         setCurrentShape(triangle);
+         shape.id = data.length
+         shape.points = [x, y, x, y, x, y],
+         shape.fill = styleBar.fill;
+         shape.stroke = styleBar.stroke;
+         setCurrentShape(shape);
       } else if (!secondPointDone) {
          setSecondPointDone(true);
       } else {

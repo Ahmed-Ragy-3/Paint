@@ -1,16 +1,19 @@
 import { useAppContext } from '../AppContext';
 
-export const polygon = {
-   type: 'Polygon',
-   draggable: false,
-   id: 0,
-   fill: '#000000',
-   points: [],
-   strokeWidth: 2, 
-   stroke: '#000000',
-   opacity: 1,
-   closed: false,
-}
+// import { shape } from '../ToolBar.jsx'
+
+// export let polygon = {}
+// export const polygon = {
+//    type: 'Polygon',
+//    draggable: false,
+//    id: 0,
+//    fill: '#000000',
+//    points: [],
+//    strokeWidth: 2, 
+//    stroke: '#000000',
+//    opacity: 1,
+//    closed: false,
+// }
 
 const Polygon = () => {
    const {
