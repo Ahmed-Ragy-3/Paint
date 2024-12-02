@@ -7,8 +7,7 @@ export default function Fill() {
     data,
     styleBar, setStyleBar,
     selectedShapeType,
-    undoStack, setUndoStack,
-    equalTop,
+    pushToUndoStack,
   } = useAppContext();
 
   const handleFillColorChange = (e) => {
@@ -28,10 +27,7 @@ export default function Fill() {
         title='Pick Fill Color'
 
         onBlur={() => {
-          if(!equalTop(undoStack, data)) {
-            console.log("push in undo stack")
-            setUndoStack((prevUndoStack) => [...prevUndoStack, data]);
-          }
+          pushToUndoStack();
         }}
       />
       

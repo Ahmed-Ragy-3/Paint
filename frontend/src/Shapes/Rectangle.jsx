@@ -34,23 +34,27 @@ const Rectangle = () => {
          let w = Math.abs(x - initialPoint[0]);
          let h = Math.abs(y - initialPoint[1]);
    
-         // let cx = (initialPoint[0] + x) / 2
-         // let cy = (initialPoint[1] + y) / 2
+         let cx = (initialPoint[0] + x) / 2
+         let cy = (initialPoint[1] + y) / 2
    
          if(e.evt.shiftKey) {
             if(h < w) {
                h = w
-               // cy = (initialPoint[1] + h) / 2
+               // cy = (h) / 2
+               cy = (initialPoint[1] + h) / 2
             }else {
                w = h
-               // cx = (initialPoint[0] + w) / 2
+               // cx = (w) / 2
+               cx = (initialPoint[0] + w) / 2
             }
          }
    
          setCurrentShape((prevShape) => ({
             ...prevShape,
-            centerX: initialPoint[0] - w / 2,
-            centerY: initialPoint[1] - h / 2,
+            // centerX: initialPoint[0] - w / 2,
+            centerX: cx,
+            centerY: cy,
+            // centerY: initialPoint[1] - h / 2,
             width: w,
             height: h,
          }));
@@ -61,24 +65,22 @@ const Rectangle = () => {
       const { x, y } = e.target.getStage().getPointerPosition();
       let w = Math.abs(x - initialPoint[0]);
       let h = Math.abs(y - initialPoint[1]);
+      
+      const cx = x < initialPoint[0] ? initialPoint[0] - w : initialPoint[0];
+      const cy = y < initialPoint[1] ? initialPoint[1] - h : initialPoint[1];
 
-      // let cx = (initialPoint[0] + x) / 2
-      // let cy = (initialPoint[1] + y) / 2
-
-      if(e.evt.shiftKey) {
-         if(h < w) {
-            h = w
-            // cy = (initialPoint[1] + h) / 2
-         }else {
-            w = h
-            // cx = (initialPoint[0] + w) / 2
+      if (e.evt.shiftKey) {
+         if (h < w) {
+            h = w;
+         } else {
+            w = h;
          }
       }
 
       setCurrentShape((prevShape) => ({
          ...prevShape,
-         centerX: initialPoint[0] - w / 2,
-         centerY: initialPoint[1] - h / 2,
+         centerX: cx,
+         centerY: cy,
          width: w,
          height: h,
       }));

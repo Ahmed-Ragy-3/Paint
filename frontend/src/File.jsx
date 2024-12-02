@@ -22,7 +22,6 @@ function File() {
     }
 
     console.log(data);
-    
   };
   
   function XMLToJSON(xmlString) {

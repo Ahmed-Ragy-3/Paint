@@ -31,7 +31,7 @@ function CreateEllipse({ shape, handleClick }) {
    const transformerRef = React.useRef();
 
    const { selectedId, putShapeInId,
-      pushToUndoStackIfNeeded   
+      pushToUndoStack   
    } = useAppContext();
 
    useEffect(() => {
@@ -42,7 +42,7 @@ function CreateEllipse({ shape, handleClick }) {
    }, [selectedId, shape.id]);
 
    useEffect(() => {
-      pushToUndoStackIfNeeded()
+      pushToUndoStack()
    }, [])
 
    return (
@@ -63,6 +63,7 @@ function CreateEllipse({ shape, handleClick }) {
 
 
             onDragEnd={(e) => {
+               pushToUndoStack();
                const updatedShape = { ...shape }; // Clone shape to prevent mutation
                updatedShape.centerX = e.target.x();
                updatedShape.centerY = e.target.y();
@@ -70,7 +71,8 @@ function CreateEllipse({ shape, handleClick }) {
                putShapeInId(updatedShape.id, updatedShape);
             }}
 
-            onTransformEnd={() => {
+            onTransformEnd={(e) => {
+               pushToUndoStack();
                const node = shapeRef.current;
                const updatedShape = { ...shape }; // Clone shape to avoid mutation
 
@@ -113,7 +115,7 @@ function CreateRectangle({ shape, handleClick }) {
    const transformerRef = React.useRef();
 
    const { selectedId, putShapeInId,
-      pushToUndoStackIfNeeded
+      pushToUndoStack,
    } = useAppContext();
 
    useEffect(() => {
@@ -125,7 +127,7 @@ function CreateRectangle({ shape, handleClick }) {
 
    
    useEffect(() => {
-      pushToUndoStackIfNeeded()
+      pushToUndoStack()
    }, [])
 
    return (
@@ -146,6 +148,7 @@ function CreateRectangle({ shape, handleClick }) {
             
 
             onDragEnd={(e) => {
+               pushToUndoStack();
                const updatedShape = { ...shape };
                updatedShape.centerX = e.target.x();
                updatedShape.centerY = e.target.y();
@@ -155,6 +158,7 @@ function CreateRectangle({ shape, handleClick }) {
             }}
              
             onTransformEnd={(e) => {
+               pushToUndoStack();
                const node = shapeRef.current;
                const updatedShape = { ...shape }; 
              
@@ -195,7 +199,7 @@ function CreateRectangle({ shape, handleClick }) {
 function CreateTriangle({ shape, handleClick }) {
    const shapeRef = React.useRef();
    const transformerRef = React.useRef();
-   const { selectedId, putShapeInId, pushToUndoStackIfNeeded } = useAppContext();
+   const { selectedId, putShapeInId, pushToUndoStack } = useAppContext();
 
    useEffect(() => {
       if (selectedId === shape.id && transformerRef.current && shapeRef.current) {
@@ -205,7 +209,7 @@ function CreateTriangle({ shape, handleClick }) {
    }, [selectedId, shape.id]);
 
    useEffect(() => {
-      pushToUndoStackIfNeeded()
+      pushToUndoStack()
    }, [])
 
    return (
@@ -223,6 +227,7 @@ function CreateTriangle({ shape, handleClick }) {
             onClick={() => handleClick(shape.id)}
 
             onDragEnd={(e) => {
+               pushToUndoStack();
                const { x, y } = e.target.position();
              
                const updatedPoints = shape.points.map((coord, index) => {
@@ -238,6 +243,7 @@ function CreateTriangle({ shape, handleClick }) {
              
 
             onTransformEnd={(e) => {
+               pushToUndoStack();
                const node = shapeRef.current;
                const scaleX = node.scaleX();
                const scaleY = node.scaleY();
@@ -279,7 +285,7 @@ function CreateTriangle({ shape, handleClick }) {
 function CreateText({ shape, handleClick }) {
    const shapeRef = useRef();
    const transformerRef = useRef();
-   const { selectedId, putShapeInId, pushToUndoStackIfNeeded } = useAppContext();
+   const { selectedId, putShapeInId, pushToUndoStack } = useAppContext();
    
    const [isEditing, setIsEditing] = useState(false);
    
@@ -293,7 +299,7 @@ function CreateText({ shape, handleClick }) {
    }, [selectedId, shape.id]);
 
    useEffect(() => {
-      pushToUndoStackIfNeeded()
+      pushToUndoStack()
    }, [])
 
    const handleTextChange = (e) => {
@@ -335,6 +341,7 @@ function CreateText({ shape, handleClick }) {
                onDblClick={() => setIsEditing((prev) => !prev)}
                
                onDragEnd={(e) => {
+                  pushToUndoStack();
                   const deltaX = e.target.x() - shape.x;
                   const deltaY = e.target.y() - shape.y;
                   const updatedShape = {
@@ -346,6 +353,7 @@ function CreateText({ shape, handleClick }) {
                }}
 
                onTransformEnd={(e) => {
+                  pushToUndoStack();
                   const node = shapeRef.current;
                   const scaleX = node.scaleX();
                   const scaleY = node.scaleY();
@@ -412,7 +420,7 @@ function CreateText({ shape, handleClick }) {
 function CreatePolygon({shape, handleClick}) {
    const shapeRef = React.useRef();
    const transformerRef = React.useRef();
-   const { selectedId, putShapeInId, pushToUndoStackIfNeeded } = useAppContext();
+   const { selectedId, putShapeInId, pushToUndoStack } = useAppContext();
 
    useEffect(() => {
       if (selectedId === shape.id && transformerRef.current && shapeRef.current) {
@@ -422,7 +430,7 @@ function CreatePolygon({shape, handleClick}) {
    }, [selectedId, shape.id]);
 
    useEffect(() => {
-      pushToUndoStackIfNeeded()
+      pushToUndoStack()
    }, [])
 
    return (
@@ -440,6 +448,7 @@ function CreatePolygon({shape, handleClick}) {
          ref={shapeRef}
          
          onDragEnd={(e) => {
+            pushToUndoStack();
             const { x, y } = e.target.position();
           
             const updatedPoints = shape.points.map((coord, index) =>
@@ -457,6 +466,7 @@ function CreatePolygon({shape, handleClick}) {
           }}
           
           onTransformEnd={(e) => {
+            pushToUndoStack();
             const node = shapeRef.current;
             const scaleX = node.scaleX();
             const scaleY = node.scaleY();
@@ -495,10 +505,10 @@ function CreatePolygon({shape, handleClick}) {
 }
 
 function CreateLine({shape, handleClick}) { // no transformer
-   const { selectedId, putShapeInId, pushToUndoStackIfNeeded } = useAppContext();
+   const { selectedId, putShapeInId, pushToUndoStack } = useAppContext();
    
    useEffect(() => {
-      pushToUndoStackIfNeeded()
+      pushToUndoStack()
    }, [])
 
    return <Line
@@ -515,6 +525,7 @@ function CreateLine({shape, handleClick}) { // no transformer
       // ref={shapeRef}
 
       onDragEnd={(e) => {
+         pushToUndoStack();
          const { x, y } = e.target.position();
       
          const updatedPoints = shape.points.map((coord, index) => {
@@ -531,10 +542,10 @@ function CreateLine({shape, handleClick}) { // no transformer
 }
 
 function CreateFreeDraw({shape, handleClick}) { // no transformer
-   const { selectedId, putShapeInId, pushToUndoStackIfNeeded } = useAppContext();
+   const { selectedId, putShapeInId, pushToUndoStack } = useAppContext();
    
    useEffect(() => {
-      pushToUndoStackIfNeeded()
+      pushToUndoStack()
    }, [])
 
    return <Line
@@ -550,6 +561,7 @@ function CreateFreeDraw({shape, handleClick}) { // no transformer
       onClick={() => {handleClick(shape.id)}}
       // ref={shapeRef}
       onDragEnd={(e) => {
+         pushToUndoStack();
          const { x, y } = e.target.position();
       
          const updatedPoints = shape.points.map((coord, index) => {

@@ -43,7 +43,7 @@ export default function Canvas() {
     equalTop,
     undo, redo,
     selectedId, setSelectedId,
-    putShapeInId, pushToUndoStackIfNeeded
+    putShapeInId, pushToUndoStack
   } = useAppContext();
 
 
@@ -128,12 +128,21 @@ export default function Canvas() {
         // idsStack.push(selectedId)
         setSelectedId(null)
         break;
-      default:
+        default:
         break;
     }
 
     if (e.ctrlKey) {
       switch (e.key.toLowerCase()) {
+        case 'b':
+          if(selectedId !== null) {
+            const moved = data[selectedId];
+            pushToUndoStack();
+            setData([moved, ...data]);
+            putShapeInId(selectedId, null)
+            setSelectedId(null)
+          }
+          break;
         case 'z':
           undo();
           break;
@@ -144,7 +153,7 @@ export default function Canvas() {
           copy(copied)
           break;
         case 'v':
-          pushToUndoStackIfNeeded()
+          pushToUndoStack()
           console.log("copied = ")
           const newId = getNewId();
           // console.log(copied)
