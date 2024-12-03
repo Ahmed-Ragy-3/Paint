@@ -10,14 +10,14 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class Polygon extends Shape {
-    private List<Point> points;
+    private List<Object> points;
 
     private boolean closed;
 
     private String fill;
 
 
-    public Polygon(String stroke , int strokeWidth,boolean draggable , int opacity , boolean closed , String fill,  List<Point> points)
+    public Polygon(String stroke , int strokeWidth,boolean draggable , int opacity , boolean closed , String fill,  List<Object> points)
     {
         super(stroke, strokeWidth, draggable, opacity);
         setClosed(closed);

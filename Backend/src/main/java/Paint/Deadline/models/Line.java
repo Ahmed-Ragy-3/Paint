@@ -10,9 +10,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class Line extends Shape{
-    private List<Point> points;
+    private List<Object> points;
 
-    public Line(String color , int strokeWidth , boolean draggable, int opacity ,List<Point> points)
+    public Line(String color , int strokeWidth , boolean draggable, int opacity ,List<Object> points)
     {
         super(color, strokeWidth, draggable, opacity);
         setPoints(points);

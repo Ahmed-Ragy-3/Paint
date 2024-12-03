@@ -14,13 +14,13 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class Triangle extends Shape {
 
-    public Triangle(String color , int strokeWidth , boolean draggable ,int opacity, List<Point> points , String fillColor)
+    public Triangle(String color , int strokeWidth , boolean draggable ,int opacity, List<Object> points , String fillColor)
     {
         super(color, strokeWidth, draggable, opacity);
         setPoints(points);
         setFill(fillColor);
     }
-    private List<Point> points;
+    private List<Object> points;
 
     private String fill;
 
